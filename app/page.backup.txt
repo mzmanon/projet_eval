@@ -1,0 +1,129 @@
+Je développe LA CAVE, un site e - commerce de champagne haut de gamme pour un projet scolaire.
+
+** Technologies :** Next.js, TypeScript, Tailwind CSS, Supabase et Vercel.
+
+## Direction artistique — PRIORITÉ ABSOLUE
+
+Créer une expérience digne d'une véritable maison de champagne de luxe.
+
+L'identité visuelle doit être :
+  - Élégante, raffinée, intemporelle et minimaliste.
+- Inspirée des codes du luxe français et des maisons de champagne prestigieuses.
+- Sobre, éditoriale, sophistiquée, avec beaucoup d'espace et une typographie soigneusement choisie.
+  - Crédible et professionnelle, comme un site réellement conçu par un directeur artistique et un designer expérimenté.
+- Guidée par le principe « less is more ».
+
+** Palette du site:**
+  - Noir profond
+    - Ivoire / blanc cassé
+      - Champagne doré discret
+        - Quelques nuances neutres et chaleureuses
+
+          ** RÈGLE IMPÉRATIVE — RESPECT DES PRODUITS:**
+
+            Ne jamais modifier les couleurs réelles des bouteilles de champagne, des étiquettes, des logos ou des emballages.
+
+Les bouteilles doivent conserver exactement leur apparence d'origine : couleur du verre, couleur du champagne, capsule, étiquette, typographie et identité de marque.
+
+Ne pas recolorer, redessiner, réinterpréter ou déformer les bouteilles pour les adapter à la palette du site.
+
+La palette noir, ivoire et doré concerne uniquement l'interface, jamais les produits.
+
+Privilégier des photographies authentiques et fidèles aux produits.Ne pas inventer de visuels présentés comme des photographies officielles de marques.
+
+## Ce qu'il faut absolument éviter
+
+  - L'apparence d'un site généré automatiquement par IA.
+- Les designs génériques de templates e - commerce.
+- Les dégradés artificiels et les effets lumineux excessifs.
+- Les animations inutiles.
+- Les boutons surdimensionnés et les cartes trop arrondies.
+- Les textes marketing exagérés.
+- La surcharge visuelle.
+- Les images de bouteilles irréalistes.
+
+## Fonctionnalités attendues
+
+1. Page d'accueil premium et responsive.
+2. Catalogue de champagnes.
+3. Fiches produits détaillées.
+4. Panier fonctionnel.
+5. Inscription et connexion client.
+6. Historique des commandes enregistré dans Supabase.
+7. Espace administrateur sécurisé avec indicateurs de performance.
+8. Intégration réelle de skills pertinents.
+9. Déploiement sur Vercel.
+
+Le projet est développé dans un dépôt GitHub partagé.Préserver le travail existant et travailler sur la branche feature / la - cave - frontend.
+
+** Pour le moment, analyse uniquement le projet, les dépendances et AGENTS.md.Propose ensuite un plan de développement progressif.Ne modifie aucun fichier et n'installe rien sans validation.**
+
+L'objectif final est un site e-commerce fonctionnel, mais aussi une expérience visuelle luxueuse, naturelle et crédible, sans esthétique artificielle.import Image from "next/image";
+
+export default function Home() {
+  return (
+    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+        <Image
+          className="dark:invert h-5 w-[100px]"
+          src="/next.svg"
+          alt="Next.js logo"
+          width={100}
+          height={20}
+          priority
+        />
+        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
+            To get started, edit the{" "}
+            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
+              page.tsx
+            </code>{" "}
+            file.
+          </h1>
+          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
+            Looking for a starting point or more instructions? Head over to{" "}
+            <a
+              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+              className="font-medium text-zinc-950 dark:text-zinc-50"
+            >
+              Templates
+            </a>{" "}
+            or the{" "}
+            <a
+              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+              className="font-medium text-zinc-950 dark:text-zinc-50"
+            >
+              Learning
+            </a>{" "}
+            center.
+          </p>
+        </div>
+        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+          <a
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className="dark:invert h-[14px] w-4"
+              src="/vercel.svg"
+              alt="Vercel logomark"
+              width={16}
+              height={14}
+            />
+            Deploy Now
+          </a>
+          <a
+            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
+            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Documentation
+          </a>
+        </div>
+      </main>
+    </div>
+  );
+}
