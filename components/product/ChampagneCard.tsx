@@ -2,10 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Champagne } from "@/types/champagne";
 import { useCart } from "@/context/CartContext";
-import { Plus, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 
 interface ChampagneCardProps {
   champagne: Champagne;
@@ -56,7 +55,7 @@ export default function ChampagneCard({ champagne }: ChampagneCardProps) {
         <div className="absolute inset-x-0 bottom-0 py-3 bg-gradient-to-t from-black/90 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[#C5A059] font-medium bg-[#111111]/90 border border-[#C5A059]/30 px-3 py-1">
             <Eye className="h-3.5 w-3.5" />
-            <span>Sélectionner &amp; Découvrir</span>
+            <span>Sélectionner ce flacon</span>
           </span>
         </div>
       </button>
@@ -71,7 +70,7 @@ export default function ChampagneCard({ champagne }: ChampagneCardProps) {
             <button
               type="button"
               onClick={handleSelect}
-              className="text-left hover:underline focus:outline-none"
+              className="text-left hover:underline focus:outline-none cursor-pointer"
             >
               {champagne.name}
             </button>
@@ -98,25 +97,14 @@ export default function ChampagneCard({ champagne }: ChampagneCardProps) {
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div>
             {/* Bouton de sélection ouvrant le volet à droite */}
             <button
               type="button"
               onClick={handleSelect}
-              className="px-3.5 py-2 text-[11px] uppercase tracking-wider text-neutral-200 hover:text-white bg-[#1A1A1A] hover:bg-[#252525] border border-white/10 hover:border-[#C5A059]/40 transition-colors cursor-pointer"
+              className="px-4 py-2 text-[11px] uppercase tracking-wider text-neutral-200 hover:text-[#0A0A0A] bg-[#181818] hover:bg-[#C5A059] border border-white/10 hover:border-[#C5A059] transition-all duration-300 cursor-pointer"
             >
               Sélectionner
-            </button>
-
-            {/* Bouton Plus ouvrant le tiroir pour choisir la quantité */}
-            <button
-              type="button"
-              onClick={handleSelect}
-              className="flex h-9 w-9 items-center justify-center bg-[#C5A059] text-[#0A0A0A] hover:bg-[#DFC282] transition-colors cursor-pointer"
-              aria-label={`Choisir la quantité pour ${champagne.name}`}
-              title="Choisir le nombre de flacons"
-            >
-              <Plus className="h-4 w-4" />
             </button>
           </div>
         </div>

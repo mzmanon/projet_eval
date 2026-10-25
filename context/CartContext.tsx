@@ -11,11 +11,6 @@ import React, {
 } from "react";
 import { Champagne, CartItem } from "@/types/champagne";
 
-export interface LastAddedToastInfo {
-  champagne: Champagne;
-  quantity: number;
-}
-
 interface CartContextType {
   items: CartItem[];
   addItem: (champagne: Champagne, quantity?: number, openCartDrawer?: boolean) => void;
@@ -33,10 +28,8 @@ interface CartContextType {
   isProductDrawerOpen: boolean;
   openProductDrawer: (champagne: Champagne) => void;
   closeProductDrawer: () => void;
-  // Feedback badge animation & notification toast
+  // Feedback badge animation in navbar
   isBadgeAnimating: boolean;
-  lastAddedToast: LastAddedToastInfo | null;
-  dismissToast: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -86,9 +79,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [selectedChampagne, setSelectedChampagne] = useState<Champagne | null>(null);
   const [isProductDrawerOpen, setIsProductDrawerOpen] = useState(false);
   const [isBadgeAnimating, setIsBadgeAnimating] = useState(false);
-  const [lastAddedToast, setLastAddedToast] = useState<LastAddedToastInfo | null>(null);
 
-  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const badgeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Sync state cleanly with external store without set-state-in-effect
@@ -119,14 +110,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }, 300);
   }, []);
 
-  const dismissToast = useCallback(() => {
-    setLastAddedToast(null);
-    if (toastTimeoutRef.current) {
-      clearTimeout(toastTimeoutRef.current);
-      toastTimeoutRef.current = null;
-    }
-  }, []);
-
   const addItem = useCallback(
     (champagne: Champagne, quantity = 1, openCartDrawer = false) => {
       const current = items;
@@ -149,13 +132,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       badgeTimeoutRef.current = setTimeout(() => {
         setIsBadgeAnimating(false);
       }, 1000);
-
-      // Trigger discreet toast notification
-      setLastAddedToast({ champagne, quantity });
-      if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
-      toastTimeoutRef.current = setTimeout(() => {
-        setLastAddedToast(null);
-      }, 4500);
 
       if (openCartDrawer) {
         setIsCartOpen(true);
@@ -223,8 +199,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         openProductDrawer,
         closeProductDrawer,
         isBadgeAnimating,
-        lastAddedToast,
-        dismissToast,
       }}
     >
       {children}

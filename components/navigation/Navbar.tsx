@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { ShoppingBag, User, Shield, Menu, X } from "lucide-react";
+import { User, Shield, Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -62,6 +62,42 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center space-x-8 text-xs uppercase tracking-[0.2em] font-medium">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
+
+              if (link.href === "/panier") {
+                return (
+                  <button
+                    key={link.href}
+                    onClick={toggleCart}
+                    className={`transition-colors duration-300 relative py-1 flex items-center gap-1.5 cursor-pointer uppercase ${
+                      isActive
+                        ? "text-[#C5A059]"
+                        : "text-neutral-300 hover:text-[#FCFBF9]"
+                    }`}
+                    title={
+                      totalCount > 0
+                        ? `Votre sélection (${totalCount} flacons) — Cliquez pour valider votre commande`
+                        : "Votre panier"
+                    }
+                  >
+                    <span>{link.label}</span>
+                    {totalCount > 0 && (
+                      <span
+                        className={`inline-flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-[#C5A059] text-[9px] font-bold text-[#0A0A0A] transition-all duration-300 ${
+                          isBadgeAnimating
+                            ? "scale-125 ring-2 ring-[#DFC282] bg-[#DFC282] animate-bounce"
+                            : "scale-100"
+                        }`}
+                      >
+                        {totalCount}
+                      </span>
+                    )}
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A059]" />
+                    )}
+                  </button>
+                );
+              }
+
               return (
                 <Link
                   key={link.href}
@@ -73,11 +109,6 @@ export default function Navbar() {
                   }`}
                 >
                   <span>{link.label}</span>
-                  {link.href === "/panier" && totalCount > 0 && (
-                    <span className="inline-flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-[#C5A059] text-[9px] font-bold text-[#0A0A0A]">
-                      {totalCount}
-                    </span>
-                  )}
                   {isActive && (
                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A059]" />
                   )}
@@ -98,7 +129,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Right Action Icons */}
+          {/* Right Action Icons (icône panier retirée comme demandé) */}
           <div className="flex items-center space-x-4 sm:space-x-6">
             <Link
               href="/admin"
@@ -116,34 +147,6 @@ export default function Navbar() {
             >
               <User className="h-5 w-5" />
             </Link>
-
-            <button
-              onClick={toggleCart}
-              className={`p-2 transition-all duration-300 relative rounded-full ${
-                isBadgeAnimating
-                  ? "text-[#C5A059] scale-110"
-                  : "text-neutral-300 hover:text-[#C5A059]"
-              }`}
-              aria-label={`Panier, ${totalCount} articles. Cliquez pour valider votre commande.`}
-              title={
-                totalCount > 0
-                  ? `Votre sélection (${totalCount} flacons) — Cliquez pour valider votre commande`
-                  : "Votre panier est vide"
-              }
-            >
-              <ShoppingBag className="h-5 w-5" />
-              {totalCount > 0 && (
-                <span
-                  className={`absolute top-0.5 right-0 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-[#C5A059] text-[10px] font-bold text-[#0A0A0A] shadow-md transition-all duration-300 ${
-                    isBadgeAnimating
-                      ? "scale-125 ring-2 ring-[#DFC282] bg-[#DFC282] animate-bounce"
-                      : "scale-100"
-                  }`}
-                >
-                  {totalCount}
-                </span>
-              )}
-            </button>
           </div>
         </div>
       </nav>
@@ -152,21 +155,38 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-x-0 top-[85px] bg-[#0E0E0E] border-b border-[#C5A059]/20 p-6 shadow-2xl animate-in slide-in-from-top duration-300">
           <div className="flex flex-col space-y-5 text-sm uppercase tracking-[0.25em]">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5 flex items-center justify-between"
-              >
-                <span>{link.label}</span>
-                {link.href === "/panier" && totalCount > 0 && (
-                  <span className="bg-[#C5A059] text-[#0A0A0A] text-[10px] font-bold px-2 py-0.5 rounded-full">
-                    {totalCount}
-                  </span>
-                )}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              if (link.href === "/panier") {
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      toggleCart();
+                    }}
+                    className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5 flex items-center justify-between cursor-pointer text-left uppercase"
+                  >
+                    <span>{link.label}</span>
+                    {totalCount > 0 && (
+                      <span className="bg-[#C5A059] text-[#0A0A0A] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        {totalCount}
+                      </span>
+                    )}
+                  </button>
+                );
+              }
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5 flex items-center justify-between"
+                >
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
             <Link
               href="/account"
               onClick={() => setMobileMenuOpen(false)}
