@@ -8,7 +8,7 @@ import { ShoppingBag, User, Shield, Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { totalCount, toggleCart } = useCart();
+  const { totalCount, toggleCart, isBadgeAnimating } = useCart();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -119,13 +119,27 @@ export default function Navbar() {
 
             <button
               onClick={toggleCart}
-              className="p-2 text-neutral-300 hover:text-[#C5A059] transition-colors relative"
-              aria-label={`Ouvrir le panier, ${totalCount} articles`}
-              title="Ouvrir le volet panier"
+              className={`p-2 transition-all duration-300 relative rounded-full ${
+                isBadgeAnimating
+                  ? "text-[#C5A059] scale-110"
+                  : "text-neutral-300 hover:text-[#C5A059]"
+              }`}
+              aria-label={`Panier, ${totalCount} articles. Cliquez pour valider votre commande.`}
+              title={
+                totalCount > 0
+                  ? `Votre sélection (${totalCount} flacons) — Cliquez pour valider votre commande`
+                  : "Votre panier est vide"
+              }
             >
               <ShoppingBag className="h-5 w-5" />
               {totalCount > 0 && (
-                <span className="absolute top-1 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-[#C5A059] text-[10px] font-bold text-[#0A0A0A]">
+                <span
+                  className={`absolute top-0.5 right-0 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-[#C5A059] text-[10px] font-bold text-[#0A0A0A] shadow-md transition-all duration-300 ${
+                    isBadgeAnimating
+                      ? "scale-125 ring-2 ring-[#DFC282] bg-[#DFC282] animate-bounce"
+                      : "scale-100"
+                  }`}
+                >
                   {totalCount}
                 </span>
               )}

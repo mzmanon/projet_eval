@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import { X, Plus, Minus, Trash2, ShieldCheck, ArrowRight } from "lucide-react";
+import { X, Plus, Minus, Trash2, ShieldCheck, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function CartDrawer() {
   const {
@@ -40,7 +40,21 @@ export default function CartDrawer() {
     };
   }, [isCartOpen]);
 
+  // Échap pour fermer
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isCartOpen) {
+        closeCart();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isCartOpen, closeCart]);
+
   if (!isCartOpen) return null;
+
+  const shippingCost = isFreeShipping ? 0 : 25;
+  const grandTotal = totalPrice + shippingCost;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -59,7 +73,7 @@ export default function CartDrawer() {
         className="relative z-10 flex h-full w-full max-w-md flex-col bg-[#111111] border-l border-[#C5A059]/20 text-[#FCFBF9] shadow-2xl transition-transform duration-500 animate-in slide-in-from-right"
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-6">
+        <div className="flex items-center justify-between border-b border-white/10 px-6 py-6 bg-[#141414]">
           <div>
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#C5A059] font-medium">
               Maison de Sommellerie
@@ -83,7 +97,7 @@ export default function CartDrawer() {
             {isFreeShipping ? (
               <span className="text-[#C5A059] font-medium flex items-center gap-1.5">
                 <ShieldCheck className="h-4 w-4" />
-                Livraison sécurisée & coffret offerts
+                Livraison sécurisée &amp; coffret offerts
               </span>
             ) : (
               <span>
@@ -120,7 +134,7 @@ export default function CartDrawer() {
               </p>
               <button
                 onClick={closeCart}
-                className="mt-6 inline-flex items-center gap-2 border border-[#C5A059] px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-[#C5A059] hover:bg-[#C5A059] hover:text-[#0A0A0A] transition-all duration-300"
+                className="mt-6 inline-flex items-center gap-2 border border-[#C5A059] px-6 py-2.5 text-xs uppercase tracking-[0.2em] text-[#C5A059] hover:bg-[#C5A059] hover:text-[#0A0A0A] transition-all duration-300 cursor-pointer"
               >
                 Découvrir la collection
               </button>
@@ -229,19 +243,31 @@ export default function CartDrawer() {
               <div className="flex justify-between pt-2 border-t border-white/10 text-base font-serif">
                 <span className="text-neutral-200">Total estimé</span>
                 <span className="text-[#C5A059] font-medium text-lg">
-                  {(totalPrice + (isFreeShipping ? 0 : 25)).toFixed(0)} €
+                  {grandTotal.toFixed(0)} €
                 </span>
               </div>
             </div>
 
+            {/* Bouton de validation de la commande */}
             <Link
               href="/checkout"
               onClick={closeCart}
-              className="flex w-full items-center justify-center gap-2 bg-[#C5A059] py-3.5 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#0A0A0A] hover:bg-[#DFC282] transition-colors"
+              className="flex w-full items-center justify-center gap-2.5 bg-[#C5A059] py-4 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#0A0A0A] hover:bg-[#DFC282] active:scale-[0.99] transition-all duration-300 shadow-xl"
             >
-              <span>Accéder au paiement sécurisé</span>
+              <CheckCircle2 className="h-4 w-4" />
+              <span>Valider ma commande • {grandTotal.toFixed(0)} €</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
+
+            <div className="text-center">
+              <Link
+                href="/panier"
+                onClick={closeCart}
+                className="text-[11px] uppercase tracking-wider text-neutral-400 hover:text-[#C5A059] transition-colors"
+              >
+                Consulter la page détaillée du panier
+              </Link>
+            </div>
 
             <p className="text-[11px] text-center text-neutral-500">
               Flacons garantis d&apos;origine • Température contrôlée

@@ -4,6 +4,8 @@ import { CartProvider } from "@/context/CartContext";
 import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/navigation/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
+import ProductSelectionDrawer from "@/components/product/ProductSelectionDrawer";
+import AddToCartToast from "@/components/cart/AddToCartToast";
 
 export const metadata: Metadata = {
   title: "LA CAVE — Haute Champagne & Cuvées Rares",
@@ -37,6 +39,8 @@ export default function RootLayout({
         <CartProvider>
           <Navbar />
           <CartDrawer />
+          <ProductSelectionDrawer />
+          <AddToCartToast />
           <div className="flex-1 flex flex-col pt-[88px]">{children}</div>
           <Footer />
         </CartProvider>
