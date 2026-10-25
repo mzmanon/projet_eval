@@ -25,6 +25,7 @@ export default function Navbar() {
     { href: "/maisons", label: "Les Maisons" },
     { href: "/terroirs", label: "Les Terroirs" },
     { href: "/philosophie", label: "La Maison" },
+    { href: "/panier", label: "Panier" },
   ];
 
   return (
@@ -65,13 +66,18 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`transition-colors duration-300 relative py-1 ${
+                  className={`transition-colors duration-300 relative py-1 flex items-center gap-1.5 ${
                     isActive
                       ? "text-[#C5A059]"
                       : "text-neutral-300 hover:text-[#FCFBF9]"
                   }`}
                 >
-                  {link.label}
+                  <span>{link.label}</span>
+                  {link.href === "/panier" && totalCount > 0 && (
+                    <span className="inline-flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-[#C5A059] text-[9px] font-bold text-[#0A0A0A]">
+                      {totalCount}
+                    </span>
+                  )}
                   {isActive && (
                     <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A059]" />
                   )}
@@ -115,6 +121,7 @@ export default function Navbar() {
               onClick={toggleCart}
               className="p-2 text-neutral-300 hover:text-[#C5A059] transition-colors relative"
               aria-label={`Ouvrir le panier, ${totalCount} articles`}
+              title="Ouvrir le volet panier"
             >
               <ShoppingBag className="h-5 w-5" />
               {totalCount > 0 && (
@@ -136,9 +143,14 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5"
+                className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5 flex items-center justify-between"
               >
-                {link.label}
+                <span>{link.label}</span>
+                {link.href === "/panier" && totalCount > 0 && (
+                  <span className="bg-[#C5A059] text-[#0A0A0A] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    {totalCount}
+                  </span>
+                )}
               </Link>
             ))}
             <Link
