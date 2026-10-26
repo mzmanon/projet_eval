@@ -5,6 +5,7 @@ import Navbar from "@/components/navigation/Navbar";
 import Footer from "@/components/navigation/Footer";
 import CartDrawer from "@/components/cart/CartDrawer";
 import ProductSelectionDrawer from "@/components/product/ProductSelectionDrawer";
+import AuthConfirmationHandler from "@/components/auth/AuthConfirmationHandler";
 
 export const metadata: Metadata = {
   title: "LA CAVE — Haute Champagne & Cuvées Rares",
@@ -36,6 +37,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-[var(--ivory)] text-[var(--ink)]">
         <CartProvider>
+          <AuthConfirmationHandler />
           <Navbar />
           <CartDrawer />
           <ProductSelectionDrawer />

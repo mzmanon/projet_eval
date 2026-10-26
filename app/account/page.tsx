@@ -144,6 +144,7 @@ export default function AccountPage() {
   const [authPassword, setAuthPassword] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
   const [authNotice, setAuthNotice] = useState<string | null>(null);
+  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null);
   const [isAuthSubmitting, setIsAuthSubmitting] = useState(false);
 
   const supabaseConfigured = getSupabasePublicConfig().configured;
@@ -183,6 +184,36 @@ export default function AccountPage() {
       subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (isSessionLoading) return;
+
+    const url = new URL(window.location.href);
+    const confirmation = url.searchParams.get("confirmation");
+    if (!confirmation) return;
+
+    if (confirmation === "success") {
+      if (user) {
+        setConfirmationMessage(
+          "Votre adresse e-mail est confirmée. Votre compte et votre historique de commandes sont accessibles."
+        );
+        setActiveTab("orders");
+      } else {
+        setAuthError(
+          "Votre adresse e-mail est confirmée. Connectez-vous pour accéder à votre historique et à vos informations personnelles."
+        );
+        setActiveTab("auth");
+      }
+    } else {
+      setAuthError(
+        "La confirmation n'a pas pu être finalisée. Si vous avez déjà cliqué sur le lien, connectez-vous avec cette adresse et votre mot de passe ; sinon, recommencez l'inscription."
+      );
+      setActiveTab("auth");
+    }
+
+    url.searchParams.delete("confirmation");
+    window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [isSessionLoading, user]);
 
   useEffect(() => {
     if (!user) return;
@@ -301,7 +332,7 @@ export default function AccountPage() {
           setActiveTab("orders");
         } else {
           setAuthNotice(
-            "Compte créé. Consultez votre boîte email pour confirmer votre adresse, puis connectez-vous."
+            "Compte créé. Consultez votre boîte e-mail et cliquez sur le lien de confirmation pour accéder à votre espace client."
           );
           setAuthMode("login");
         }
@@ -371,6 +402,16 @@ export default function AccountPage() {
             )}
           </div>
         </div>
+
+        {confirmationMessage && user && (
+          <div
+            role="status"
+            className="mt-6 flex items-start gap-2 border border-[var(--line-dark)] bg-[var(--surface-subtle)] px-4 py-3 text-xs text-[var(--surface-strong)]"
+          >
+            <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
+            <span>{confirmationMessage}</span>
+          </div>
+        )}
 
         {!supabaseConfigured && (
           <div className="mt-8 flex items-start gap-2 border border-amber-500/40 bg-amber-950/20 px-4 py-3 text-xs text-amber-400">
