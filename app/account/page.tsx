@@ -318,10 +318,8 @@ export default function AccountPage() {
           throw new Error("Veuillez renseigner votre nom complet.");
         }
 
-        const emailRedirectTo =
-          typeof window !== "undefined"
-            ? `${window.location.origin}/auth/callback`
-            : undefined;
+        // Return to the site root; AuthConfirmationHandler exchanges the code there.
+        const emailRedirectTo = window.location.origin;
 
         const { data, error } = await supabase.auth.signUp({
           email: cleanEmail,
@@ -338,7 +336,7 @@ export default function AccountPage() {
           setActiveTab("orders");
         } else {
           setAuthNotice(
-            "Compte créé. Consultez votre boîte e-mail et cliquez sur le lien de confirmation pour accéder à votre espace client."
+            "Un e-mail de vérification vient d’être envoyé. Cliquez sur son lien : vous reviendrez sur le site avec votre session ouverte et pourrez consulter votre espace client."
           );
           setAuthMode("login");
         }
