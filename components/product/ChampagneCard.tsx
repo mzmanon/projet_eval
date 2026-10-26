@@ -20,7 +20,7 @@ export default function ChampagneCard({
   const { addItem, openProductDrawer } = useCart();
 
   return (
-    <article className="product-card group flex flex-col border-t border-[#C8C1B4] bg-transparent pt-4">
+    <article className="product-card group flex h-full flex-col border border-[#C8C1B4] bg-transparent p-5 sm:p-6">
       <Link
         href={`/champagnes/${champagne.slug}`}
         className="product-card-media relative block h-80 overflow-hidden bg-[#ECE8DF] p-7 sm:h-96"
