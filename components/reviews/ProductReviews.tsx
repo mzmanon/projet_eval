@@ -2,9 +2,9 @@
 
 import React, {
   useCallback,
+  useEffect,
   useMemo,
   useState,
-  useSyncExternalStore,
 } from "react";
 import {
   CheckCircle2,
@@ -16,8 +16,7 @@ import {
   Star,
 } from "lucide-react";
 import type { ProductReview, ReviewReply } from "@/types/champagne";
-import { getSeedReviews } from "@/lib/data/reviews";
-import { reviewsStore } from "@/lib/reviewsStore";
+import { createClient } from "@/lib/supabase/client";
 
 interface ProductReviewsProps {
   champagneId: string;
@@ -45,10 +44,6 @@ function getInitials(name: string) {
     .slice(0, 2)
     .map((part) => part.charAt(0).toUpperCase())
     .join("");
-}
-
-function createId(prefix: string) {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
 function Stars({
@@ -130,33 +125,29 @@ function StarPicker({
   );
 }
 
-function useProductReviews(champagneId: string): ProductReview[] {
-  const getSnapshot = useCallback(
-    () => reviewsStore.getSnapshot(champagneId),
-    [champagneId]
-  );
-
-  const rawReviews = useSyncExternalStore(
-    reviewsStore.subscribe,
-    getSnapshot,
-    reviewsStore.getServerSnapshot
-  );
-
-  return useMemo(() => {
-    if (!rawReviews) return getSeedReviews(champagneId);
-
-    try {
-      const parsed = JSON.parse(rawReviews) as ProductReview[];
-      if (!Array.isArray(parsed)) return getSeedReviews(champagneId);
-
-      return parsed.map((review) => ({
-        ...review,
-        replies: Array.isArray(review.replies) ? review.replies : [],
-      }));
-    } catch {
-      return getSeedReviews(champagneId);
-    }
-  }, [rawReviews, champagneId]);
+function mapReviewRow(
+  row: Record<string, unknown>,
+  champagneId: string
+): ProductReview {
+  const rows = Array.isArray(row.product_review_replies)
+    ? (row.product_review_replies as Record<string, unknown>[])
+    : [];
+  return {
+    id: String(row.id ?? ""),
+    champagneId,
+    author: String(row.author ?? "Client"),
+    rating: Number(row.rating ?? 0),
+    title: typeof row.title === "string" ? row.title : undefined,
+    message: String(row.message ?? ""),
+    createdAt: String(row.created_at ?? new Date().toISOString()),
+    verified: row.verified === true,
+    replies: rows.map((reply) => ({
+      id: String(reply.id ?? ""),
+      author: String(reply.author ?? "Client"),
+      message: String(reply.message ?? ""),
+      createdAt: String(reply.created_at ?? new Date().toISOString()),
+    })),
+  };
 }
 
 interface ReviewItemProps {
@@ -356,8 +347,11 @@ export default function ProductReviews({
   champagneId,
   variant = "card",
 }: ProductReviewsProps) {
-  const reviews = useProductReviews(champagneId);
   const full = variant === "full";
+
+  const [reviews, setReviews] = useState<ProductReview[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const [expanded, setExpanded] = useState(full);
   const [formOpen, setFormOpen] = useState(false);
@@ -372,6 +366,35 @@ export default function ProductReviews({
   const [replyAuthor, setReplyAuthor] = useState("");
   const [replyMessage, setReplyMessage] = useState("");
   const [replyError, setReplyError] = useState<string | null>(null);
+
+  const loadReviews = useCallback(async () => {
+    try {
+      const { data, error } = await createClient()
+        .from("product_reviews")
+        .select(
+          "id,product_id,author,rating,title,message,created_at,verified,product_review_replies(id,author,message,created_at)"
+        )
+        .eq("product_id", champagneId)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setLoadError(null);
+      setReviews(
+        ((data ?? []) as unknown as Record<string, unknown>[]).map((row) =>
+          mapReviewRow(row, champagneId)
+        )
+      );
+    } catch {
+      setLoadError("Les avis ne sont pas disponibles pour le moment.");
+      setReviews([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [champagneId]);
+
+  useEffect(() => {
+    void loadReviews();
+  }, [loadReviews]);
 
   const sortedReviews = useMemo(
     () =>
@@ -393,7 +416,7 @@ export default function ProductReviews({
 
   const padding = full ? "px-6 sm:px-8" : "px-6 sm:px-7";
 
-  const handleSubmitReview = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitReview = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!message.trim()) {
@@ -401,19 +424,38 @@ export default function ProductReviews({
       return;
     }
 
-    const newReview: ProductReview = {
-      id: createId("rev"),
-      champagneId,
-      author: author.trim() || "Amateur de Champagne",
-      rating,
-      title: title.trim() || undefined,
-      message: message.trim(),
-      createdAt: new Date().toISOString(),
-      verified: false,
-      replies: [],
-    };
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      setFormError("Connectez-vous à votre compte pour publier un avis.");
+      return;
+    }
 
-    reviewsStore.save(champagneId, [newReview, ...reviews]);
+    const profileName = user.user_metadata.full_name;
+    const publicAuthor =
+      author.trim() ||
+      (typeof profileName === "string" ? profileName.trim() : "") ||
+      user.email?.split("@")[0] ||
+      "Client";
+    const { error } = await supabase.from("product_reviews").upsert(
+      {
+        product_id: champagneId,
+        user_id: user.id,
+        author: publicAuthor.slice(0, 40),
+        rating,
+        title: title.trim() || null,
+        message: message.trim(),
+      },
+      { onConflict: "product_id,user_id" }
+    );
+    if (error) {
+      setFormError("Impossible d’enregistrer votre avis pour le moment.");
+      return;
+    }
+
+    await loadReviews();
     setAuthor("");
     setTitle("");
     setMessage("");
@@ -439,7 +481,7 @@ export default function ProductReviews({
     setReplyError(null);
   };
 
-  const handleSubmitReply = (
+  const handleSubmitReply = async (
     event: React.FormEvent<HTMLFormElement>,
     reviewId: string
   ) => {
@@ -450,22 +492,33 @@ export default function ProductReviews({
       return;
     }
 
-    const newReply: ReviewReply = {
-      id: createId("rep"),
-      author: replyAuthor.trim() || "Amateur de Champagne",
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      setReplyError("Connectez-vous à votre compte pour répondre.");
+      return;
+    }
+
+    const profileName = user.user_metadata.full_name;
+    const publicAuthor =
+      replyAuthor.trim() ||
+      (typeof profileName === "string" ? profileName.trim() : "") ||
+      user.email?.split("@")[0] ||
+      "Client";
+    const { error } = await supabase.from("product_review_replies").insert({
+      review_id: reviewId,
+      user_id: user.id,
+      author: publicAuthor.slice(0, 40),
       message: replyMessage.trim(),
-      createdAt: new Date().toISOString(),
-    };
+    });
+    if (error) {
+      setReplyError("Impossible d’enregistrer votre réponse pour le moment.");
+      return;
+    }
 
-    reviewsStore.save(
-      champagneId,
-      reviews.map((review) =>
-        review.id === reviewId
-          ? { ...review, replies: [...review.replies, newReply] }
-          : review
-      )
-    );
-
+    await loadReviews();
     handleCancelReply();
     setExpanded(true);
     setNotice("Votre réponse a été publiée.");
@@ -503,12 +556,22 @@ export default function ProductReviews({
 
             <div className="mt-2 flex items-center gap-2.5">
               <span className="font-serif text-3xl font-light leading-none text-[#14150F]">
-                {average.toFixed(1).replace(".", ",")}
+                {isLoading
+                  ? "…"
+                  : reviews.length
+                    ? average.toFixed(1).replace(".", ",")
+                    : "—"}
               </span>
               <div className="flex flex-col gap-1">
-                <Stars value={average} size="md" />
+                {!isLoading && reviews.length > 0 && (
+                  <Stars value={average} size="md" />
+                )}
                 <span className="text-[9px] font-light uppercase tracking-[0.14em] text-[#565C4E]">
-                  sur 5 · {reviews.length} avis
+                  {isLoading
+                    ? "Chargement des avis"
+                    : reviews.length > 0
+                      ? `sur 5 · ${reviews.length} avis`
+                      : "Aucune note"}
                 </span>
               </div>
             </div>
@@ -530,7 +593,7 @@ export default function ProductReviews({
         </div>
 
         <p className="mt-2 text-[10px] font-light leading-relaxed text-[#565C4E]">
-          Échangez avec la Maison et les autres amateurs de la collection.
+          Connectez-vous pour publier un avis et une note sur cinq.
         </p>
 
         {notice && (
@@ -623,7 +686,15 @@ export default function ProductReviews({
         </form>
       )}
 
-      {visibleReviews.length > 0 ? (
+      {loadError ? (
+        <p role="alert" className={`${padding} pb-5 text-[11px] font-light text-[#A3352B]`}>
+          {loadError}
+        </p>
+      ) : isLoading ? (
+        <p className={`${padding} pb-5 text-[11px] font-light text-[#565C4E]`}>
+          Chargement des avis…
+        </p>
+      ) : visibleReviews.length > 0 ? (
         <div>
           {visibleReviews.map((review) => (
             <ReviewItem
