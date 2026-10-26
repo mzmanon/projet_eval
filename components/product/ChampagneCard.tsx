@@ -93,7 +93,9 @@ export default function ChampagneCard({
         </div>
       </div>
 
-      {showReviews && <ProductReviews champagneId={champagne.id} />}
+      {showReviews && (
+        <ProductReviews champagneId={champagne.id} champagneSlug={champagne.slug} />
+      )}
     </article>
   );
 }

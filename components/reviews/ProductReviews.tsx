@@ -17,9 +17,11 @@ import {
 } from "lucide-react";
 import type { ProductReview, ReviewReply } from "@/types/champagne";
 import { createClient } from "@/lib/supabase/client";
+import { getSeedReviews } from "@/lib/data/reviews";
 
 interface ProductReviewsProps {
   champagneId: string;
+  champagneSlug: string;
   /** "card" : aperçu compact sous une cuvée. "full" : discussion complète. */
   variant?: "card" | "full";
 }
@@ -153,6 +155,7 @@ function mapReviewRow(
 interface ReviewItemProps {
   review: ProductReview;
   full: boolean;
+  isDemo: boolean;
   preview?: boolean;
   isReplying: boolean;
   replyAuthor: string;
@@ -168,6 +171,7 @@ interface ReviewItemProps {
 function ReviewItem({
   review,
   full,
+  isDemo,
   preview = false,
   isReplying,
   replyAuthor,
@@ -235,30 +239,32 @@ function ReviewItem({
             </div>
           )}
 
-          <div className="mt-3 flex items-center gap-3">
-            <button
-              type="button"
-              onClick={isReplying ? onCancelReply : onStartReply}
-              className="inline-flex cursor-pointer items-center gap-1.5 text-[9px] uppercase tracking-[0.18em] text-[#755A22] transition-colors hover:text-[#2E4636] focus:outline-none focus:ring-1 focus:ring-[#B08F4C]/40"
-              aria-expanded={isReplying}
-              aria-label={
-                isReplying
-                  ? "Fermer le formulaire de réponse"
-                  : `Répondre à l'avis de ${review.author}`
-              }
-            >
-              <MessageSquare className="h-3 w-3 stroke-1" aria-hidden="true" />
-              <span>
-                {isReplying
-                  ? "Annuler"
-                  : review.replies.length > 0
-                    ? `Répondre · ${review.replies.length}`
-                    : "Répondre"}
-              </span>
-            </button>
-          </div>
+          {!isDemo && (
+            <div className="mt-3 flex items-center gap-3">
+              <button
+                type="button"
+                onClick={isReplying ? onCancelReply : onStartReply}
+                className="inline-flex cursor-pointer items-center gap-1.5 text-[9px] uppercase tracking-[0.18em] text-[#755A22] transition-colors hover:text-[#2E4636] focus:outline-none focus:ring-1 focus:ring-[#B08F4C]/40"
+                aria-expanded={isReplying}
+                aria-label={
+                  isReplying
+                    ? "Fermer le formulaire de réponse"
+                    : `Répondre à l'avis de ${review.author}`
+                }
+              >
+                <MessageSquare className="h-3 w-3 stroke-1" aria-hidden="true" />
+                <span>
+                  {isReplying
+                    ? "Annuler"
+                    : review.replies.length > 0
+                      ? `Répondre · ${review.replies.length}`
+                      : "Répondre"}
+                </span>
+              </button>
+            </div>
+          )}
 
-          {isReplying && (
+          {!isDemo && isReplying && (
             <form
               onSubmit={onSubmitReply}
               className="mt-3 space-y-2 border border-[#2E4636]/12 bg-[#F4F7EE] p-3"
@@ -345,6 +351,7 @@ function ReplyBubble({
 
 export default function ProductReviews({
   champagneId,
+  champagneSlug,
   variant = "card",
 }: ProductReviewsProps) {
   const full = variant === "full";
@@ -352,6 +359,8 @@ export default function ProductReviews({
   const [reviews, setReviews] = useState<ProductReview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [isDemoReviews, setIsDemoReviews] = useState(false);
+  const [isReviewStoreAvailable, setIsReviewStoreAvailable] = useState(false);
 
   const [expanded, setExpanded] = useState(full);
   const [formOpen, setFormOpen] = useState(false);
@@ -378,19 +387,27 @@ export default function ProductReviews({
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setLoadError(null);
-      setReviews(
+      const loadedReviews =
         ((data ?? []) as unknown as Record<string, unknown>[]).map((row) =>
           mapReviewRow(row, champagneId)
-        )
-      );
+        );
+      const demoReviews = getSeedReviews(champagneSlug, champagneId);
+      setIsReviewStoreAvailable(true);
+      setIsDemoReviews(loadedReviews.length === 0 && demoReviews.length > 0);
+      setLoadError(null);
+      setReviews(loadedReviews.length > 0 ? loadedReviews : demoReviews);
     } catch {
-      setLoadError("Les avis ne sont pas disponibles pour le moment.");
-      setReviews([]);
+      const demoReviews = getSeedReviews(champagneSlug, champagneId);
+      setReviews(demoReviews);
+      setIsDemoReviews(demoReviews.length > 0);
+      setIsReviewStoreAvailable(false);
+      setLoadError(
+        demoReviews.length === 0 ? "Les avis ne sont pas disponibles pour le moment." : null
+      );
     } finally {
       setIsLoading(false);
     }
-  }, [champagneId]);
+  }, [champagneId, champagneSlug]);
 
   useEffect(() => {
     void loadReviews();
@@ -545,6 +562,15 @@ export default function ProductReviews({
           </div>
         )}
 
+        {isDemoReviews && (
+          <aside
+            aria-label="Avis fictifs de démonstration"
+            className="mb-4 border border-[#B08F4C]/35 bg-[#E3C47D]/15 px-3 py-2 text-[9px] font-medium uppercase leading-relaxed tracking-[0.12em] text-[#755A22]"
+          >
+            Avis fictifs — démonstration. Ces exemples ne proviennent pas de clients ni d’achats réels.
+          </aside>
+        )}
+
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <span
@@ -577,23 +603,27 @@ export default function ProductReviews({
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              setFormOpen((open) => !open);
-              setFormError(null);
-              setNotice(null);
-            }}
-            className="inline-flex cursor-pointer items-center gap-1.5 border border-[#2E4636]/20 bg-[#2E4636]/[0.04] px-3 py-2 text-[9px] uppercase tracking-[0.18em] text-[#333A2F] transition-colors hover:border-[#B08F4C] hover:text-[#755A22] focus:outline-none focus:ring-1 focus:ring-[#B08F4C]/40"
-            aria-expanded={formOpen}
-          >
-            <PenLine className="h-3 w-3 stroke-1" aria-hidden="true" />
-            <span>{formOpen ? "Fermer" : "Rédiger un avis"}</span>
-          </button>
+          {isReviewStoreAvailable && (
+            <button
+              type="button"
+              onClick={() => {
+                setFormOpen((open) => !open);
+                setFormError(null);
+                setNotice(null);
+              }}
+              className="inline-flex cursor-pointer items-center gap-1.5 border border-[#2E4636]/20 bg-[#2E4636]/[0.04] px-3 py-2 text-[9px] uppercase tracking-[0.18em] text-[#333A2F] transition-colors hover:border-[#B08F4C] hover:text-[#755A22] focus:outline-none focus:ring-1 focus:ring-[#B08F4C]/40"
+              aria-expanded={formOpen}
+            >
+              <PenLine className="h-3 w-3 stroke-1" aria-hidden="true" />
+              <span>{formOpen ? "Fermer" : "Rédiger un avis"}</span>
+            </button>
+          )}
         </div>
 
         <p className="mt-2 text-[10px] font-light leading-relaxed text-[#565C4E]">
-          Connectez-vous pour publier un avis et une note sur cinq.
+          {isReviewStoreAvailable
+            ? "Connectez-vous pour publier un avis et une note sur cinq."
+            : "Avis clients et notes de dégustation."}
         </p>
 
         {notice && (
@@ -701,6 +731,7 @@ export default function ProductReviews({
               key={review.id}
               review={review}
               full={full}
+              isDemo={isDemoReviews}
               preview={!full && !expanded}
               isReplying={replyingTo === review.id}
               replyAuthor={replyAuthor}

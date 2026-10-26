@@ -261,7 +261,11 @@ export default async function ChampagneDetailPage({
 
         {/* Client Reviews & Discussion */}
         <div className="mt-16 sm:mt-20">
-          <ProductReviews champagneId={champagne.id} variant="full" />
+          <ProductReviews
+            champagneId={champagne.id}
+            champagneSlug={champagne.slug}
+            variant="full"
+          />
         </div>
 
         {/* Related Cuvées Section */}
