@@ -1,0 +1,53 @@
+const FALLBACK_SUPABASE_URL = "https://placeholder-project.supabase.co";
+const FALLBACK_SUPABASE_ANON_KEY = "placeholder-anon-key";
+
+export interface SupabasePublicConfig {
+  url: string;
+  anonKey: string;
+  configured: boolean;
+}
+
+export function getSupabasePublicConfig(): SupabasePublicConfig {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || "";
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() || "";
+
+  return {
+    url: url || FALLBACK_SUPABASE_URL,
+    anonKey: anonKey || FALLBACK_SUPABASE_ANON_KEY,
+    configured: Boolean(
+      url &&
+        anonKey &&
+        !url.includes("placeholder-project") &&
+        anonKey !== FALLBACK_SUPABASE_ANON_KEY
+    ),
+  };
+}
+
+export function getSupabaseAdminConfig() {
+  const publicConfig = getSupabasePublicConfig();
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() || "";
+
+  return {
+    ...publicConfig,
+    serviceRoleKey,
+    adminConfigured: publicConfig.configured && Boolean(serviceRoleKey),
+  };
+}
+
+export function getStripeConfig() {
+  const secretKey = process.env.STRIPE_SECRET_KEY?.trim() || "";
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim() || "";
+
+  return {
+    secretKey,
+    webhookSecret,
+    configured: Boolean(secretKey),
+  };
+}
+
+export function getSiteUrl(): string {
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configuredUrl) return configuredUrl.replace(/\/$/, "");
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+}

@@ -6,6 +6,12 @@ import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { CHAMPAGNES } from "@/lib/data/champagnes";
 import {
+  FREE_SHIPPING_THRESHOLD,
+  getFreeShippingProgress,
+  getMissingAmountForFreeShipping,
+  getShippingCost,
+} from "@/lib/checkout/pricing";
+import {
   ShoppingBag,
   Trash2,
   Plus,
@@ -30,17 +36,10 @@ export default function CartPage() {
     addItem,
   } = useCart();
 
-  const FREE_SHIPPING_THRESHOLD = 250;
   const isFreeShipping = totalPrice >= FREE_SHIPPING_THRESHOLD;
-  const missingForFreeShipping = Math.max(
-    0,
-    FREE_SHIPPING_THRESHOLD - totalPrice
-  );
-  const progressRatio = Math.min(
-    100,
-    (totalPrice / FREE_SHIPPING_THRESHOLD) * 100
-  );
-  const shippingCost = items.length === 0 ? 0 : isFreeShipping ? 0 : 25;
+  const missingForFreeShipping = getMissingAmountForFreeShipping(totalPrice);
+  const progressRatio = getFreeShippingProgress(totalPrice);
+  const shippingCost = getShippingCost(totalPrice);
   const grandTotal = totalPrice + shippingCost;
 
   // Suggestions de cuvées lorsque le panier est vide ou pour compléter

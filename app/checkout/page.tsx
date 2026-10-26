@@ -1,34 +1,109 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import { ShieldCheck, Lock, CheckCircle2, ArrowLeft } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import {
+  formatEuro,
+  getFreeShippingProgress,
+  getMissingAmountForFreeShipping,
+  getShippingCost,
+  FREE_SHIPPING_THRESHOLD,
+} from "@/lib/checkout/pricing";
+import { AlertCircle, ArrowLeft, Loader2, Lock, ShieldCheck } from "lucide-react";
 import ProductImage from "@/components/product/ProductImage";
 
+interface CheckoutFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  specialInstructions: string;
+}
+
+const EMPTY_FORM: CheckoutFormData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  address: "",
+  city: "",
+  postalCode: "",
+  country: "France",
+  specialInstructions: "",
+};
+
+function PaymentCancelledNotice() {
+  const searchParams = useSearchParams();
+
+  if (searchParams.get("annule") !== "1") {
+    return null;
+  }
+
+  return (
+    <div className="mb-8 flex items-start gap-2 border border-amber-500/30 bg-amber-950/20 px-4 py-3 text-xs text-amber-500">
+      <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+      <span>
+        Le paiement a été interrompu. Votre panier est conservé : vous pouvez
+        reprendre la validation quand vous le souhaitez.
+      </span>
+    </div>
+  );
+}
+
 export default function CheckoutPage() {
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, totalPrice } = useCart();
 
-  const [formData, setFormData] = useState({
-    firstName: "Jean",
-    lastName: "de Montmirail",
-    email: "jean.montmirail@collection.fr",
-    phone: "+33 6 12 34 56 78",
-    address: "24, Rue du Faubourg Saint-Honoré",
-    city: "Paris",
-    postalCode: "75008",
-    country: "France",
-    specialInstructions: "Livraison en mains propres avec signature requise.",
-  });
-
-  const [orderConfirmed, setOrderConfirmed] = useState(false);
-  const [orderNumber, setOrderNumber] = useState<string>("");
+  const [formData, setFormData] = useState<CheckoutFormData>(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [accountEmail, setAccountEmail] = useState<string | null>(null);
 
-  const FREE_SHIPPING_THRESHOLD = 250;
   const isFreeShipping = totalPrice >= FREE_SHIPPING_THRESHOLD;
-  const shippingCost = isFreeShipping ? 0 : 25;
+  const shippingCost = getShippingCost(totalPrice);
   const finalTotal = totalPrice + shippingCost;
+  const missingForFreeShipping = getMissingAmountForFreeShipping(totalPrice);
+  const progressRatio = getFreeShippingProgress(totalPrice);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function prefillAccount() {
+      try {
+        const supabase = createClient();
+        const { data } = await supabase.auth.getUser();
+        const user = data.user;
+        if (!user || cancelled) return;
+
+        const fullName =
+          typeof user.user_metadata?.full_name === "string"
+            ? user.user_metadata.full_name
+            : "";
+        const [firstName = "", ...lastNameParts] = fullName.split(" ");
+
+        setAccountEmail(user.email ?? null);
+        setFormData((previous) => ({
+          ...previous,
+          email: previous.email || user.email || "",
+          firstName: previous.firstName || firstName,
+          lastName: previous.lastName || lastNameParts.join(" "),
+        }));
+      } catch {
+        // Supabase non configuré : le paiement invité reste possible.
+      }
+    }
+
+    prefillAccount();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,118 +111,46 @@ export default function CheckoutPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const generatedOrderNumber = `LC-${new Date().getFullYear()}-${Math.floor(
-        100000 + Math.random() * 900000
-      )}`;
-      setOrderNumber(generatedOrderNumber);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map(({ champagne, quantity }) => ({
+            champagneId: champagne.id,
+            quantity,
+          })),
+          customer: formData,
+        }),
+      });
 
-      // Enregistrer la commande dans le localStorage pour l'historique client
-      const newOrder = {
-        id: generatedOrderNumber,
-        createdAt: new Date().toISOString(),
-        customerName: `${formData.firstName} ${formData.lastName}`,
-        customerEmail: formData.email,
-        shippingAddress: {
-          street: formData.address,
-          city: formData.city,
-          postalCode: formData.postalCode,
-          country: formData.country,
-        },
-        items: items.map((i) => ({
-          champagneId: i.champagne.id,
-          name: i.champagne.name,
-          house: i.champagne.house,
-          vintage: i.champagne.vintage,
-          price: i.champagne.price,
-          quantity: i.quantity,
-          imageUrl: i.champagne.imageUrl,
-        })),
-        totalAmount: finalTotal,
-        status: "confirmed",
+      const payload = (await response.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
       };
 
-      try {
-        const existing = JSON.parse(
-          localStorage.getItem("la_cave_orders") || "[]"
+      if (!response.ok || !payload.url) {
+        throw new Error(
+          payload.error ??
+            "Le paiement n'a pas pu être initialisé. Veuillez réessayer."
         );
-        localStorage.setItem(
-          "la_cave_orders",
-          JSON.stringify([newOrder, ...existing])
-        );
-      } catch {
-        // ignore
       }
 
-      clearCart();
+      window.location.assign(payload.url);
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Une erreur est survenue pendant la préparation du paiement."
+      );
       setIsSubmitting(false);
-      setOrderConfirmed(true);
-    }, 1200);
+    }
   };
-
-  if (orderConfirmed) {
-    return (
-      <div className="luxury-page min-h-[80vh] flex items-center justify-center py-20 px-6">
-        <div className="max-w-2xl w-full bg-[#121212] border border-[#C5A059]/30 p-8 sm:p-14 text-center space-y-6">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#C5A059]/10 border border-[#C5A059]">
-            <CheckCircle2 className="h-8 w-8 text-[#C5A059]" />
-          </div>
-
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#C5A059] font-medium block">
-            Allocation Confirmée
-          </span>
-
-          <h1 className="font-serif text-3xl sm:text-4xl text-[#FCFBF9] font-light">
-            Merci pour votre confiance
-          </h1>
-
-          <p className="text-xs sm:text-sm text-neutral-300 max-w-lg mx-auto leading-relaxed">
-            Votre commande n° <strong className="text-[#C5A059] font-mono">{orderNumber}</strong>{" "}
-            a été transmise à notre maître de chai. Vos flacons sont préparés
-            sous scellé dans nos emballages isothermes haute protection.
-          </p>
-
-          <div className="p-4 bg-[#181818] border border-white/5 text-xs text-neutral-400 max-w-md mx-auto text-left space-y-1.5">
-            <div className="flex justify-between">
-              <span>Destinataire :</span>
-              <strong className="text-neutral-200">
-                {formData.firstName} {formData.lastName}
-              </strong>
-            </div>
-            <div className="flex justify-between">
-              <span>Lieu de livraison :</span>
-              <span className="text-neutral-200">
-                {formData.address}, {formData.postalCode} {formData.city}
-              </span>
-            </div>
-            <div className="flex justify-between pt-1 border-t border-white/5 font-serif text-sm">
-              <span>Montant réglé :</span>
-              <strong className="text-[#C5A059]">{finalTotal.toFixed(0)} € TTC</strong>
-            </div>
-          </div>
-
-          <div className="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/account"
-              className="bg-[#C5A059] text-[#0A0A0A] px-7 py-3 text-xs uppercase tracking-widest font-semibold hover:bg-[#DFC282] transition-colors"
-            >
-              Consulter mon historique
-            </Link>
-            <Link
-              href="/champagnes"
-              className="border border-white/20 px-7 py-3 text-xs uppercase tracking-widest text-neutral-300 hover:text-white transition-colors"
-            >
-              Retourner à la collection
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (items.length === 0) {
     return (
@@ -157,7 +160,8 @@ export default function CheckoutPage() {
             Votre panier est actuellement vide
           </h1>
           <p className="text-xs text-neutral-400">
-            Veuillez sélectionner au moins une cuvée avant de passer votre commande.
+            Veuillez sélectionner au moins une cuvée avant de passer votre
+            commande.
           </p>
           <div className="pt-4">
             <Link
@@ -175,7 +179,6 @@ export default function CheckoutPage() {
   return (
     <div className="luxury-page min-h-screen py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-neutral-400">
           <Link
             href="/champagnes"
@@ -188,9 +191,18 @@ export default function CheckoutPage() {
           <span className="text-[#C5A059]">Validation de Commande</span>
         </nav>
 
-        <h1 className="font-serif text-3xl sm:text-4xl text-[#FCFBF9] font-light mb-10">
+        <h1 className="font-serif text-3xl sm:text-4xl text-[#FCFBF9] font-light mb-4">
           Finalisation de votre Acquisition
         </h1>
+
+        <p className="text-xs text-neutral-400 mb-10 max-w-2xl">
+          Après validation, vous serez redirigé vers la page de paiement sécurisée
+          Stripe. Aucune donnée bancaire ne transite par nos serveurs.
+        </p>
+
+        <Suspense fallback={null}>
+          <PaymentCancelledNotice />
+        </Suspense>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left: Form */}
@@ -203,32 +215,44 @@ export default function CheckoutPage() {
                     1. Coordonnées &amp; Contact
                   </h2>
                   <span className="text-[10px] uppercase tracking-widest text-[#C5A059]">
-                    Compte Privilège
+                    {accountEmail ? "Compte Privilège" : "Commande Invité"}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                    <label
+                      htmlFor="firstName"
+                      className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                    >
                       Prénom
                     </label>
                     <input
+                      id="firstName"
                       type="text"
                       name="firstName"
+                      autoComplete="given-name"
                       required
+                      maxLength={80}
                       value={formData.firstName}
                       onChange={handleChange}
                       className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                    <label
+                      htmlFor="lastName"
+                      className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                    >
                       Nom de famille
                     </label>
                     <input
+                      id="lastName"
                       type="text"
                       name="lastName"
+                      autoComplete="family-name"
                       required
+                      maxLength={80}
                       value={formData.lastName}
                       onChange={handleChange}
                       className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
@@ -238,32 +262,65 @@ export default function CheckoutPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                    >
                       Adresse email
                     </label>
                     <input
+                      id="email"
                       type="email"
                       name="email"
+                      autoComplete="email"
                       required
+                      maxLength={254}
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                    <label
+                      htmlFor="phone"
+                      className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                    >
                       Téléphone pour le coursier
                     </label>
                     <input
+                      id="phone"
                       type="tel"
                       name="phone"
+                      autoComplete="tel"
                       required
+                      maxLength={40}
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
                     />
                   </div>
                 </div>
+
+                <p className="text-[11px] text-neutral-500">
+                  {accountEmail ? (
+                    <>
+                      Vous êtes connecté avec{" "}
+                      <span className="text-[#C5A059]">{accountEmail}</span>. La
+                      commande sera automatiquement ajoutée à votre historique.
+                    </>
+                  ) : (
+                    <>
+                      Vous commandez en tant qu&apos;invité.{" "}
+                      <Link
+                        href="/account"
+                        className="text-[#C5A059] underline hover:no-underline"
+                      >
+                        Connectez-vous
+                      </Link>{" "}
+                      pour retrouver ensuite cet achat dans votre historique.
+                    </>
+                  )}
+                </p>
               </div>
 
               {/* Adresse de livraison */}
@@ -278,13 +335,19 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                  <label
+                    htmlFor="address"
+                    className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                  >
                     Adresse postale
                   </label>
                   <input
+                    id="address"
                     type="text"
                     name="address"
+                    autoComplete="street-address"
                     required
+                    maxLength={200}
                     value={formData.address}
                     onChange={handleChange}
                     className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
@@ -293,39 +356,56 @@ export default function CheckoutPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                    <label
+                      htmlFor="postalCode"
+                      className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                    >
                       Code postal
                     </label>
                     <input
+                      id="postalCode"
                       type="text"
                       name="postalCode"
+                      autoComplete="postal-code"
                       required
+                      maxLength={20}
                       value={formData.postalCode}
                       onChange={handleChange}
                       className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                    <label
+                      htmlFor="city"
+                      className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                    >
                       Ville
                     </label>
                     <input
+                      id="city"
                       type="text"
                       name="city"
+                      autoComplete="address-level2"
                       required
+                      maxLength={120}
                       value={formData.city}
                       onChange={handleChange}
                       className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                    <label
+                      htmlFor="country"
+                      className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                    >
                       Pays
                     </label>
                     <input
+                      id="country"
                       type="text"
                       name="country"
-                      disabled
+                      autoComplete="country-name"
+                      readOnly
                       value={formData.country}
                       className="w-full bg-[#181818] border border-white/10 px-4 py-3 text-xs text-neutral-400"
                     />
@@ -333,12 +413,17 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-2">
+                  <label
+                    htmlFor="specialInstructions"
+                    className="block text-xs uppercase tracking-wider text-neutral-400 mb-2"
+                  >
                     Instructions spécifiques de remise
                   </label>
                   <textarea
+                    id="specialInstructions"
                     rows={2}
                     name="specialInstructions"
+                    maxLength={500}
                     value={formData.specialInstructions}
                     onChange={handleChange}
                     className="w-full bg-[#181818] border border-white/10 px-4 py-2.5 text-xs text-neutral-200 focus:outline-none focus:border-[#C5A059]"
@@ -346,19 +431,35 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {/* Validation CTA */}
+              {error && (
+                <div className="flex items-start gap-2 border border-red-500/40 bg-red-950/30 px-4 py-3 text-xs text-red-300">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                  <span>{error}</span>
+                </div>
+              )}
+
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-3 bg-[#C5A059] text-[#0A0A0A] py-4 px-8 text-xs font-semibold uppercase tracking-[0.25em] hover:bg-[#DFC282] transition-colors"
+                className="w-full flex items-center justify-center gap-3 bg-[#C5A059] text-[#0A0A0A] py-4 px-8 text-xs font-semibold uppercase tracking-[0.25em] hover:bg-[#DFC282] transition-colors disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <Lock className="h-4 w-4" />
+                {isSubmitting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Lock className="h-4 w-4" />
+                )}
                 <span>
                   {isSubmitting
-                    ? "Scellement de la commande en cours..."
-                    : `Confirmer la commande • ${finalTotal.toFixed(0)} € TTC`}
+                    ? "Redirection vers Stripe…"
+                    : `Payer avec Stripe • ${formatEuro(finalTotal)} TTC`}
                 </span>
               </button>
+
+              <p className="text-[10px] text-center text-neutral-500 leading-relaxed">
+                En validant, vous acceptez nos conditions de vente. Le paiement est
+                traité par Stripe ; la commande est enregistrée dans votre espace
+                client dès confirmation.
+              </p>
             </form>
           </div>
 
@@ -388,11 +489,11 @@ export default function CheckoutPage() {
                         {champagne.name}
                       </p>
                       <span className="text-[11px] text-neutral-400">
-                        Qté : {quantity} × {champagne.price} €
+                        Qté : {quantity} × {formatEuro(champagne.price)}
                       </span>
                     </div>
                     <span className="text-xs font-mono text-[#C5A059]">
-                      {(champagne.price * quantity).toFixed(0)} €
+                      {formatEuro(champagne.price * quantity)}
                     </span>
                   </div>
                 ))}
@@ -401,11 +502,11 @@ export default function CheckoutPage() {
               <div className="space-y-2 pt-4 border-t border-white/10 text-xs">
                 <div className="flex justify-between text-neutral-300">
                   <span>Sous-total flacons</span>
-                  <span>{totalPrice.toFixed(0)} €</span>
+                  <span>{formatEuro(totalPrice)}</span>
                 </div>
                 <div className="flex justify-between text-neutral-300">
                   <span>Transport isotherme sécurisé</span>
-                  <span>{isFreeShipping ? "Offert" : "25 €"}</span>
+                  <span>{isFreeShipping ? "Offert" : formatEuro(shippingCost)}</span>
                 </div>
                 <div className="flex justify-between text-neutral-400 text-[11px]">
                   <span>Coffrets protecteurs</span>
@@ -413,18 +514,37 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between pt-3 border-t border-white/10 font-serif text-lg text-neutral-100">
                   <span>Total TTC</span>
-                  <span className="text-[#C5A059]">{finalTotal.toFixed(0)} €</span>
+                  <span className="text-[#C5A059]">{formatEuro(finalTotal)}</span>
                 </div>
               </div>
+
+              {!isFreeShipping && (
+                <div className="space-y-2">
+                  <p className="text-[11px] text-neutral-400">
+                    Ajoutez{" "}
+                    <strong className="text-[#C5A059]">
+                      {formatEuro(missingForFreeShipping)}
+                    </strong>{" "}
+                    pour bénéficier de la livraison offerte.
+                  </p>
+                  <div className="h-1.5 w-full bg-[#1e1e1e] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-[#8E733E] via-[#C5A059] to-[#DFC282] transition-all duration-500"
+                      style={{ width: `${progressRatio}%` }}
+                    />
+                  </div>
+                </div>
+              )}
 
               <div className="p-4 bg-[#161616] border border-white/5 text-[11px] text-neutral-400 space-y-2">
                 <div className="flex items-center gap-2 text-neutral-200">
                   <ShieldCheck className="h-4 w-4 text-[#C5A059]" />
-                  <span>Protocole Haute Sécurité</span>
+                  <span>Paiement Haute Sécurité</span>
                 </div>
                 <p className="leading-relaxed">
-                  Chaque flacon fait l&apos;objet d&apos;un contrôle optique avant
-                  scellement. Envoi avec assurance intégrale ad valorem.
+                  Votre paiement est traité par Stripe. Chaque flacon fait
+                  l&apos;objet d&apos;un contrôle optique avant scellement. Envoi
+                  avec assurance intégrale ad valorem.
                 </p>
               </div>
             </div>

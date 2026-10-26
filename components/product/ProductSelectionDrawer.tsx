@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import type { Champagne } from "@/types/champagne";
 import ProductImage from "@/components/product/ProductImage";
 import {
   X,
@@ -18,48 +19,47 @@ import {
 } from "lucide-react";
 
 export default function ProductSelectionDrawer() {
-  const {
-    selectedChampagne,
-    isProductDrawerOpen,
-    closeProductDrawer,
-    addItem,
-  } = useCart();
+  const { selectedChampagne, isProductDrawerOpen } = useCart();
+
+  if (!isProductDrawerOpen || !selectedChampagne) return null;
+
+  // Remount when the selected cuvée changes so quantity/isAdding reset naturally.
+  return (
+    <ProductSelectionDrawerContent
+      key={selectedChampagne.id}
+      selectedChampagne={selectedChampagne}
+    />
+  );
+}
+
+function ProductSelectionDrawerContent({
+  selectedChampagne,
+}: {
+  selectedChampagne: Champagne;
+}) {
+  const { addItem, closeProductDrawer } = useCart();
 
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
 
-  // Reset quantity whenever a new champagne is opened
-  useEffect(() => {
-    if (selectedChampagne) {
-      setQuantity(1);
-      setIsAdding(false);
-    }
-  }, [selectedChampagne]);
-
   // Lock body scroll while drawer is open
   useEffect(() => {
-    if (isProductDrawerOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isProductDrawerOpen]);
+  }, []);
 
   // Keyboard shortcut: ESC to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isProductDrawerOpen) {
+      if (e.key === "Escape") {
         closeProductDrawer();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isProductDrawerOpen, closeProductDrawer]);
-
-  if (!isProductDrawerOpen || !selectedChampagne) return null;
+  }, [closeProductDrawer]);
 
   const handleIncrement = () => setQuantity((q) => q + 1);
   const handleDecrement = () => setQuantity((q) => Math.max(1, q - 1));

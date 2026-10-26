@@ -63,8 +63,34 @@ export interface CartItem {
   quantity: number;
 }
 
+export type OrderStatus =
+  | "pending"
+  | "confirmed"
+  | "preparing"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
+
+export type PaymentStatus =
+  | "unpaid"
+  | "processing"
+  | "paid"
+  | "failed"
+  | "refunded";
+
+export interface OrderItem {
+  champagneId: string;
+  name: string;
+  house: string;
+  vintage: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+}
+
 export interface Order {
   id: string;
+  orderNumber?: string;
   userId?: string;
   customerName: string;
   customerEmail: string;
@@ -74,19 +100,18 @@ export interface Order {
     city: string;
     postalCode: string;
     country: string;
+    specialInstructions?: string;
   };
-  items: {
-    champagneId: string;
-    name: string;
-    house: string;
-    vintage: string;
-    price: number;
-    quantity: number;
-    imageUrl: string;
-  }[];
+  items: OrderItem[];
+  subtotalAmount?: number;
+  shippingAmount?: number;
   totalAmount: number;
-  status: "pending" | "confirmed" | "preparing" | "shipped" | "delivered";
+  currency?: string;
+  status: OrderStatus;
+  paymentStatus?: PaymentStatus;
+  stripeSessionId?: string;
   createdAt: string;
+  paidAt?: string | null;
 }
 
 export interface AdminKPIs {
