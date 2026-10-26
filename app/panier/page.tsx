@@ -35,6 +35,8 @@ export default function CartPage() {
     totalPrice,
     totalCount,
     addItem,
+    isAuthenticated,
+    isAuthReady,
   } = useCart();
 
   const isFreeShipping = totalPrice >= FREE_SHIPPING_THRESHOLD;
@@ -79,11 +81,23 @@ export default function CartPage() {
                 Votre Sélection de Champagnes
               </h1>
             </div>
-            {items.length > 0 && (
-              <p className="text-xs text-neutral-400 font-mono tracking-wider">
-                {totalCount} {totalCount > 1 ? "flacons retenus" : "flacon retenu"}
-              </p>
-            )}
+            <div className="flex flex-col items-start sm:items-end gap-2">
+              {items.length > 0 && (
+                <p className="text-xs text-neutral-400 font-mono tracking-wider">
+                  {totalCount} {totalCount > 1 ? "flacons retenus" : "flacon retenu"}
+                </p>
+              )}
+              {isAuthReady && (
+                <Link
+                  href="/account"
+                  className="text-[10px] uppercase tracking-[0.14em] text-[#C5A059] hover:text-[#DFC282] transition-colors"
+                >
+                  {isAuthenticated
+                    ? "Panier lié à votre compte · Mon compte"
+                    : "Connectez-vous pour retrouver ce panier sur votre compte"}
+                </Link>
+              )}
+            </div>
           </div>
         </div>
 

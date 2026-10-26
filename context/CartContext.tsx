@@ -34,11 +34,14 @@ interface CartContextType {
   closeProductDrawer: () => void;
   // Feedback badge animation in navbar
   isBadgeAnimating: boolean;
+  isAuthenticated: boolean;
+  isAuthReady: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const STORAGE_KEY = "la_cave_cart_items";
+const STORAGE_PREFIX = `${STORAGE_KEY}:`;
 
 let listeners: Array<() => void> = [];
 
@@ -49,10 +52,10 @@ function emitChange() {
 }
 
 const cartStore = {
-  getSnapshot(): string {
+  getSnapshot(scope: string): string {
     if (typeof window === "undefined") return "[]";
     try {
-      return localStorage.getItem(STORAGE_KEY) || "[]";
+      return localStorage.getItem(`${STORAGE_PREFIX}${scope}`) || "[]";
     } catch {
       return "[]";
     }
@@ -66,10 +69,10 @@ const cartStore = {
       listeners = listeners.filter((l) => l !== listener);
     };
   },
-  save(items: CartItem[]) {
+  save(items: CartItem[], scope: string) {
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        localStorage.setItem(`${STORAGE_PREFIX}${scope}`, JSON.stringify(items));
       } catch {
         // ignore
       }
@@ -85,15 +88,68 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [selectedChampagne, setSelectedChampagne] = useState<Champagne | null>(null);
   const [isProductDrawerOpen, setIsProductDrawerOpen] = useState(false);
   const [isBadgeAnimating, setIsBadgeAnimating] = useState(false);
+  const [cartScope, setCartScope] = useState("guest");
+  const [authReady, setAuthReady] = useState(false);
+  const isAuthenticated = cartScope.startsWith("user:");
 
   const badgeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Sync state cleanly with external store without set-state-in-effect
+  const getSnapshot = useCallback(() => cartStore.getSnapshot(cartScope), [cartScope]);
   const rawItems = useSyncExternalStore(
     cartStore.subscribe,
-    cartStore.getSnapshot,
+    getSnapshot,
     cartStore.getServerSnapshot
   );
+
+  useEffect(() => {
+    const supabase = createClient();
+    let active = true;
+    let authEventReceived = false;
+
+    const activateScope = (userId: string | null) => {
+      if (!active) return;
+      const nextScope = userId ? `user:${userId}` : "guest";
+      try {
+        const legacyCart = localStorage.getItem(STORAGE_KEY);
+        if (legacyCart) {
+          const targetKey = `${STORAGE_PREFIX}${nextScope}`;
+          const existing = JSON.parse(localStorage.getItem(targetKey) || "[]") as CartItem[];
+          const legacy = JSON.parse(legacyCart) as CartItem[];
+          const merged = new Map<string, CartItem>();
+          for (const item of [...existing, ...legacy]) {
+            const current = merged.get(item.champagne.id);
+            merged.set(item.champagne.id, {
+              ...item,
+              quantity: (current?.quantity ?? 0) + item.quantity,
+            });
+          }
+          localStorage.setItem(targetKey, JSON.stringify([...merged.values()]));
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      } catch {
+        // Keep the current account usable if legacy browser storage is malformed.
+      }
+      setCartScope(nextScope);
+      setAuthReady(true);
+      emitChange();
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      authEventReceived = true;
+      activateScope(session?.user.id ?? null);
+    });
+    supabase.auth.getSession().then(({ data }) => {
+      if (!authEventReceived) activateScope(data.session?.user.id ?? null);
+    }).catch(() => {
+      if (!authEventReceived) activateScope(null);
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   const items: CartItem[] = useMemo(() => {
     try {
@@ -128,16 +184,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!isCatalogLoaded) return;
+    if (!isCatalogLoaded || !authReady) return;
     const catalogById = new Map(catalog.map((champagne) => [champagne.id, champagne]));
     const synchronizedItems = items.flatMap((item) => {
       const currentProduct = catalogById.get(item.champagne.id);
       return currentProduct ? [{ ...item, champagne: currentProduct }] : [];
     });
     if (JSON.stringify(synchronizedItems) !== JSON.stringify(items)) {
-      cartStore.save(synchronizedItems);
+      cartStore.save(synchronizedItems, cartScope);
     }
-  }, [catalog, isCatalogLoaded, items]);
+  }, [catalog, isCatalogLoaded, authReady, cartScope, items]);
 
   const openProductDrawer = useCallback((champagne: Champagne) => {
     setSelectedChampagne(champagne);
@@ -166,7 +222,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       } else {
         updated = [...current, { champagne, quantity }];
       }
-      cartStore.save(updated);
+      cartStore.save(updated, cartScope);
 
       // Trigger badge animation in Navbar
       setIsBadgeAnimating(true);
@@ -179,15 +235,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         setIsCartOpen(true);
       }
     },
-    [items]
+    [items, cartScope]
   );
 
   const removeItem = useCallback(
     (champagneId: string) => {
       const updated = items.filter((i) => i.champagne.id !== champagneId);
-      cartStore.save(updated);
+      cartStore.save(updated, cartScope);
     },
-    [items]
+    [items, cartScope]
   );
 
   const updateQuantity = useCallback(
@@ -199,14 +255,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const updated = items.map((i) =>
         i.champagne.id === champagneId ? { ...i, quantity } : i
       );
-      cartStore.save(updated);
+      cartStore.save(updated, cartScope);
     },
-    [items, removeItem]
+    [items, removeItem, cartScope]
   );
 
   const clearCart = useCallback(() => {
-    cartStore.save([]);
-  }, []);
+    cartStore.save([], cartScope);
+  }, [cartScope]);
 
   const totalCount = useMemo(
     () => items.reduce((acc, curr) => acc + curr.quantity, 0),
@@ -242,6 +298,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         openProductDrawer,
         closeProductDrawer,
         isBadgeAnimating,
+        isAuthenticated,
+        isAuthReady: authReady,
       }}
     >
       {children}
