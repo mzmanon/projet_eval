@@ -1,5 +1,6 @@
-const FALLBACK_SUPABASE_URL = "https://placeholder-project.supabase.co";
-const FALLBACK_SUPABASE_ANON_KEY = "placeholder-anon-key";
+const FALLBACK_SUPABASE_URL = "https://svkhmjdewifbhwfyomwd.supabase.co";
+// Supabase publishable keys are public by design; table access remains governed by RLS.
+const FALLBACK_SUPABASE_ANON_KEY = "sb_publishable_V4YUMUK-bGOF-w4XiMrKhQ_d_glRL27";
 
 export interface SupabasePublicConfig {
   url: string;
@@ -8,21 +9,16 @@ export interface SupabasePublicConfig {
 }
 
 export function getSupabasePublicConfig(): SupabasePublicConfig {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || "";
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || FALLBACK_SUPABASE_URL;
   const anonKey =
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim() ||
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() ||
-    "";
+    FALLBACK_SUPABASE_ANON_KEY;
 
   return {
     url: url || FALLBACK_SUPABASE_URL,
     anonKey: anonKey || FALLBACK_SUPABASE_ANON_KEY,
-    configured: Boolean(
-      url &&
-        anonKey &&
-        !url.includes("placeholder-project") &&
-        anonKey !== FALLBACK_SUPABASE_ANON_KEY
-    ),
+    configured: Boolean(url && anonKey && !url.includes("placeholder-project")),
   };
 }
 
