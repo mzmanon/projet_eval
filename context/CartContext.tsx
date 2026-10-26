@@ -5,14 +5,19 @@ import React, {
   useContext,
   useState,
   useSyncExternalStore,
+  useEffect,
   useMemo,
   useCallback,
   useRef,
 } from "react";
 import { Champagne, CartItem } from "@/types/champagne";
+import { createClient } from "@/lib/supabase/client";
+import { mapChampagneRows } from "@/lib/data/champagnesMapper";
 
 interface CartContextType {
   items: CartItem[];
+  catalog: Champagne[];
+  isCatalogLoaded: boolean;
   addItem: (champagne: Champagne, quantity?: number, openCartDrawer?: boolean) => void;
   removeItem: (champagneId: string) => void;
   updateQuantity: (champagneId: string, quantity: number) => void;
@@ -75,6 +80,8 @@ const cartStore = {
 };
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const [catalog, setCatalog] = useState<Champagne[]>([]);
+  const [isCatalogLoaded, setIsCatalogLoaded] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedChampagne, setSelectedChampagne] = useState<Champagne | null>(null);
   const [isProductDrawerOpen, setIsProductDrawerOpen] = useState(false);
@@ -96,6 +103,58 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return [];
     }
   }, [rawItems]);
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadCatalog() {
+      try {
+        const { data, error } = await createClient()
+          .from("champagnes")
+          .select("*")
+          .order("name", { ascending: true });
+
+        if (!active) return;
+        if (error) {
+          console.error(
+            "Impossible de synchroniser le catalogue du panier:",
+            error.message
+          );
+          return;
+        }
+
+        setCatalog(mapChampagneRows(data ?? []));
+        setIsCatalogLoaded(true);
+      } catch (error) {
+        if (active) {
+          console.error("Impossible de joindre le catalogue Supabase:", error);
+        }
+      }
+    }
+
+    void loadCatalog();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isCatalogLoaded) return;
+
+    const champagneBySlug = new Map(
+      catalog.map((champagne) => [champagne.slug, champagne])
+    );
+    const synchronizedItems = items.flatMap((item) => {
+      const currentChampagne = champagneBySlug.get(item.champagne.slug);
+      return currentChampagne
+        ? [{ ...item, champagne: currentChampagne }]
+        : [];
+    });
+
+    if (JSON.stringify(synchronizedItems) !== JSON.stringify(items)) {
+      cartStore.save(synchronizedItems);
+    }
+  }, [catalog, isCatalogLoaded, items]);
 
   const openProductDrawer = useCallback((champagne: Champagne) => {
     setSelectedChampagne(champagne);
@@ -184,6 +243,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     <CartContext.Provider
       value={{
         items,
+        catalog,
+        isCatalogLoaded,
         addItem,
         removeItem,
         updateQuantity,

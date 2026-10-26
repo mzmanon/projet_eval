@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, ShieldCheck, ShoppingBag, Wine } from "lucide-react";
-import { getFeaturedChampagnes } from "@/lib/data/champagnes";
+import { getChampagnesFromDatabase } from "@/lib/data/champagnesRepository";
 import ChampagneCard from "@/components/product/ChampagneCard";
 
-export default function Home() {
-  const featured = getFeaturedChampagnes().slice(0, 3);
+export default async function Home() {
+  const featured = (await getChampagnesFromDatabase())
+    .filter((champagne) => champagne.isFeatured)
+    .slice(0, 3);
 
   return (
     <main className="page-shell overflow-hidden">
