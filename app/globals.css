@@ -122,13 +122,13 @@ textarea {
 .button-ink {
   background: var(--surface-strong);
   border-color: var(--surface-strong);
-  color: var(--on-strong);
+  color: var(--surface-subtle);
 }
 
 .button-ink:hover {
   background: var(--champagne);
   border-color: var(--champagne);
-  color: var(--on-strong);
+  color: var(--surface-subtle);
 }
 
 .button-gold {
@@ -138,7 +138,7 @@ textarea {
 
 .button-gold:hover {
   background: var(--ink);
-  color: var(--paper);
+  color: var(--surface-subtle);
 }
 
 /* Legacy page markup is kept functional while the palette is unified. */
@@ -183,6 +183,7 @@ html:not([data-theme="dark"]):not(.dark) .product-card {
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#FCFBF9]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#FCFBF8]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#F7F5F0]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#171715]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#14150F]"],
@@ -191,7 +192,7 @@ html:not([data-theme="dark"]):not(.dark) .product-card {
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-neutral-200"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-neutral-300"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-white"] {
-  color: var(--ink) !important;
+  color: var(--surface-strong) !important;
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#827D75]"],
@@ -213,9 +214,8 @@ html:not([data-theme="dark"]):not(.dark) .product-card {
   color: var(--champagne) !important;
 }
 
-:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#2E4636]"],
-:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#2F6B45]"] {
-  color: var(--ink) !important;
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#2E4636]"] {
+  color: var(--surface-strong) !important;
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#C5A059]"],
@@ -224,7 +224,7 @@ html:not([data-theme="dark"]):not(.dark) .product-card {
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#0A0A0A]"] {
-  color: var(--on-strong) !important;
+  color: var(--surface-subtle) !important;
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) [class*="border-white/"],
@@ -256,7 +256,7 @@ html:not([data-theme="dark"]):not(.dark) .product-card {
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) .hover\:text-white:hover {
-  color: var(--ink) !important;
+  color: var(--surface-strong) !important;
 }
 
 .cart-panel {
