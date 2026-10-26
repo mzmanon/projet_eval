@@ -127,7 +127,7 @@ function ProductSelectionDrawerContent({
               </span>
             )}
             {selectedChampagne.score && (
-              <span className="absolute top-3 right-3 z-10 bg-[#1D1D1D]/90 backdrop-blur-sm border border-[#C5A059]/30 text-neutral-200 text-[11px] font-mono px-2 py-1">
+              <span className="absolute top-3 right-3 z-10 text-neutral-200 text-[11px] font-mono px-2 py-1">
                 Note : {selectedChampagne.score}/100
               </span>
             )}
@@ -165,10 +165,10 @@ function ProductSelectionDrawerContent({
 
             {/* Badges / Terroir & Vintage */}
             <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-neutral-300">
-              <span className="bg-[#1A1A1A] border border-white/10 px-2.5 py-0.5 font-mono">
+              <span className="px-2.5 py-0.5 font-mono">
                 {selectedChampagne.vintage}
               </span>
-              <span className="bg-[#1A1A1A] border border-white/10 px-2.5 py-0.5">
+              <span className="px-2.5 py-0.5">
                 {selectedChampagne.dosage}
               </span>
               <span className="text-neutral-400 text-xs">
@@ -246,7 +246,7 @@ function ProductSelectionDrawerContent({
               </div>
 
               {/* Quantity Counter */}
-              <div className="flex items-center border border-white/20 bg-[#0E0E0E]">
+              <div className="flex items-center">
                 <button
                   type="button"
                   onClick={handleDecrement}
@@ -289,7 +289,7 @@ function ProductSelectionDrawerContent({
                   className={`text-[11px] py-1 px-2.5 rounded-xs transition-colors ${
                     selectedQuantity === count
                       ? "bg-[#C5A059] text-[#0A0A0A] font-semibold"
-                      : "bg-[#222222] text-neutral-300 hover:bg-[#2A2A2A]"
+                      : "text-neutral-300"
                   }`}
                 >
                   {label}
