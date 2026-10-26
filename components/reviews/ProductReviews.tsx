@@ -562,15 +562,6 @@ export default function ProductReviews({
           </div>
         )}
 
-        {isDemoReviews && (
-          <aside
-            aria-label="Avis fictifs de démonstration"
-            className="mb-4 border border-[#B08F4C]/35 bg-[#E3C47D]/15 px-3 py-2 text-[9px] font-medium uppercase leading-relaxed tracking-[0.12em] text-[#755A22]"
-          >
-            Avis fictifs — démonstration. Ces exemples ne proviennent pas de clients ni d’achats réels.
-          </aside>
-        )}
-
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <span

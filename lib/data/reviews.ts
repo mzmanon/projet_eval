@@ -9,7 +9,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-moet-ice-1",
     champagneSlug: "moet-et-chandon-ice-imperial",
-    author: "Avis fictif 01",
+    author: "Camille Bertrand",
     rating: 5,
     title: "Une dégustation estivale",
     message: "Servi bien frais, il offre une bouche ample et fruitée. Une cuvée agréable pour un moment convivial.",
@@ -20,7 +20,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-moet-ice-2",
     champagneSlug: "moet-et-chandon-ice-imperial",
-    author: "Avis fictif 02",
+    author: "Élodie Roussel",
     rating: 4,
     title: "Rond et généreux",
     message: "Le profil est gourmand et facile à apprécier. J’ai aimé sa fraîcheur en fin de bouche.",
@@ -31,7 +31,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-veuve-rich-1",
     champagneSlug: "veuve-clicquot-rich",
-    author: "Avis fictif 03",
+    author: "Antoine Morel",
     rating: 5,
     title: "Expressif et gourmand",
     message: "Une cuvée expressive, aux notes fruitées et à la texture souple. Elle accompagne bien un apéritif.",
@@ -42,7 +42,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-veuve-rich-2",
     champagneSlug: "veuve-clicquot-rich",
-    author: "Avis fictif 04",
+    author: "Sophie Lambert",
     rating: 4,
     title: "Une belle rondeur",
     message: "La douceur est présente sans effacer les arômes. Un champagne original à servir bien frais.",
@@ -53,7 +53,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-perrier-jouet-1",
     champagneSlug: "perrier-jouet-grand-brut",
-    author: "Avis fictif 05",
+    author: "Isabelle Nadeau",
     rating: 5,
     title: "Fin et floral",
     message: "Une effervescence délicate et un joli bouquet floral. Très agréable à l’apéritif.",
@@ -64,7 +64,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-perrier-jouet-2",
     champagneSlug: "perrier-jouet-grand-brut",
-    author: "Avis fictif 06",
+    author: "Jean-Baptiste Clément",
     rating: 4,
     title: "Équilibré et frais",
     message: "Un style harmonieux, avec une finale fraîche. Il reste élégant sans être austère.",
@@ -75,7 +75,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-laurent-rose-1",
     champagneSlug: "laurent-perrier-cuvee-rose",
-    author: "Avis fictif 07",
+    author: "Léa Perrin",
     rating: 5,
     title: "Un rosé délicat",
     message: "Le fruit rouge est expressif et la bouche reste fraîche. Une cuvée à la fois charmeuse et précise.",
@@ -86,7 +86,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-laurent-rose-2",
     champagneSlug: "laurent-perrier-cuvee-rose",
-    author: "Avis fictif 08",
+    author: "Marion Leclerc",
     rating: 4,
     title: "Belle expression fruitée",
     message: "Une robe séduisante, des arômes de fruits rouges et une finale nette. Un rosé de caractère.",
@@ -97,7 +97,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-veuve-yellow-1",
     champagneSlug: "veuve-clicquot-yellow-label",
-    author: "Avis fictif 09",
+    author: "Hugo Marchand",
     rating: 5,
     title: "Un classique équilibré",
     message: "Un profil fruité et une belle vivacité. La cuvée se montre généreuse tout en gardant de la fraîcheur.",
@@ -108,7 +108,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-veuve-yellow-2",
     champagneSlug: "veuve-clicquot-yellow-label",
-    author: "Avis fictif 10",
+    author: "Claire Dufour",
     rating: 4,
     title: "Franc et convivial",
     message: "Un champagne expressif, facile à servir à table comme à l’apéritif. Bonne persistance.",
@@ -119,7 +119,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-moet-brut-1",
     champagneSlug: "moet-et-chandon-brut-imperial",
-    author: "Avis fictif 11",
+    author: "Thomas Renard",
     rating: 5,
     title: "L’élégance du Brut Impérial",
     message: "Des arômes de fruits mûrs et une bouche équilibrée. Une cuvée festive qui reste raffinée.",
@@ -130,7 +130,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-moet-brut-2",
     champagneSlug: "moet-et-chandon-brut-imperial",
-    author: "Avis fictif 12",
+    author: "Alice Garnier",
     rating: 4,
     title: "Un bel équilibre",
     message: "La fraîcheur accompagne bien les notes de pomme et de brioche. Une valeur sûre pour une réception.",
@@ -141,7 +141,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-veuve-vintage-1",
     champagneSlug: "veuve-clicquot-vintage-rose",
-    author: "Avis fictif 13",
+    author: "Julien Moreau",
     rating: 5,
     title: "Un rosé de caractère",
     message: "Une matière ample, de beaux arômes de fruits rouges et une finale longue. Une cuvée de repas.",
@@ -152,7 +152,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-veuve-vintage-2",
     champagneSlug: "veuve-clicquot-vintage-rose",
-    author: "Avis fictif 14",
+    author: "Chloé Vincent",
     rating: 4,
     title: "Structuré et élégant",
     message: "Le fruit est bien soutenu par une structure sérieuse. J’ai apprécié sa longueur et son équilibre.",
@@ -163,7 +163,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-taittinger-1",
     champagneSlug: "taittinger-brut-reserve",
-    author: "Avis fictif 15",
+    author: "Olivier Fabre",
     rating: 5,
     title: "Finesse et fraîcheur",
     message: "Les notes délicates de fruits et de miel s’accompagnent de bulles fines. Très harmonieux.",
@@ -174,7 +174,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-taittinger-2",
     champagneSlug: "taittinger-brut-reserve",
-    author: "Avis fictif 16",
+    author: "Manon Girard",
     rating: 4,
     title: "Un brut réserve classique",
     message: "Un champagne équilibré et frais, agréable à l’apéritif. La finale est nette et discrète.",
@@ -185,7 +185,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-nicolas-1",
     champagneSlug: "nicolas-feuillatte-reserve-exclusive-brut",
-    author: "Avis fictif 17",
+    author: "Vincent Petit",
     rating: 5,
     title: "Très bon rapport plaisir-prix",
     message: "Un brut frais et fruité, avec assez de relief pour accompagner un repas. Une cuvée plaisante.",
@@ -196,7 +196,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-nicolas-2",
     champagneSlug: "nicolas-feuillatte-reserve-exclusive-brut",
-    author: "Avis fictif 18",
+    author: "Anaïs Laurent",
     rating: 4,
     title: "Frais et accessible",
     message: "Une bouche franche et des arômes agréables. Facile à partager lors d’un dîner entre amis.",
@@ -207,7 +207,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-ruinart-1",
     champagneSlug: "ruinart-blanc-de-blancs",
-    author: "Avis fictif 19",
+    author: "Paul Mercier",
     rating: 5,
     title: "Chardonnay lumineux",
     message: "Une bouche fraîche et ample, portée par des notes d’agrumes. La finale saline prolonge bien la dégustation.",
@@ -218,7 +218,7 @@ const DEMO_REVIEWS: DemoReview[] = [
   {
     id: "demo-ruinart-2",
     champagneSlug: "ruinart-blanc-de-blancs",
-    author: "Avis fictif 20",
+    author: "Julie Bernard",
     rating: 4,
     title: "Élégant et précis",
     message: "Des arômes fins et une texture délicate. Une cuvée qui accompagne avec élégance un repas léger.",
