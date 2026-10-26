@@ -97,10 +97,10 @@ function ProductSelectionDrawerContent({
         role="dialog"
         aria-modal="true"
         aria-labelledby="product-drawer-title"
-        className="cart-panel relative z-10 flex h-full w-full max-w-lg lg:max-w-xl flex-col bg-[#0F0F0F] border-l border-[#C5A059]/25 text-[#FCFBF9] shadow-2xl transition-transform duration-500 animate-in slide-in-from-right"
+        className="cart-panel relative z-10 flex h-full w-full max-w-lg lg:max-w-xl flex-col bg-[#0F0F0F] border-l border-[var(--line)] text-[#FCFBF9] shadow-2xl transition-transform duration-500 animate-in slide-in-from-right"
       >
         {/* Header with Title and Close Button */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-5 bg-[#141414]">
+        <div className="flex items-center justify-between border-b border-[var(--line)] px-6 py-5 bg-[var(--surface-subtle)]">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-[#C5A059]" />
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#C5A059] font-medium">
@@ -120,7 +120,7 @@ function ProductSelectionDrawerContent({
         {/* Scrollable Content Body */}
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
           {/* Authentic Packshot Display */}
-          <div className="relative h-64 sm:h-72 w-full bg-[#161616] border border-white/5 p-4 rounded-sm flex items-center justify-center overflow-hidden">
+          <div className="relative h-64 sm:h-72 w-full bg-[var(--surface-subtle)] border border-[var(--line)] p-4 rounded-sm flex items-center justify-center overflow-hidden">
             {selectedChampagne.isRare && (
               <span className="absolute top-3 left-3 z-10 bg-[#C5A059] text-[#0A0A0A] text-[9px] uppercase tracking-[0.2em] font-semibold px-2 py-0.5">
                 Cuvée Rare
@@ -177,7 +177,7 @@ function ProductSelectionDrawerContent({
             </div>
 
             {/* Unit Price */}
-            <div className="mt-4 flex items-baseline justify-between border-y border-white/10 py-3">
+            <div className="mt-4 flex items-baseline justify-between border-y border-[var(--line)] py-3">
               <span className="text-xs uppercase tracking-wider text-neutral-400">
                 Prix unitaire
               </span>
@@ -201,7 +201,7 @@ function ProductSelectionDrawerContent({
 
           {/* Tasting Notes & Oenology */}
           {selectedChampagne.tastingNotes && (
-            <div className="bg-[#141414] border border-white/5 p-4 rounded-sm space-y-3">
+            <div className="bg-[var(--surface-subtle)] border border-[var(--line)] p-4 rounded-sm space-y-3">
               <h4 className="text-[11px] uppercase tracking-[0.2em] text-neutral-200 font-medium">
                 Profil &amp; Dégustation
               </h4>
@@ -224,7 +224,7 @@ function ProductSelectionDrawerContent({
                   </div>
                 )}
                 {selectedChampagne.tastingNotes.service && (
-                  <div className="flex items-center gap-1.5 text-neutral-400 pt-1 border-t border-white/5 text-[11px]">
+                  <div className="flex items-center gap-1.5 text-neutral-400 pt-1 border-t border-[var(--line)] text-[11px]">
                     <Thermometer className="h-3.5 w-3.5 text-[#C5A059]" />
                     <span>Service conseillé : {selectedChampagne.tastingNotes.service}</span>
                   </div>
@@ -234,7 +234,7 @@ function ProductSelectionDrawerContent({
           )}
 
           {/* Quantity Selection Section ("choisir le nombre de champagne qu'il souhaite prendre") */}
-          <div className="border border-[#C5A059]/30 bg-[#161616] p-5 rounded-sm space-y-4">
+          <div className="border border-[color:var(--champagne)]/30 bg-[var(--surface-subtle)] p-5 rounded-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs uppercase tracking-[0.2em] text-[#FCFBF9] font-medium block">
@@ -273,7 +273,7 @@ function ProductSelectionDrawerContent({
             </div>
 
             {/* Quick shortcuts for collectors */}
-            <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+            <div className="flex items-center gap-2 pt-2 border-t border-[var(--line)]">
               <span className="text-[10px] uppercase tracking-wider text-neutral-400 mr-1">
                 Lots :
               </span>
@@ -320,7 +320,7 @@ function ProductSelectionDrawerContent({
         </div>
 
         {/* Sticky Bottom Action Bar with "Ajouter au panier" */}
-        <div className="border-t border-white/10 bg-[#121212] p-5 sm:p-6 space-y-3 shadow-2xl">
+        <div className="border-t border-[var(--line)] bg-[var(--surface)] p-5 sm:p-6 space-y-3 shadow-2xl">
           <button
             onClick={handleAddToCart}
             disabled={isAdding}
