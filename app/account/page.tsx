@@ -318,11 +318,17 @@ export default function AccountPage() {
           throw new Error("Veuillez renseigner votre nom complet.");
         }
 
+        const emailRedirectTo =
+          typeof window !== "undefined"
+            ? `${window.location.origin}/auth/callback`
+            : undefined;
+
         const { data, error } = await supabase.auth.signUp({
           email: cleanEmail,
           password: authPassword,
           options: {
             data: { full_name: cleanName },
+            emailRedirectTo,
           },
         });
         if (error) throw error;
