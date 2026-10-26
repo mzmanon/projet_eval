@@ -82,7 +82,7 @@ export default function ChampagneCard({
               <Eye className="h-4 w-4" />
             </button>
             <button
-              onClick={() => addItem(champagne, 1, true)}
+              onClick={() => addItem(champagne, 1)}
               className="flex h-11 w-11 items-center justify-center border border-[#171715] text-[#171715] transition-colors hover:bg-[#171715] hover:text-[#FCFBF8]"
               aria-label={`Ajouter ${champagne.name} au panier`}
             >
