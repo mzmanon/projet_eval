@@ -2,16 +2,16 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --ivory: #f8f7f3;
-  --paper: #fffefb;
-  --surface: #edf1ea;
+  --ivory: #dde8da;
+  --paper: #edf3eb;
+  --surface: #eaf0e6;
   --surface-strong: #344d42;
   --ink: #344d42;
   --taupe: #5d7066;
   --champagne: #b5a078;
-  --line: #d5ddd4;
-  --line-dark: #aebcaf;
-  --on-strong: #f8f7f3;
+  --line: #c6d4c5;
+  --line-dark: #a5b8a5;
+  --on-strong: #edf3eb;
 }
 
 html[data-theme="dark"],
@@ -145,6 +145,13 @@ textarea {
   color: var(--ink);
 }
 
+/* Product frames remain a subtle step above the light green page background. */
+html:not([data-theme="dark"]):not(.dark)
+  :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#ECE8DF]"],
+html:not([data-theme="dark"]):not(.dark) .product-card {
+  background-color: var(--surface) !important;
+}
+
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#0A0A0A]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#0F0F0F]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#111111]"],
@@ -245,6 +252,12 @@ textarea {
   border-color: var(--line) !important;
   box-shadow: -12px 0 36px rgb(20 37 31 / 18%) !important;
   color: var(--ink) !important;
+}
+
+/* Matches the elevated surface already used by client-review panels. */
+html[data-theme="dark"] .product-card-media,
+html.dark .product-card-media {
+  background-color: var(--surface) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
