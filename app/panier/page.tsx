@@ -2,8 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import ProductImage from "@/components/product/ProductImage";
 import { formatPrice } from "@/lib/format-price";
 import {
   FREE_SHIPPING_THRESHOLD,
@@ -154,10 +154,11 @@ export default function CartPage() {
                     >
                       <div className="flex gap-4 items-center">
                         <div className="relative h-24 w-16 bg-[#181818] flex-shrink-0 p-1">
-                          <Image
+                          <ProductImage
                             src={champagne.imageUrl}
                             alt={champagne.name}
-                            fill
+                            house={champagne.house}
+                            name={champagne.name}
                             sizes="64px"
                             className="object-contain"
                           />
@@ -262,10 +263,11 @@ export default function CartPage() {
                           href={`/champagnes/${champagne.slug}`}
                           className="relative h-28 w-20 flex-shrink-0 bg-[#181818] border border-white/5 p-2 rounded-xs group overflow-hidden"
                         >
-                          <Image
+                          <ProductImage
                             src={champagne.imageUrl}
                             alt={`${champagne.house} ${champagne.name}`}
-                            fill
+                            house={champagne.house}
+                            name={champagne.name}
                             sizes="80px"
                             className="object-contain transition-transform duration-500 group-hover:scale-105"
                           />
