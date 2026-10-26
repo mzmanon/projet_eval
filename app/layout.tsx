@@ -34,7 +34,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#F7F5F0] text-[#171715]">
+      <body className="min-h-full flex flex-col bg-[var(--ivory)] text-[var(--ink)]">
         <CartProvider>
           <Navbar />
           <CartDrawer />

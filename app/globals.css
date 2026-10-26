@@ -2,23 +2,30 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --ivory: #f7f5f0;
-  --paper: #fcfbf8;
-  --ink: #171715;
-  --taupe: #827d75;
-  --champagne: #a58c62;
-  --line: #dcd7cd;
-  --line-dark: #c8c1b4;
+  --ivory: #f8f7f3;
+  --paper: #fffefb;
+  --surface: #edf1ea;
+  --surface-strong: #344d42;
+  --ink: #344d42;
+  --taupe: #5d7066;
+  --champagne: #b5a078;
+  --line: #d5ddd4;
+  --line-dark: #aebcaf;
+  --on-strong: #f8f7f3;
 }
 
-html[data-theme="dark"] {
-  --ivory: #141414;
-  --paper: #1c1b19;
-  --ink: #f5f2eb;
-  --taupe: #b5ad9e;
-  --champagne: #c5a059;
-  --line: #37332d;
-  --line-dark: #514a3f;
+html[data-theme="dark"],
+:root.dark {
+  --ivory: #14251f;
+  --paper: #1c332a;
+  --surface: #243d32;
+  --surface-strong: #9db7a4;
+  --ink: #f4f1e9;
+  --taupe: #9db7a4;
+  --champagne: #c5b38e;
+  --line: #486457;
+  --line-dark: #668071;
+  --on-strong: #14251f;
 }
 
 html[data-theme="dark"] body {
@@ -26,43 +33,11 @@ html[data-theme="dark"] body {
   color: var(--ink);
 }
 
-html[data-theme="dark"] header {
-  background-color: rgb(20 20 20 / 95%) !important;
-  color: var(--ink);
-}
-
-html[data-theme="dark"] header nav,
-html[data-theme="dark"] header > div,
-html[data-theme="dark"] header [class*="bg-[#FCFBF8]"] {
-  border-color: var(--line) !important;
-}
-
-html[data-theme="dark"] header [class*="bg-[#FCFBF8]"] {
-  background-color: #1c1b19 !important;
-}
-
-html[data-theme="dark"] header a,
-html[data-theme="dark"] header button {
-  color: #d7c8a6;
-}
-
 @theme inline {
   --color-background: var(--ivory);
   --color-foreground: var(--ink);
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Geist", Arial, sans-serif;
-}
-
-:root.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --ivory: #0f0f0e;
-  --paper: #171715;
-  --ink: #f7f5f0;
-  --taupe: #a8a29e;
-  --champagne: #d4af37;
-  --line: #292826;
-  --line-dark: #3a3835;
 }
 
 html {
@@ -143,13 +118,15 @@ textarea {
 }
 
 .button-ink {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--surface-strong);
+  border-color: var(--surface-strong);
+  color: var(--on-strong);
 }
 
 .button-ink:hover {
   background: var(--champagne);
   border-color: var(--champagne);
+  color: var(--on-strong);
 }
 
 .button-gold {
@@ -168,63 +145,105 @@ textarea {
   color: var(--ink);
 }
 
-:is(.luxury-page, .cart-panel) [class*="bg-[#0A0A0A]"],
-:is(.luxury-page, .cart-panel) [class*="bg-[#0F0F0F]"],
-:is(.luxury-page, .cart-panel) [class*="bg-[#111111]"],
-:is(.luxury-page, .cart-panel) [class*="bg-[#121212]"],
-:is(.luxury-page, .cart-panel) [class*="bg-[#141414]"],
-:is(.luxury-page, .cart-panel) [class*="bg-[#161616]"],
-:is(.luxury-page, .cart-panel) [class*="bg-[#181818]"],
-:is(.luxury-page, .cart-panel) [class*="bg-[#101010]"] {
-  background-color: var(--paper) !important;
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#0A0A0A]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#0F0F0F]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#111111]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#121212]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#141414]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#161616]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#181818]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#1e1e1e]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#101010]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#171715]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-white"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#FBFAF6]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#EFF3E8]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#F1EEE7]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#e9e5dc]"] {
+  background-color: var(--surface) !important;
 }
 
-:is(.luxury-page, .cart-panel) [class*="text-[#FCFBF9]"],
-:is(.luxury-page, .cart-panel) [class*="text-neutral-100"],
-:is(.luxury-page, .cart-panel) [class*="text-neutral-200"],
-:is(.luxury-page, .cart-panel) [class*="text-neutral-300"] {
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#FCFBF9]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#F7F5F0]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#171715]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#14150F]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#22271F]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-neutral-100"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-neutral-200"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-neutral-300"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-white"] {
   color: var(--ink) !important;
 }
 
-:is(.luxury-page, .cart-panel) [class*="text-neutral-400"],
-:is(.luxury-page, .cart-panel) [class*="text-neutral-500"] {
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#827D75]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#59554e]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#565C4E]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#585F50]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#333A2F]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#C8C1B4]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-neutral-400"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-neutral-500"] {
   color: var(--taupe) !important;
 }
 
-:is(.luxury-page, .cart-panel) [class*="text-[#C5A059]"],
-:is(.luxury-page, .cart-panel) [class*="text-[#DFC282]"] {
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#C5A059]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#DFC282]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#A58C62]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#755A22]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#B08F4C]"] {
   color: var(--champagne) !important;
 }
 
-:is(.luxury-page, .cart-panel) [class*="bg-[#C5A059]"] {
-  background-color: var(--ink) !important;
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#2E4636]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#2F6B45]"] {
+  color: var(--ink) !important;
 }
 
-:is(.luxury-page, .cart-panel) [class*="text-[#0A0A0A]"] {
-  color: var(--paper) !important;
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#C5A059]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#E3C47D]"] {
+  background-color: var(--surface-strong) !important;
 }
 
-:is(.luxury-page, .cart-panel) [class*="border-white/"],
-:is(.luxury-page, .cart-panel) [class*="border-[#C5A059]"] {
+:is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#0A0A0A]"] {
+  color: var(--on-strong) !important;
+}
+
+:is(.luxury-page, .page-shell, .cart-panel) [class*="border-white/"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="border-[#C5A059]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="border-[#2E4636]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="border-[#DCD7CD]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="border-[#C8C1B4]"] {
   border-color: var(--line) !important;
 }
 
-:is(.luxury-page, .cart-panel) input,
-:is(.luxury-page, .cart-panel) select,
-:is(.luxury-page, .cart-panel) textarea {
+:is(.luxury-page, .page-shell, .cart-panel) [class*="divide-white/"] > :not(:last-child) {
+  border-color: var(--line) !important;
+}
+
+:is(.luxury-page, .page-shell, .cart-panel) [fill="#A58C62"] {
+  fill: var(--champagne);
+}
+
+:is(.luxury-page, .page-shell, .cart-panel) [stroke="#A58C62"] {
+  stroke: var(--champagne);
+}
+
+:is(.luxury-page, .page-shell, .cart-panel) input,
+:is(.luxury-page, .page-shell, .cart-panel) select,
+:is(.luxury-page, .page-shell, .cart-panel) textarea {
   background: var(--paper) !important;
   border-color: var(--line-dark) !important;
   color: var(--ink) !important;
 }
 
-:is(.luxury-page, .cart-panel) .hover\:text-white:hover {
+:is(.luxury-page, .page-shell, .cart-panel) .hover\:text-white:hover {
   color: var(--ink) !important;
 }
 
 .cart-panel {
   background: var(--paper) !important;
   border-color: var(--line) !important;
-  box-shadow: -12px 0 36px rgba(23, 23, 21, 0.12) !important;
+  box-shadow: -12px 0 36px rgb(20 37 31 / 18%) !important;
   color: var(--ink) !important;
 }
 

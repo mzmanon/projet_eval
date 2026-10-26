@@ -26,15 +26,8 @@ export default function ProductSelectionDrawer() {
   } = useCart();
 
   const [quantity, setQuantity] = useState(1);
+  const [quantityChampagneId, setQuantityChampagneId] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
-
-  // Reset quantity whenever a new champagne is opened
-  useEffect(() => {
-    if (selectedChampagne) {
-      setQuantity(1);
-      setIsAdding(false);
-    }
-  }, [selectedChampagne]);
 
   // Lock body scroll while drawer is open
   useEffect(() => {
@@ -61,12 +54,17 @@ export default function ProductSelectionDrawer() {
 
   if (!isProductDrawerOpen || !selectedChampagne) return null;
 
-  const handleIncrement = () => setQuantity((q) => q + 1);
-  const handleDecrement = () => setQuantity((q) => Math.max(1, q - 1));
+  const selectedQuantity = quantityChampagneId === selectedChampagne.id ? quantity : 1;
+  const setSelectedQuantity = (nextQuantity: number) => {
+    setQuantityChampagneId(selectedChampagne.id);
+    setQuantity(nextQuantity);
+  };
+  const handleIncrement = () => setSelectedQuantity(selectedQuantity + 1);
+  const handleDecrement = () => setSelectedQuantity(Math.max(1, selectedQuantity - 1));
 
   const handleAddToCart = () => {
     setIsAdding(true);
-    addItem(selectedChampagne, quantity, false);
+    addItem(selectedChampagne, selectedQuantity, false);
 
     // Brief confirmation feel before closing drawer so user is returned to their page
     setTimeout(() => {
@@ -75,7 +73,7 @@ export default function ProductSelectionDrawer() {
     }, 250);
   };
 
-  const totalPrice = selectedChampagne.price * quantity;
+  const totalPrice = selectedChampagne.price * selectedQuantity;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -244,7 +242,7 @@ export default function ProductSelectionDrawer() {
                 <button
                   type="button"
                   onClick={handleDecrement}
-                  disabled={quantity <= 1}
+                  disabled={selectedQuantity <= 1}
                   className="flex h-10 w-10 items-center justify-center text-neutral-300 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   aria-label="Diminuer la quantité de 1"
                 >
@@ -252,7 +250,7 @@ export default function ProductSelectionDrawer() {
                 </button>
 
                 <span className="w-12 text-center font-mono text-base font-semibold text-[#FCFBF9]">
-                  {quantity}
+                  {selectedQuantity}
                 </span>
 
                 <button
@@ -279,9 +277,9 @@ export default function ProductSelectionDrawer() {
                 <button
                   key={count}
                   type="button"
-                  onClick={() => setQuantity(count)}
+                  onClick={() => setSelectedQuantity(count)}
                   className={`text-[11px] py-1 px-2.5 rounded-xs transition-colors ${
-                    quantity === count
+                    selectedQuantity === count
                       ? "bg-[#C5A059] text-[#0A0A0A] font-semibold"
                       : "bg-[#222222] text-neutral-300 hover:bg-[#2A2A2A]"
                   }`}
@@ -293,7 +291,7 @@ export default function ProductSelectionDrawer() {
 
             {/* Subtotal summary */}
             <div className="flex items-center justify-between text-xs pt-2 text-neutral-300">
-              <span>Sous-total sélectionné ({quantity} {quantity > 1 ? "flacons" : "flacon"})</span>
+              <span>Sous-total sélectionné ({selectedQuantity} {selectedQuantity > 1 ? "flacons" : "flacon"})</span>
               <span className="font-serif text-lg font-medium text-[#C5A059]">
                 {totalPrice.toFixed(0)} €
               </span>
@@ -319,7 +317,7 @@ export default function ProductSelectionDrawer() {
             onClick={handleAddToCart}
             disabled={isAdding}
             className="flex w-full items-center justify-center gap-3 bg-[#C5A059] text-[#0A0A0A] py-4 px-6 text-xs font-semibold uppercase tracking-[0.2em] hover:bg-[#DFC282] active:scale-[0.99] transition-all duration-300 shadow-xl cursor-pointer disabled:opacity-50"
-            aria-label={`Ajouter ${quantity} flacon(s) au panier`}
+            aria-label={`Ajouter ${selectedQuantity} flacon(s) au panier`}
           >
             {isAdding ? (
               <>
