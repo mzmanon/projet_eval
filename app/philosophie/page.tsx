@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function PhilosophiePage() {
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-20">
+    <div className="luxury-page min-h-screen py-16 sm:py-24">
       <div className="max-w-4xl mx-auto px-6 sm:px-8 space-y-16">
         {/* Header */}
         <div className="text-center space-y-4">
@@ -58,8 +58,8 @@ export default function PhilosophiePage() {
         {/* Image Break */}
         <div className="relative h-72 sm:h-96 w-full bg-[#181818] border border-white/10 overflow-hidden">
           <Image
-            src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80"
-            alt="Dégustation confidentielle de grands crus"
+            src="/cave-crayere.jpg"
+            alt="Crayère de Champagne"
             fill
             className="object-cover"
           />

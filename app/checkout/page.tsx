@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 import { ShieldCheck, Lock, CheckCircle2, ArrowLeft } from "lucide-react";
+import ProductImage from "@/components/product/ProductImage";
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCart();
@@ -91,7 +91,7 @@ export default function CheckoutPage() {
 
   if (orderConfirmed) {
     return (
-      <div className="bg-[#0A0A0A] min-h-[80vh] flex items-center justify-center py-20 px-6">
+      <div className="luxury-page min-h-[80vh] flex items-center justify-center py-20 px-6">
         <div className="max-w-2xl w-full bg-[#121212] border border-[#C5A059]/30 p-8 sm:p-14 text-center space-y-6">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#C5A059]/10 border border-[#C5A059]">
             <CheckCircle2 className="h-8 w-8 text-[#C5A059]" />
@@ -151,7 +151,7 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="bg-[#0A0A0A] min-h-[70vh] flex items-center justify-center py-20 px-6 text-center">
+      <div className="luxury-page min-h-[70vh] flex items-center justify-center py-20 px-6 text-center">
         <div className="space-y-4">
           <h1 className="font-serif text-3xl text-neutral-200 font-light">
             Votre panier est actuellement vide
@@ -173,7 +173,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-16">
+    <div className="luxury-page min-h-screen py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-neutral-400">
@@ -373,11 +373,11 @@ export default function CheckoutPage() {
                 {items.map(({ champagne, quantity }) => (
                   <div key={champagne.id} className="py-3 flex gap-3 items-center">
                     <div className="relative h-16 w-12 flex-shrink-0 bg-[#181818] border border-white/5 p-1">
-                      <Image
+                      <ProductImage
                         src={champagne.imageUrl}
                         alt={champagne.name}
-                        fill
-                        className="object-contain"
+                        house={champagne.house}
+                        name={champagne.name}
                       />
                     </div>
                     <div className="flex-1 min-w-0">

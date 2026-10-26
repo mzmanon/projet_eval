@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useSyncExternalStore, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { CHAMPAGNES } from "@/lib/data/champagnes";
 import { ordersStore } from "@/lib/data/ordersStore";
 import { Champagne, Order } from "@/types/champagne";
+import ProductImage from "@/components/product/ProductImage";
 import {
   ShieldAlert,
   TrendingUp,
@@ -78,7 +78,7 @@ export default function AdminDashboardPage() {
 
   if (!isAdminAuthenticated) {
     return (
-      <div className="bg-[#0A0A0A] min-h-[80vh] flex items-center justify-center py-20 px-6">
+      <div className="luxury-page min-h-[80vh] flex items-center justify-center py-20 px-6">
         <div className="max-w-md w-full bg-[#121212] border border-[#C5A059]/40 p-8 sm:p-10 space-y-6 text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#1A1A1A] border border-[#C5A059]">
             <Lock className="h-6 w-6 text-[#C5A059]" />
@@ -124,7 +124,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-10 sm:py-16">
+    <div className="luxury-page min-h-screen py-14 sm:py-20">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 space-y-10">
         {/* Header & Security Badge */}
         <div className="border-b border-white/10 pb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -243,7 +243,7 @@ export default function AdminDashboardPage() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full min-w-[760px] text-left text-xs">
               <thead className="bg-[#181818] border-b border-white/5 uppercase text-[10px] tracking-wider text-neutral-400">
                 <tr>
                   <th className="py-3.5 px-6">Cuvée &amp; Maison</th>
@@ -257,22 +257,24 @@ export default function AdminDashboardPage() {
               <tbody className="divide-y divide-white/5 text-neutral-200">
                 {inventory.map((champagne) => (
                   <tr key={champagne.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="py-4 px-6 flex items-center gap-3">
-                      <div className="relative h-12 w-9 flex-shrink-0 bg-[#161616] border border-white/5 p-0.5">
-                        <Image
-                          src={champagne.imageUrl}
-                          alt={champagne.name}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                      <div>
-                        <span className="text-[10px] uppercase text-[#C5A059] block font-medium">
-                          {champagne.house}
-                        </span>
-                        <span className="font-serif text-sm font-normal text-neutral-100">
-                          {champagne.name}
-                        </span>
+                    <td className="min-w-[16rem] px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="relative h-12 w-9 flex-shrink-0 bg-[#161616] border border-white/5 p-0.5">
+                          <ProductImage
+                            src={champagne.imageUrl}
+                            alt={champagne.name}
+                            house={champagne.house}
+                            name={champagne.name}
+                          />
+                        </div>
+                        <div className="min-w-0 leading-tight">
+                          <span className="text-[10px] uppercase text-[#C5A059] block font-medium">
+                            {champagne.house}
+                          </span>
+                          <span className="block font-serif text-sm font-normal text-neutral-100">
+                            {champagne.name}
+                          </span>
+                        </div>
                       </div>
                     </td>
 

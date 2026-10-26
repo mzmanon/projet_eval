@@ -2,9 +2,9 @@
 
 import React, { useState, useSyncExternalStore, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Order } from "@/types/champagne";
 import { ordersStore } from "@/lib/data/ordersStore";
+import ProductImage from "@/components/product/ProductImage";
 import {
   User,
   Package,
@@ -46,7 +46,7 @@ export default function AccountPage() {
   };
 
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-16">
+    <div className="luxury-page min-h-screen py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <div className="border-b border-white/10 pb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
@@ -68,7 +68,7 @@ export default function AccountPage() {
         </div>
 
         {/* Tab buttons */}
-        <div className="flex border-b border-white/10 mt-8 gap-8 text-xs uppercase tracking-widest font-medium">
+        <div className="flex gap-8 overflow-x-auto border-b border-white/10 mt-8 text-xs uppercase tracking-widest font-medium">
           <button
             onClick={() => setActiveTab("orders")}
             className={`pb-4 border-b-2 flex items-center gap-2 transition-colors ${
@@ -184,11 +184,11 @@ export default function AccountPage() {
                       >
                         <div className="flex items-center gap-4">
                           <div className="relative h-16 w-12 flex-shrink-0 bg-[#181818] border border-white/5 p-1">
-                            <Image
+                            <ProductImage
                               src={item.imageUrl}
                               alt={item.name}
-                              fill
-                              className="object-contain"
+                              house={item.house}
+                              name={item.name}
                             />
                           </div>
                           <div>

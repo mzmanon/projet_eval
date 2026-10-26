@@ -33,11 +33,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#0A0A0A] text-[#FCFBF9] selection:bg-[#C5A059] selection:text-[#0A0A0A]">
+      <body className="min-h-full flex flex-col bg-[#F7F5F0] text-[#171715]">
         <CartProvider>
           <Navbar />
           <CartDrawer />
-          <div className="flex-1 flex flex-col pt-[88px]">{children}</div>
+          <div className="flex-1 flex flex-col pt-[104px] sm:pt-[112px]">{children}</div>
           <Footer />
         </CartProvider>
       </body>

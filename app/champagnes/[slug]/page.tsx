@@ -1,11 +1,11 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CHAMPAGNES, getChampagneBySlug } from "@/lib/data/champagnes";
 import AddToCartButton from "@/components/product/AddToCartButton";
 import ChampagneCard from "@/components/product/ChampagneCard";
+import ProductImage from "@/components/product/ProductImage";
 import {
   ShieldCheck,
   Award,
@@ -59,7 +59,7 @@ export default async function ChampagneDetailPage({
   ).slice(0, 3);
 
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-10 sm:py-16">
+    <div className="luxury-page min-h-screen py-14 sm:py-20">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-neutral-400">
@@ -95,10 +95,11 @@ export default async function ChampagneDetailPage({
 
               {/* Packshot Image - Strictly Preserved Natural Appearance */}
               <div className="relative h-full w-full">
-                <Image
+                <ProductImage
                   src={champagne.imageUrl}
                   alt={`${champagne.name} — Bouteille authentique`}
-                  fill
+                  house={champagne.house}
+                  name={champagne.name}
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-contain filter-none"
@@ -108,7 +109,7 @@ export default async function ChampagneDetailPage({
               {/* Discreet Authenticity Tag */}
               <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2 text-[10px] uppercase tracking-wider text-neutral-400 bg-black/60 backdrop-blur-sm px-2.5 py-1">
                 <CheckCircle2 className="h-3.5 w-3.5 text-[#C5A059]" />
-                <span>Packshot &amp; Flacon Certifiés d&apos;Origine</span>
+                <span>Visuel produit</span>
               </div>
             </div>
           </div>

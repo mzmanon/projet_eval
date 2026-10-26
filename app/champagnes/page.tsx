@@ -46,7 +46,7 @@ export default function ChampagnesCatalogPage() {
   };
 
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-16">
+    <div className="luxury-page min-h-screen py-16 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Breadcrumb & Header */}
         <div className="border-b border-white/10 pb-10">

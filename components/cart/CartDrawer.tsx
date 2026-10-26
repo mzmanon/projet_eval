@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { X, Plus, Minus, Trash2, ShieldCheck, ArrowRight } from "lucide-react";
+import ProductImage from "@/components/product/ProductImage";
 
 export default function CartDrawer() {
   const {
@@ -56,7 +56,7 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Votre Panier"
-        className="relative z-10 flex h-full w-full max-w-md flex-col bg-[#111111] border-l border-[#C5A059]/20 text-[#FCFBF9] shadow-2xl transition-transform duration-500 animate-in slide-in-from-right"
+        className="cart-panel relative z-10 flex h-full w-full max-w-md flex-col bg-[#111111] border-l border-[#C5A059]/20 text-[#FCFBF9] shadow-2xl transition-transform duration-500 animate-in slide-in-from-right"
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 px-6 py-6">
@@ -130,12 +130,12 @@ export default function CartDrawer() {
               <div key={champagne.id} className="flex gap-4 py-4 items-center">
                 {/* Bottle authentic packshot */}
                 <div className="relative h-24 w-16 flex-shrink-0 bg-[#171717] rounded-sm p-1 border border-white/5 overflow-hidden">
-                  <Image
+                  <ProductImage
                     src={champagne.imageUrl}
                     alt={champagne.name}
-                    fill
+                    house={champagne.house}
+                    name={champagne.name}
                     sizes="64px"
-                    className="object-contain"
                   />
                 </div>
 

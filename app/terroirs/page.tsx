@@ -17,8 +17,9 @@ const TERROIRS = [
     villages: "Le Mesnil-sur-Oger, Cramant, Avize, Oger, Chouilly (Grands Crus)",
     description:
       "Royaume absolu du Chardonnay. Orientée plein est, cette falaise calcaire immaculée donne naissance aux champagnes les plus minéraux, tendus et purs de la planète. C'est ici que naissent les légendes de Salon et Taittinger Comtes de Champagne.",
-    image:
-      "https://images.unsplash.com/photo-1547595628-c61a29f496f0?auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1547595628-c61a29f496f0?auto=format&fit=crop&w=1000&q=80",
+    imageAlt: "Vignobles de Champagne, photographie éditoriale",
+    credit: "Photographie éditoriale — Unsplash",
   },
   {
     name: "La Montagne de Reims",
@@ -27,8 +28,9 @@ const TERROIRS = [
     villages: "Ambonnay, Bouzy, Verzenay, Mailly-Champagne",
     description:
       "Un vaste plateau forestier bordé de coteaux abrupts. Les raisins de Pinot Noir y puisent une puissance musculaire, une vinosité noble et une complexité épicée inimitable, indispensables à l'architecture de Dom Pérignon et Krug.",
-    image:
-      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1000&q=80",
+    imageAlt: "Coteaux de Champagne, photographie éditoriale",
+    credit: "Photographie éditoriale — Unsplash",
   },
   {
     name: "La Vallée de la Marne",
@@ -37,14 +39,15 @@ const TERROIRS = [
     villages: "Aÿ, Hautvillers, Mareuil-sur-Aÿ",
     description:
       "Bercée par les méandres de la Marne, cette région historique offre une rondeur fruitée, une gourmandise soyeuse et une générosité florale éclatante. Berceau historique de la Maison Bollinger et de Dom Pierre Pérignon.",
-    image:
-      "https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?auto=format&fit=crop&w=1000&q=80",
+    imageAlt: "Paysage de vigne, photographie éditoriale",
+    credit: "Photographie éditoriale — Unsplash",
   },
 ];
 
 export default function TerroirsPage() {
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-20">
+    <div className="luxury-page min-h-screen py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
@@ -67,20 +70,26 @@ export default function TerroirsPage() {
           {TERROIRS.map((terroir, idx) => (
             <article
               key={terroir.name}
-              className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#111111] border border-white/5 p-6 sm:p-10 ${
-                idx % 2 === 1 ? "lg:flex-row-reverse" : ""
-              }`}
+              className="grid grid-cols-1 items-center gap-8 border border-white/5 bg-[#111111] p-6 lg:grid-cols-12 lg:gap-12 sm:p-10"
             >
-              <div className="lg:col-span-6 relative h-72 sm:h-96 w-full bg-[#181818] border border-white/10 overflow-hidden">
-                <Image
-                  src={terroir.image}
-                  alt={terroir.name}
-                  fill
-                  className="object-cover"
-                />
+              <div className={`lg:col-span-6 ${idx % 2 === 1 ? "lg:col-start-7 lg:row-start-1" : ""}`}>
+                <figure>
+                  <div className="relative h-72 w-full overflow-hidden border border-white/10 bg-[#181818] sm:h-96">
+                    <Image
+                      src={terroir.image}
+                      alt={terroir.imageAlt}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <figcaption className="mt-2 text-[9px] text-[#827D75]">
+                    {terroir.credit}
+                  </figcaption>
+                </figure>
               </div>
 
-              <div className="lg:col-span-6 space-y-4">
+              <div className={`lg:col-span-6 space-y-4 ${idx % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""}`}>
                 <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#C5A059] font-medium">
                   <Compass className="h-3.5 w-3.5" />
                   <span>Cépage de prédilection : {terroir.grape}</span>
