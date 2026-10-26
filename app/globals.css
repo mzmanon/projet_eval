@@ -11,6 +11,41 @@
   --line-dark: #c8c1b4;
 }
 
+html[data-theme="dark"] {
+  --ivory: #141414;
+  --paper: #1c1b19;
+  --ink: #f5f2eb;
+  --taupe: #b5ad9e;
+  --champagne: #c5a059;
+  --line: #37332d;
+  --line-dark: #514a3f;
+}
+
+html[data-theme="dark"] body {
+  background: var(--ivory) !important;
+  color: var(--ink);
+}
+
+html[data-theme="dark"] header {
+  background-color: rgb(20 20 20 / 95%) !important;
+  color: var(--ink);
+}
+
+html[data-theme="dark"] header nav,
+html[data-theme="dark"] header > div,
+html[data-theme="dark"] header [class*="bg-[#FCFBF8]"] {
+  border-color: var(--line) !important;
+}
+
+html[data-theme="dark"] header [class*="bg-[#FCFBF8]"] {
+  background-color: #1c1b19 !important;
+}
+
+html[data-theme="dark"] header a,
+html[data-theme="dark"] header button {
+  color: #d7c8a6;
+}
+
 @theme inline {
   --color-background: var(--ivory);
   --color-foreground: var(--ink);

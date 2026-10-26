@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Earth, Menu, User, X } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 
 const links = [
   { href: "/champagnes", label: "Collection" },
@@ -17,6 +18,23 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem("la-cave-theme");
+    const dark = savedTheme === "dark";
+    setIsDarkTheme(dark);
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+    document.documentElement.classList.toggle("dark", dark);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextIsDark = !isDarkTheme;
+    setIsDarkTheme(nextIsDark);
+    document.documentElement.dataset.theme = nextIsDark ? "dark" : "light";
+    document.documentElement.classList.toggle("dark", nextIsDark);
+    window.localStorage.setItem("la-cave-theme", nextIsDark ? "dark" : "light");
+  };
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 16);
@@ -34,7 +52,20 @@ export default function Navbar() {
           <div className="hidden items-center gap-7 lg:flex">{links.map((link) => <Link key={link.href} href={link.href} className={`border-b pb-1 text-[10px] font-medium uppercase tracking-[0.16em] transition-colors ${pathname === link.href ? "border-[#171715] text-[#171715]" : "border-transparent text-[#827D75] hover:text-[#171715]"}`}>{link.label}</Link>)}</div>
           <button onClick={() => setMenuOpen((open) => !open)} className="flex h-11 w-11 items-center justify-center lg:hidden" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-expanded={menuOpen}>{menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
           <Link href="/" className="absolute left-1/2 -translate-x-1/2 text-center" aria-label="LA CAVE, accueil"><span className="block font-serif text-2xl tracking-[0.22em] sm:text-3xl">LA CAVE</span><span className="block text-[8px] font-medium uppercase tracking-[0.3em] text-[#A58C62]">Champagne</span></Link>
-          <div className="flex items-center gap-1 sm:gap-3"><Link href="/account" className="flex h-11 w-11 items-center justify-center text-[#59554e] transition-colors hover:text-[#171715]" aria-label="Espace client"><User className="h-[18px] w-[18px]" /></Link><Link href="/carte" aria-current={pathname === "/carte" ? "page" : undefined} className={`flex h-11 w-11 items-center justify-center transition-colors ${pathname === "/carte" ? "text-[#A58C62]" : "text-[#59554e] hover:text-[#171715]"}`} aria-label="Voir la carte de nos terroirs"><Earth className="h-[18px] w-[18px]" /></Link></div>
+          <div className="flex items-center gap-1 sm:gap-3">
+            <button
+              onClick={toggleTheme}
+              className="group flex h-10 items-center gap-2 border border-[#A58C62]/35 px-2.5 text-[#755F3C] transition-colors hover:border-[#A58C62] hover:bg-[#A58C62]/[0.08] focus-visible:outline-offset-2 sm:px-3"
+              aria-label={`Activer le thème ${isDarkTheme ? "clair" : "sombre"}`}
+              aria-pressed={isDarkTheme}
+              title={`Thème ${isDarkTheme ? "sombre" : "clair"}`}
+            >
+              {isDarkTheme ? <Sun className="h-4 w-4" strokeWidth={1.5} /> : <Moon className="h-4 w-4" strokeWidth={1.5} />}
+              <span className="hidden text-[9px] font-medium uppercase tracking-[0.15em] sm:inline">{isDarkTheme ? "Clair" : "Sombre"}</span>
+            </button>
+            <Link href="/account" className="flex h-11 w-11 items-center justify-center text-[#59554e] transition-colors hover:text-[#171715]" aria-label="Espace client"><User className="h-[18px] w-[18px]" /></Link>
+            <Link href="/carte" aria-current={pathname === "/carte" ? "page" : undefined} className={`flex h-11 w-11 items-center justify-center transition-colors ${pathname === "/carte" ? "text-[#A58C62]" : "text-[#59554e] hover:text-[#171715]"}`} aria-label="Voir la carte de nos terroirs"><Earth className="h-[18px] w-[18px]" /></Link>
+          </div>
         </div>
       </nav>
       {menuOpen && <div className="border-b border-[#DCD7CD] bg-[#FCFBF8] px-6 py-7 lg:hidden"><div className="mx-auto flex max-w-md flex-col">{links.map((link) => <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)} className="border-b border-[#DCD7CD] py-4 font-serif text-2xl text-[#171715]">{link.label}</Link>)}<Link href="/carte" onClick={() => setMenuOpen(false)} className="border-b border-[#DCD7CD] py-4 font-serif text-2xl text-[#171715]">Carte des terroirs</Link><Link href="/account" onClick={() => setMenuOpen(false)} className="pt-5 text-[10px] font-medium uppercase tracking-[0.16em] text-[#827D75]">Mon compte</Link><Link href="/admin" onClick={() => setMenuOpen(false)} className="pt-3 text-[10px] font-medium uppercase tracking-[0.16em] text-[#827D75]">Administration</Link></div></div>}
