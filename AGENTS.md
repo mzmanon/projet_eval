@@ -2,18 +2,14 @@
 
 ## This is NOT the Next.js you know
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in 
-ode_modules/next/dist/docs/ (resolved from this file's directory; in monorepos the 
-ext package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+This version has breaking changes â€” APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
-This block is written and re-added by 
-ext dev — verify at 
-ode_modules/next/dist/server/lib/generate-agent-files.js. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+This block is written and re-added by `next dev` â€” verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
 
 ## Project overview
-- Name: projet_eval (LA CAVE - Haute Champagne & Cuvées Rares)
+- Name: projet_eval (LA CAVE - Haute Champagne & Cuvï¿½es Rares)
 - Framework: Next.js 16.4.2 (App Router, React 19.3.0), TypeScript 5 (strict), Tailwind CSS v4
 - Package manager: pnpm 12.11.2
 - Path alias: @/* ? project root

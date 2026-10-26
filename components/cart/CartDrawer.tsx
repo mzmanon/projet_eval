@@ -4,6 +4,12 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import {
+  FREE_SHIPPING_THRESHOLD,
+  getFreeShippingProgress,
+  getMissingAmountForFreeShipping,
+  getShippingCost,
+} from "@/lib/checkout/pricing";
+import {
   X,
   Plus,
   Minus,
@@ -29,16 +35,9 @@ export default function CartDrawer() {
     totalCount,
   } = useCart();
 
-  const FREE_SHIPPING_THRESHOLD = 250;
   const isFreeShipping = totalPrice >= FREE_SHIPPING_THRESHOLD;
-  const missingForFreeShipping = Math.max(
-    0,
-    FREE_SHIPPING_THRESHOLD - totalPrice
-  );
-  const progressRatio = Math.min(
-    100,
-    (totalPrice / FREE_SHIPPING_THRESHOLD) * 100
-  );
+  const missingForFreeShipping = getMissingAmountForFreeShipping(totalPrice);
+  const progressRatio = getFreeShippingProgress(totalPrice);
 
   // Verrouiller le défilement du body quand la fenêtre plein écran est ouverte
   useEffect(() => {
@@ -65,7 +64,7 @@ export default function CartDrawer() {
 
   if (!isCartOpen) return null;
 
-  const shippingCost = items.length === 0 ? 0 : isFreeShipping ? 0 : 25;
+  const shippingCost = getShippingCost(totalPrice);
   const grandTotal = totalPrice + shippingCost;
 
   return (
