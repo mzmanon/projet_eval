@@ -19,6 +19,25 @@ function isSupabaseStorageAsset(src: string) {
   return /^https:\/\/[^/]+\.supabase\.co\/storage\/v1\/object\//.test(src);
 }
 
+function isDatabaseProductAsset(src: string) {
+  try {
+    const url = new URL(src);
+    return (
+      url.protocol === "https:" &&
+      [
+        "vinnalia.fr",
+        "d2i4pzk02r8gti.cloudfront.net",
+        "www.perrier-jouet.com",
+        "medias.taittinger.com",
+        "nicolas-feuillatte.com",
+        "www.moet.com",
+      ].includes(url.hostname)
+    );
+  } catch {
+    return false;
+  }
+}
+
 function isConfiguredRemoteImage(src: string) {
   try {
     const url = new URL(src);
@@ -39,6 +58,7 @@ function isApprovedProductAsset(src: string) {
   return (
     src.startsWith("/") ||
     isSupabaseStorageAsset(src) ||
+    isDatabaseProductAsset(src) ||
     isConfiguredRemoteImage(src)
   );
 }
@@ -69,10 +89,10 @@ export default function ProductImage({
     );
   }
 
-  if (isSupabaseStorageAsset(src)) {
+  if (isSupabaseStorageAsset(src) || isDatabaseProductAsset(src)) {
     return (
-      // Supabase assets are supplied by the product team at runtime. Native img avoids
-      // coupling their project hostname to Next's static remote-image allowlist.
+      // Product assets come from the catalogue at runtime; native img avoids coupling
+      // those image hosts to Next's static remote-image allowlist.
       <img
         src={src}
         alt={alt}

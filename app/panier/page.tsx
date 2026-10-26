@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-import { CHAMPAGNES } from "@/lib/data/champagnes";
+import { formatPrice } from "@/lib/format-price";
 import {
   FREE_SHIPPING_THRESHOLD,
   getFreeShippingProgress,
@@ -28,6 +28,7 @@ import {
 export default function CartPage() {
   const {
     items,
+    catalog,
     updateQuantity,
     removeItem,
     clearCart,
@@ -43,7 +44,7 @@ export default function CartPage() {
   const grandTotal = totalPrice + shippingCost;
 
   // Suggestions de cuvées lorsque le panier est vide ou pour compléter
-  const suggestions = CHAMPAGNES.filter(
+  const suggestions = catalog.filter(
     (c) => !items.some((item) => item.champagne.id === c.id)
   ).slice(0, 3);
 
@@ -161,7 +162,7 @@ export default function CartPage() {
                             {champagne.vintage} &bull; {champagne.dosage}
                           </p>
                           <p className="text-sm font-semibold text-[#FCFBF9] mt-1">
-                            {champagne.price} €
+                            {formatPrice(champagne.price)}
                           </p>
                         </div>
                       </div>
@@ -206,7 +207,7 @@ export default function CartPage() {
                       <span>
                         Ajoutez encore{" "}
                         <strong className="text-[#C5A059] font-semibold">
-                          {missingForFreeShipping.toFixed(0)} €
+                          {formatPrice(missingForFreeShipping)}
                         </strong>{" "}
                         de cuvées pour bénéficier de la{" "}
                         <span className="text-[#C5A059]">livraison offerte</span>.
@@ -296,7 +297,7 @@ export default function CartPage() {
                         </span>
                         <div>
                           <span className="font-serif text-sm sm:text-base text-neutral-200">
-                            {champagne.price} €
+                            {formatPrice(champagne.price)}
                           </span>
                           <span className="text-[10px] text-neutral-400 block sm:hidden">
                             / unité
@@ -341,7 +342,7 @@ export default function CartPage() {
                         </span>
                         <div>
                           <span className="font-serif text-base sm:text-lg font-medium text-[#C5A059]">
-                            {lineTotal.toFixed(0)} €
+                            {formatPrice(lineTotal)}
                           </span>
                           <button
                             onClick={() => removeItem(champagne.id)}
@@ -406,7 +407,7 @@ export default function CartPage() {
                       Prix des articles (Sous-total)
                     </span>
                     <span className="font-serif font-medium text-neutral-100 text-base">
-                      {totalPrice.toFixed(0)} €
+                      {formatPrice(totalPrice)}
                     </span>
                   </div>
 
@@ -445,7 +446,7 @@ export default function CartPage() {
                     </div>
                     <div className="text-right">
                       <span className="font-serif text-2xl sm:text-3xl font-medium text-[#C5A059]">
-                        {grandTotal.toFixed(0)} €
+                        {formatPrice(grandTotal)}
                       </span>
                       <span className="text-[10px] text-neutral-400 block">
                         TTC

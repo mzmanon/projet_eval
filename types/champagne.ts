@@ -4,9 +4,15 @@ export type Dosage =
   | "Brut"
   | "Blanc de Blancs"
   | "Blanc de Noirs"
-  | "Rosé";
+  | "Rosé"
+  | "Demi-Sec"
+  | "Non renseigné";
 
-export type Format = "Bouteille (75cl)" | "Magnum (1.5L)" | "Jéroboam (3L)";
+export type Format =
+  | "Bouteille (75cl)"
+  | "Magnum (1.5L)"
+  | "Jéroboam (3L)"
+  | "Non renseigné";
 
 export interface TastingNotes {
   robe: string; // La couleur et l'effervescence
@@ -36,6 +42,7 @@ export interface Champagne {
   isFeatured?: boolean;
   isRare?: boolean;
   score?: number; // Note Bettane & Desseauve ou Parker / Revue du Vin de France (ex: 97)
+  category?: string;
 }
 
 export interface ReviewReply {

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { formatPrice } from "@/lib/format-price";
 import type { Champagne } from "@/types/champagne";
 import ProductImage from "@/components/product/ProductImage";
 import {
@@ -182,7 +183,7 @@ function ProductSelectionDrawerContent({
                 Prix unitaire
               </span>
               <span className="font-serif text-2xl font-light text-[#FCFBF9]">
-                {selectedChampagne.price} €{" "}
+                {formatPrice(selectedChampagne.price)}{" "}
                 <span className="text-xs text-neutral-400 font-sans">TTC</span>
               </span>
             </div>
@@ -301,7 +302,7 @@ function ProductSelectionDrawerContent({
             <div className="flex items-center justify-between text-xs pt-2 text-neutral-300">
               <span>Sous-total sélectionné ({selectedQuantity} {selectedQuantity > 1 ? "flacons" : "flacon"})</span>
               <span className="font-serif text-lg font-medium text-[#C5A059]">
-                {totalPrice.toFixed(0)} €
+                {formatPrice(totalPrice)}
               </span>
             </div>
           </div>
@@ -336,7 +337,7 @@ function ProductSelectionDrawerContent({
               <>
                 <ShoppingBag className="h-4 w-4" />
                 <span>
-                  Ajouter au panier • {totalPrice.toFixed(0)} €
+                  Ajouter au panier • {formatPrice(totalPrice)}
                 </span>
               </>
             )}

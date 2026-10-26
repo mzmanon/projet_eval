@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
+import { formatPrice } from "@/lib/format-price";
 import {
   FREE_SHIPPING_THRESHOLD,
   getFreeShippingProgress,
@@ -114,7 +115,7 @@ export default function CartDrawer() {
               <span className="text-neutral-300">
                 Plus que{" "}
                 <strong className="text-[#C5A059] font-mono font-bold">
-                  {missingForFreeShipping.toFixed(0)} €
+                  {formatPrice(missingForFreeShipping)}
                 </strong>{" "}
                 pour bénéficier de la livraison sécurisée offerte
               </span>
@@ -229,7 +230,7 @@ export default function CartDrawer() {
                         <div className="text-xs text-neutral-300 pt-1">
                           <span>Prix unitaire : </span>
                           <span className="font-mono font-medium text-white">
-                            {champagne.price} € TTC
+                            {formatPrice(champagne.price)} TTC
                           </span>
                         </div>
                       </div>
@@ -263,7 +264,7 @@ export default function CartDrawer() {
                             Sous-total
                           </span>
                           <span className="font-serif text-xl font-medium text-[#C5A059]">
-                            {(champagne.price * quantity).toFixed(0)} €
+                            {formatPrice(champagne.price * quantity)}
                           </span>
                         </div>
 
@@ -313,7 +314,7 @@ export default function CartDrawer() {
                     <div className="flex justify-between">
                       <span>Sous-total flacons ({totalCount})</span>
                       <span className="font-mono text-white font-medium">
-                        {totalPrice.toFixed(0)} €
+                        {formatPrice(totalPrice)}
                       </span>
                     </div>
 
@@ -338,7 +339,7 @@ export default function CartDrawer() {
                         Total à régler
                       </span>
                       <span className="font-serif text-3xl font-light text-[#C5A059]">
-                        {grandTotal.toFixed(0)} €
+                        {formatPrice(grandTotal)}
                       </span>
                     </div>
                   </div>
@@ -351,7 +352,7 @@ export default function CartDrawer() {
                       className="w-full flex items-center justify-center gap-3 bg-[#C5A059] text-[#0A0A0A] py-4 px-6 text-xs font-semibold uppercase tracking-[0.2em] hover:bg-[#DFC282] active:scale-[0.99] transition-all duration-300 shadow-xl cursor-pointer text-center"
                     >
                       <Lock className="h-4 w-4" />
-                      <span>Valider ma commande &bull; {grandTotal.toFixed(0)} €</span>
+                      <span>Valider ma commande &bull; {formatPrice(grandTotal)}</span>
                       <ArrowRight className="h-4 w-4" />
                     </Link>
 

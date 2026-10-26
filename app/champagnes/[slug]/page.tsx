@@ -2,11 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { CHAMPAGNES, getChampagneBySlug } from "@/lib/data/champagnes";
+import { getProductFromDatabaseBySlug, getProductsFromDatabase } from "@/lib/data/productsRepository";
 import AddToCartButton from "@/components/product/AddToCartButton";
 import ChampagneCard from "@/components/product/ChampagneCard";
 import ProductImage from "@/components/product/ProductImage";
 import ProductReviews from "@/components/reviews/ProductReviews";
+import { formatPrice } from "@/lib/format-price";
 import {
   ShieldCheck,
   Award,
@@ -16,19 +17,13 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-export function generateStaticParams() {
-  return CHAMPAGNES.map((c) => ({
-    slug: c.slug,
-  }));
-}
-
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const champagne = getChampagneBySlug(slug);
+  const champagne = await getProductFromDatabaseBySlug(slug);
 
   if (!champagne) {
     return {
@@ -48,13 +43,14 @@ export default async function ChampagneDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const champagne = getChampagneBySlug(slug);
+  const champagnes = await getProductsFromDatabase();
+  const champagne = champagnes.find((product) => product.slug === slug);
 
   if (!champagne) {
     notFound();
   }
 
-  const relatedChampagnes = CHAMPAGNES.filter(
+  const relatedChampagnes = champagnes.filter(
     (c) => c.id !== champagne.id
   ).slice(0, 3);
 
@@ -137,9 +133,8 @@ export default async function ChampagneDetailPage({
                 <span className="text-[#565C4E]">Millésime :</span>
                 <span className="text-[#755A22] font-mono">{champagne.vintage}</span>
                 <span>•</span>
-                <span>{champagne.dosage}</span>
-                <span>•</span>
-                <span>{champagne.format}</span>
+                <span>{champagne.category ?? champagne.dosage}</span>
+                {!champagne.category && <><span>•</span><span>{champagne.format}</span></>}
                 <span>•</span>
                 <span>{champagne.alcoholByVolume}</span>
               </div>
@@ -153,7 +148,7 @@ export default async function ChampagneDetailPage({
                     Prix Domaine TTC
                   </span>
                   <span className="font-serif text-3xl sm:text-4xl font-light text-[#14150F]">
-                    {champagne.price} €
+                    {formatPrice(champagne.price)}
                   </span>
                 </div>
                 <div className="text-right">

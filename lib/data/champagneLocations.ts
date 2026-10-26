@@ -18,21 +18,56 @@ export const CHAMPAGNE_LOCATIONS: ChampagneLocation[] = [
     lat: 49.2583,
     lng: 4.0317,
     champagneSlugs: [
-      "krug-grande-cuvee-171eme-edition",
-      "louis-roederer-cristal-2015",
       "ruinart-blanc-de-blancs",
-      "taittinger-comtes-de-champagne-blanc-de-blancs-2012",
+      "taittinger-brut-reserve",
+      "veuve-clicquot-rich",
+      "veuve-clicquot-yellow-label",
+      "veuve-clicquot-vintage-rose",
     ],
+  },
+  {
+    id: "epernay",
+    village: "Épernay",
+    area: "Vallée de la Marne",
+    description:
+      "Ville de grandes maisons champenoises, dont Moët & Chandon et Perrier-Jouët.",
+    lat: 49.0438,
+    lng: 3.9598,
+    champagneSlugs: [
+      "moet-et-chandon-ice-imperial",
+      "moet-et-chandon-brut-imperial",
+      "perrier-jouet-grand-brut",
+    ],
+  },
+  {
+    id: "tours-sur-marne",
+    village: "Tours-sur-Marne",
+    area: "Montagne de Reims",
+    description:
+      "Village où la Maison Laurent-Perrier est installée depuis 1812.",
+    lat: 49.0544,
+    lng: 4.1206,
+    champagneSlugs: ["laurent-perrier-cuvee-rose"],
+  },
+  {
+    id: "chouilly",
+    village: "Chouilly",
+    area: "Côte des Blancs",
+    description:
+      "Au cœur de la Côte des Blancs, Chouilly accueille la Maison Nicolas Feuillatte.",
+    lat: 49.0239,
+    lng: 4.0178,
+    champagneSlugs: ["nicolas-feuillatte-reserve-exclusive-brut"],
   },
   {
     id: "hautvillers",
     village: "Hautvillers",
     area: "Montagne de Reims",
     description:
-      "Village de l'abbaye bénédictine où Dom Pérignon a posé les fondations de l'assemblage champenois.",
+      "Village de l'abbaye bénédictine associé à l'histoire de l'assemblage champenois.",
     lat: 49.0833,
     lng: 3.9333,
-    champagneSlugs: ["dom-perignon-vintage-2013"],
+    champagneSlugs: [],
   },
   {
     id: "ay",
@@ -42,26 +77,26 @@ export const CHAMPAGNE_LOCATIONS: ChampagneLocation[] = [
       "Grand cru historique de la Vallée de la Marne, réputé pour ses pinots noirs de grande garde.",
     lat: 49.05,
     lng: 4.0,
-    champagneSlugs: ["bollinger-la-grande-annee-2014"],
+    champagneSlugs: [],
   },
   {
     id: "mareuil-sur-ay",
     village: "Mareuil-sur-Aÿ",
     area: "Vallée de la Marne",
     description:
-      "Coteau de la Vallée de la Marne où la maison Billecart-Salmon cultive son style de fraîcheur.",
+      "Coteau de la Vallée de la Marne aux sols propices aux pinots champenois.",
     lat: 49.05,
     lng: 4.0333,
-    champagneSlugs: ["billecart-salmon-brut-rose"],
+    champagneSlugs: [],
   },
   {
     id: "le-mesnil-sur-oger",
     village: "Le Mesnil-sur-Oger",
     area: "Côte des Blancs",
     description:
-      "Grand cru mythique de la Côte des Blancs, porté par un chardonnay calcaire d'une tension rare.",
+      "Grand cru de la Côte des Blancs, réputé pour ses chardonnays sur sol calcaire.",
     lat: 48.95,
     lng: 3.9833,
-    champagneSlugs: ["salon-cuvee-s-le-mesnil-blanc-de-blancs-2012"],
+    champagneSlugs: [],
   },
 ];

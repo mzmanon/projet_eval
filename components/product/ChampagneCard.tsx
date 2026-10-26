@@ -6,6 +6,7 @@ import type { Champagne } from "@/types/champagne";
 import { useCart } from "@/context/CartContext";
 import ProductImage from "@/components/product/ProductImage";
 import ProductReviews from "@/components/reviews/ProductReviews";
+import { formatPrice } from "@/lib/format-price";
 
 interface ChampagneCardProps {
   champagne: Champagne;
@@ -56,7 +57,7 @@ export default function ChampagneCard({
           <Link href={`/champagnes/${champagne.slug}`}>{champagne.name}</Link>
         </h3>
         <p className="mt-3 text-xs text-[#827D75]">
-          {champagne.vintage} · {champagne.dosage} · {champagne.format}
+          {champagne.vintage} · {champagne.category ?? `${champagne.dosage} · ${champagne.format}`}
         </p>
         <div className="mt-6 flex items-end justify-between border-t border-[#DCD7CD] pt-4">
           <div>
@@ -64,7 +65,7 @@ export default function ChampagneCard({
               Le flacon
             </p>
             <p className="mt-1 font-serif text-2xl text-[#171715]">
-              {champagne.price} €
+              {formatPrice(champagne.price)}
             </p>
           </div>
           <div className="flex items-center gap-3">

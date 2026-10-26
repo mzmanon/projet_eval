@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useSyncExternalStore, useMemo } from "react";
+import React, { useState, useSyncExternalStore, useMemo, useEffect } from "react";
 import Link from "next/link";
-import { CHAMPAGNES } from "@/lib/data/champagnes";
 import { ordersStore } from "@/lib/data/ordersStore";
 import { Champagne, Order } from "@/types/champagne";
+import { createClient } from "@/lib/supabase/client";
+import { mapProductRows } from "@/lib/data/productsMapper";
 import ProductImage from "@/components/product/ProductImage";
+import { formatPrice } from "@/lib/format-price";
 import {
   ShieldAlert,
   TrendingUp,
@@ -22,8 +24,30 @@ export default function AdminDashboardPage() {
   const [pinInput, setPinInput] = useState("");
   const [pinError, setPinError] = useState(false);
 
-  // Stock local mutable pour la démo administrateur
-  const [inventory, setInventory] = useState<Champagne[]>(CHAMPAGNES);
+  const [inventory, setInventory] = useState<Champagne[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    async function loadInventory() {
+      const { data, error } = await createClient()
+        .from("products")
+        .select("id,name,description,price,image_url,stock,category,is_active")
+        .eq("is_active", true)
+        .order("name", { ascending: true });
+      if (!active) return;
+      if (error) {
+        console.error("Impossible de charger les produits :", error.message);
+        return;
+      }
+      setInventory(mapProductRows(data ?? []));
+    }
+    void loadInventory().catch((error: unknown) => {
+      if (active) console.error("Impossible de joindre le catalogue Supabase :", error);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Synchronisation des commandes via ordersStore
   const rawOrders = useSyncExternalStore(
@@ -287,7 +311,7 @@ export default function AdminDashboardPage() {
                     </td>
 
                     <td className="py-4 px-4 font-mono text-neutral-100 font-medium">
-                      {champagne.price} €
+                      {formatPrice(champagne.price)}
                     </td>
 
                     <td className="py-4 px-4">
