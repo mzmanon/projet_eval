@@ -1,6 +1,6 @@
 import type { ProductReview } from "@/types/champagne";
 
-const STORAGE_PREFIX = "la_cave_product_reviews_v1:";
+const STORAGE_PREFIX = "la_cave_product_reviews_v2:";
 
 let listeners: Array<() => void> = [];
 

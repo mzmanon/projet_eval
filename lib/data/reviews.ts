@@ -78,6 +78,27 @@ export const SEED_REVIEWS: ProductReview[] = [
       },
     ],
   },
+  {
+    id: "rev-dom-perignon-2013-4",
+    champagneId: "dom-perignon-2013",
+    author: "Marion Leclerc",
+    rating: 5,
+    title: "Un millésime d'une droiture rare",
+    message:
+      "Dégusté en parallèle du 2012, ce 2013 m'a semblé plus tendu et plus aérien. La finale sur la craie et le citron confit est d'une grande netteté. Une bouteille que je rachèterais sans hésiter.",
+    createdAt: "2026-10-12T19:10:00.000Z",
+    verified: true,
+    replies: [
+      {
+        id: "rep-dom-perignon-2013-4-1",
+        author: "LA CAVE",
+        isHouse: true,
+        message:
+          "Merci Marion. La comparaison avec 2012 est passionnante : 2013 joue davantage sur la tension et la salinité, tout en gardant une belle profondeur.",
+        createdAt: "2026-10-13T09:05:00.000Z",
+      },
+    ],
+  },
 
   /* ------------------------------------------------------------------ */
   /* Krug Grande Cuvée 171ème Édition                                   */
@@ -127,10 +148,10 @@ export const SEED_REVIEWS: ProductReview[] = [
     id: "rev-krug-171-3",
     champagneId: "krug-grande-cuvee-171",
     author: "Hugo Marchand",
-    rating: 4,
+    rating: 5,
     title: "Puissant, presque gastronomique",
     message:
-      "Un champagne qui a besoin de table : seul à l'apéritif, il peut sembler intense. Avec un jambon Jabugo, l'équilibre est parfait. Je conseille de le carafer quelques minutes.",
+      "Un champagne qui a besoin de table : seul à l'apéritif, il peut sembler intense. Avec un jambon Jabugo, l'équilibre est parfait. Je conseille de le carafer quelques minutes. Une profondeur rare, vraiment pensée pour la gastronomie.",
     createdAt: "2026-05-19T20:25:00.000Z",
     verified: true,
     replies: [
@@ -268,6 +289,39 @@ export const SEED_REVIEWS: ProductReview[] = [
       },
     ],
   },
+  {
+    id: "rev-ruinart-bdb-4",
+    champagneId: "ruinart-blanc-de-blancs",
+    author: "Julien Mercier",
+    rating: 5,
+    title: "La finesse incarnée",
+    message:
+      "Une bulle d'une délicatesse remarquable et un nez de pamplemousse rose très pur. Servi à 9 °C, il accompagne à merveille un carpaccio de Saint-Jacques. Une valeur sûre de la cave.",
+    createdAt: "2026-10-08T20:00:00.000Z",
+    verified: true,
+    replies: [
+      {
+        id: "rep-ruinart-bdb-4-1",
+        author: "LA CAVE",
+        isHouse: true,
+        message:
+          "Merci Julien. À 9 °C, la fraîcheur du chardonnay et la finesse de la bulle s'expriment pleinement : un accord de toute élégance.",
+        createdAt: "2026-10-09T09:40:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "rev-ruinart-bdb-5",
+    champagneId: "ruinart-blanc-de-blancs",
+    author: "Sarah Benali",
+    rating: 4,
+    title: "Très beau, sans être le plus profond",
+    message:
+      "Un blanc de blancs élégant et frais, très facile à aimer. Il manque peut-être un peu de matière pour rivaliser avec les grands crus voisins, mais à ce prix c'est une très belle entrée en matière.",
+    createdAt: "2026-05-21T18:30:00.000Z",
+    verified: true,
+    replies: [],
+  },
 
   /* ------------------------------------------------------------------ */
   /* Taittinger Comtes de Champagne 2012                                */
@@ -323,6 +377,27 @@ export const SEED_REVIEWS: ProductReview[] = [
         message:
           "Merci Olivier. Votre patience sera récompensée : ce 2012 possède une belle réserve de fruits et de minéralité pour évoluer encore.",
         createdAt: "2026-05-03T09:35:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "rev-taittinger-2012-4",
+    champagneId: "taittinger-comtes-de-champagne-2012",
+    author: "Grégoire Faure",
+    rating: 4,
+    title: "Un grand blanc de blancs, encore dans l'ombre",
+    message:
+      "Belle bouteille, mais qui demande encore du temps. Après une heure d'ouverture, les notes de brioche et d'agrumes se déploient. Je la reverrais dans deux ou trois ans avec plaisir.",
+    createdAt: "2026-10-03T19:45:00.000Z",
+    verified: true,
+    replies: [
+      {
+        id: "rep-taittinger-2012-4-1",
+        author: "LA CAVE",
+        isHouse: true,
+        message:
+          "Merci Grégoire. Votre patience est le meilleur conseil : ce 2012 possède encore une belle réserve et gagnera en tendreté avec le temps.",
+        createdAt: "2026-10-04T09:10:00.000Z",
       },
     ],
   },
@@ -384,6 +459,39 @@ export const SEED_REVIEWS: ProductReview[] = [
       },
     ],
   },
+  {
+    id: "rev-bollinger-2014-4",
+    champagneId: "bollinger-la-grande-annee-2014",
+    author: "Hélène Caron",
+    rating: 4,
+    title: "Un champagne de caractère",
+    message:
+      "La matière est dense et le boisé bien présent, ce qui en fait un excellent compagnon de table. Je l'ai trouvé un peu plus austère que prévu à l'apéritif, mais avec un filet de bœuf c'était superbe.",
+    createdAt: "2026-10-15T20:20:00.000Z",
+    verified: true,
+    replies: [
+      {
+        id: "rep-bollinger-2014-4-1",
+        author: "LA CAVE",
+        isHouse: true,
+        message:
+          "Merci Hélène. La Grande Année est effectivement un vin de gastronomie : sa structure trouve toute sa place à table, notamment avec des viandes rôties.",
+        createdAt: "2026-10-16T09:30:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "rev-bollinger-2014-5",
+    champagneId: "bollinger-la-grande-annee-2014",
+    author: "Damien Perrot",
+    rating: 4,
+    title: "Belle ampleur, à carafer",
+    message:
+      "Un Pinot Noir expressif et une finale longue sur la noisette. Un passage en carafe de quinze minutes lui fait beaucoup de bien. Très belle bouteille pour les amateurs de champagnes vineux.",
+    createdAt: "2026-08-28T19:00:00.000Z",
+    verified: true,
+    replies: [],
+  },
 
   /* ------------------------------------------------------------------ */
   /* Billecart-Salmon Brut Rosé                                         */
@@ -433,10 +541,10 @@ export const SEED_REVIEWS: ProductReview[] = [
     id: "rev-billecart-rose-3",
     champagneId: "billecart-salmon-brut-rose",
     author: "Emma Sanchez",
-    rating: 5,
+    rating: 4,
     title: "Fraises des bois et dentelle",
     message:
-      "Parfait pour un brunch entre amis. La texture est délicate, presque aérienne, et le fruit reste frais sans lourdeur. Tout le monde en a redemandé !",
+      "Parfait pour un brunch entre amis. La texture est délicate, presque aérienne, et le fruit reste frais sans lourdeur. Tout le monde en a redemandé ! Une très belle bouteille de plaisir, même si je garde mes cinq étoiles pour les cuvées de grande garde.",
     createdAt: "2026-06-18T12:40:00.000Z",
     verified: true,
     replies: [
@@ -479,10 +587,10 @@ export const SEED_REVIEWS: ProductReview[] = [
     id: "rev-salon-2012-2",
     champagneId: "salon-le-mesnil-2012",
     author: "Béatrice Colin",
-    rating: 5,
+    rating: 4,
     title: "Une expérience contemplative",
     message:
-      "Nous l'avons ouvert sans accompagnement, dans le silence, pour prendre le temps. Chaque gorgée révèle une nouvelle facette minérale. Rare et intimidant, mais quelle émotion.",
+      "Nous l'avons ouvert sans accompagnement, dans le silence, pour prendre le temps. Chaque gorgée révèle une nouvelle facette minérale. Rare et intimidant, mais quelle émotion. Quatre étoiles pour son exigence, cinq pour le souvenir laissé.",
     createdAt: "2026-07-19T21:10:00.000Z",
     verified: true,
     replies: [],
@@ -507,6 +615,39 @@ export const SEED_REVIEWS: ProductReview[] = [
         createdAt: "2026-05-01T10:40:00.000Z",
       },
     ],
+  },
+  {
+    id: "rev-salon-2012-4",
+    champagneId: "salon-le-mesnil-2012",
+    author: "Valérie-Anne Dubois",
+    rating: 4,
+    title: "Une expérience hors du temps",
+    message:
+      "Servi dans un grand verre, ce Salon impose le silence. La craie et le sel dominent, avec une finale interminable. Je mets quatre étoiles simplement parce qu'il faut accepter de ne pas tout comprendre du premier coup.",
+    createdAt: "2026-10-18T20:30:00.000Z",
+    verified: true,
+    replies: [
+      {
+        id: "rep-salon-2012-4-1",
+        author: "LA CAVE",
+        isHouse: true,
+        message:
+          "Merci Valérie-Anne. C'est une très belle façon de décrire Salon : un vin qui se découvre par touches successives, plus qu'il ne se livre immédiatement.",
+        createdAt: "2026-10-19T09:15:00.000Z",
+      },
+    ],
+  },
+  {
+    id: "rev-salon-2012-5",
+    champagneId: "salon-le-mesnil-2012",
+    author: "Pierre-Yves Lambert",
+    rating: 4,
+    title: "Un mythe exigeant",
+    message:
+      "Bouteille exceptionnelle, mais qui ne se livre pas facilement. Il faut du temps, un grand verre et une table à sa hauteur. Pour les amateurs de sensations minérales, c'est une étape incontournable.",
+    createdAt: "2026-06-03T19:15:00.000Z",
+    verified: true,
+    replies: [],
   },
 ];
 
