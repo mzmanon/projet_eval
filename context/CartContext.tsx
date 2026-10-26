@@ -7,12 +7,13 @@ import React, {
   useSyncExternalStore,
   useMemo,
   useCallback,
+  useRef,
 } from "react";
 import { Champagne, CartItem } from "@/types/champagne";
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (champagne: Champagne, quantity?: number) => void;
+  addItem: (champagne: Champagne, quantity?: number, openCartDrawer?: boolean) => void;
   removeItem: (champagneId: string) => void;
   updateQuantity: (champagneId: string, quantity: number) => void;
   clearCart: () => void;
@@ -22,6 +23,13 @@ interface CartContextType {
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
+  // Product Selection Drawer ("fenêtre à droite")
+  selectedChampagne: Champagne | null;
+  isProductDrawerOpen: boolean;
+  openProductDrawer: (champagne: Champagne) => void;
+  closeProductDrawer: () => void;
+  // Feedback badge animation in navbar
+  isBadgeAnimating: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -68,6 +76,11 @@ const cartStore = {
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedChampagne, setSelectedChampagne] = useState<Champagne | null>(null);
+  const [isProductDrawerOpen, setIsProductDrawerOpen] = useState(false);
+  const [isBadgeAnimating, setIsBadgeAnimating] = useState(false);
+
+  const badgeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Sync state cleanly with external store without set-state-in-effect
   const rawItems = useSyncExternalStore(
@@ -84,8 +97,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [rawItems]);
 
+  const openProductDrawer = useCallback((champagne: Champagne) => {
+    setSelectedChampagne(champagne);
+    setIsProductDrawerOpen(true);
+  }, []);
+
+  const closeProductDrawer = useCallback(() => {
+    setIsProductDrawerOpen(false);
+    // Give time for transition before clearing champagne
+    setTimeout(() => {
+      setSelectedChampagne(null);
+    }, 300);
+  }, []);
+
   const addItem = useCallback(
-    (champagne: Champagne, quantity = 1) => {
+    (champagne: Champagne, quantity = 1, openCartDrawer = false) => {
       const current = items;
       const existing = current.find((i) => i.champagne.id === champagne.id);
       let updated: CartItem[];
@@ -99,7 +125,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         updated = [...current, { champagne, quantity }];
       }
       cartStore.save(updated);
-      setIsCartOpen(true);
+
+      // Trigger badge animation in Navbar
+      setIsBadgeAnimating(true);
+      if (badgeTimeoutRef.current) clearTimeout(badgeTimeoutRef.current);
+      badgeTimeoutRef.current = setTimeout(() => {
+        setIsBadgeAnimating(false);
+      }, 1000);
+
+      if (openCartDrawer) {
+        setIsCartOpen(true);
+      }
     },
     [items]
   );
@@ -141,7 +177,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         (acc, curr) => acc + curr.champagne.price * curr.quantity,
         0
       ),
-    [items]
+      [items]
   );
 
   return (
@@ -158,6 +194,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         openCart: () => setIsCartOpen(true),
         closeCart: () => setIsCartOpen(false),
         toggleCart: () => setIsCartOpen((prev) => !prev),
+        selectedChampagne,
+        isProductDrawerOpen,
+        openProductDrawer,
+        closeProductDrawer,
+        isBadgeAnimating,
       }}
     >
       {children}

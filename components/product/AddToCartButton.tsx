@@ -10,7 +10,7 @@ export default function AddToCartButton({ champagne }: { champagne: Champagne })
   const [justAdded, setJustAdded] = useState(false);
   const { addItem } = useCart();
   const handleAdd = () => {
-    addItem(champagne, quantity);
+    addItem(champagne, quantity, true);
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 2000);
   };
