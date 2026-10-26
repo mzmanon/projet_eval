@@ -334,6 +334,15 @@ export default function AccountPage() {
         setAuthPassword("");
         if (data.session) {
           setActiveTab("orders");
+        } else if (
+          data.user &&
+          Array.isArray(data.user.identities) &&
+          data.user.identities.length === 0
+        ) {
+          setAuthError(
+            "Un compte existe déjà avec cette adresse e-mail. Veuillez vous connecter avec votre mot de passe."
+          );
+          setAuthMode("login");
         } else {
           setAuthNotice(
             "Un e-mail de vérification vient d’être envoyé. Cliquez sur son lien : vous reviendrez sur le site avec votre session ouverte et pourrez consulter votre espace client."
