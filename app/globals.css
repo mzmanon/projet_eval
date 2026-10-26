@@ -2,16 +2,17 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --ivory: #dde8da;
-  --paper: #edf3eb;
-  --surface: #eaf0e6;
-  --surface-strong: #344d42;
-  --ink: #344d42;
-  --taupe: #5d7066;
-  --champagne: #b5a078;
-  --line: #c6d4c5;
-  --line-dark: #a5b8a5;
-  --on-strong: #edf3eb;
+  --ivory: #fbfaf6;
+  --paper: #ffffff;
+  --surface: #f4f7ee;
+  --surface-subtle: #eff3e8;
+  --surface-strong: #2e4636;
+  --ink: #14150f;
+  --taupe: #565c4e;
+  --champagne: #755a22;
+  --line: #d9e4d4;
+  --line-dark: #aab9a9;
+  --on-strong: #fdfbf7;
 }
 
 html[data-theme="dark"],
@@ -19,6 +20,7 @@ html[data-theme="dark"],
   --ivory: #14251f;
   --paper: #1c332a;
   --surface: #243d32;
+  --surface-subtle: #1f382e;
   --surface-strong: #9db7a4;
   --ink: #f4f1e9;
   --taupe: #9db7a4;
@@ -149,7 +151,7 @@ textarea {
 html:not([data-theme="dark"]):not(.dark)
   :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#ECE8DF]"],
 html:not([data-theme="dark"]):not(.dark) .product-card {
-  background-color: var(--surface) !important;
+  background-color: var(--paper) !important;
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#0A0A0A]"],
@@ -162,12 +164,22 @@ html:not([data-theme="dark"]):not(.dark) .product-card {
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#1e1e1e]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#101010]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#171715]"],
-:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-white"],
-:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#FBFAF6]"],
-:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#EFF3E8]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#F1EEE7]"],
 :is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#e9e5dc]"] {
   background-color: var(--surface) !important;
+}
+
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#161616]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#141414]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#EFF3E8]"] {
+  background-color: var(--surface-subtle) !important;
+}
+
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#181818]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#1e1e1e]"],
+:is(.luxury-page, .page-shell, .cart-panel) [class~="bg-white"],
+:is(.luxury-page, .page-shell, .cart-panel) [class*="bg-[#FBFAF6]"] {
+  background-color: var(--paper) !important;
 }
 
 :is(.luxury-page, .page-shell, .cart-panel) [class*="text-[#FCFBF9]"],
