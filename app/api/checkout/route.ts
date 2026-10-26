@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { getChampagnesFromDatabase } from "@/lib/data/champagnesRepository";
+import { CHAMPAGNES } from "@/lib/data/champagnes";
 import type { CheckoutRequestPayload } from "@/types/order";
 import type { Champagne } from "@/types/champagne";
 import {
@@ -41,19 +41,12 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-async function resolveItems(
-  payload: CheckoutRequestPayload
-): Promise<ResolvedItem[] | string> {
+function resolveItems(payload: CheckoutRequestPayload): ResolvedItem[] | string {
   if (!Array.isArray(payload.items) || payload.items.length === 0) {
     return "Votre panier est vide.";
   }
 
-  const champagnes = await getChampagnesFromDatabase();
-  if (champagnes.length === 0) {
-    return "Le catalogue est momentanément indisponible. Veuillez réessayer.";
-  }
-
-  const catalog = new Map(champagnes.map((champagne) => [champagne.id, champagne]));
+  const catalog = new Map(CHAMPAGNES.map((champagne) => [champagne.id, champagne]));
   const quantities = new Map<string, number>();
 
   for (const rawItem of payload.items) {
@@ -111,7 +104,7 @@ export async function POST(request: NextRequest) {
     return jsonError("Le contenu de la requête est invalide.");
   }
 
-  const items = await resolveItems(payload);
+  const items = resolveItems(payload);
   if (typeof items === "string") {
     return jsonError(items);
   }

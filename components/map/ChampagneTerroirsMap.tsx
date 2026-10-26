@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import ProductImage from "@/components/product/ProductImage";
 import { CHAMPAGNE_LOCATIONS } from "@/lib/data/champagneLocations";
+import { getChampagneBySlug } from "@/lib/data/champagnes";
 import type { Champagne } from "@/types/champagne";
 
 /**
@@ -50,6 +51,36 @@ type Terroir = {
   champagnes: Champagne[];
 };
 
+const TERROIRS: Terroir[] = CHAMPAGNE_LOCATIONS.map((location) => {
+  const x = X_OFFSET + X_SCALE * location.lng;
+  const y = Y_OFFSET + Y_SCALE * location.lat;
+
+  return {
+    id: location.id,
+    village: location.village,
+    area: location.area,
+    description: location.description,
+    xPct: ((x - MAP_VIEWBOX.minX) / MAP_VIEWBOX.width) * 100,
+    yPct: ((y - MAP_VIEWBOX.minY) / MAP_VIEWBOX.height) * 100,
+    champagnes: location.champagneSlugs
+      .map((slug) => getChampagneBySlug(slug))
+      .filter((champagne): champagne is Champagne => champagne !== undefined),
+  };
+});
+
+const TOTAL_CUVEES = TERROIRS.reduce(
+  (total, terroir) => total + terroir.champagnes.length,
+  0
+);
+
+const CENTROID = TERROIRS.reduce(
+  (center, terroir) => ({
+    xPct: center.xPct + terroir.xPct / TERROIRS.length,
+    yPct: center.yPct + terroir.yPct / TERROIRS.length,
+  }),
+  { xPct: 0, yPct: 0 }
+);
+
 type View = { zoom: number; x: number; y: number };
 
 const clamp = (value: number, min: number, max: number) =>
@@ -57,48 +88,7 @@ const clamp = (value: number, min: number, max: number) =>
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-export default function ChampagneTerroirsMap({
-  champagnes,
-}: {
-  champagnes: Champagne[];
-}) {
-  const terroirs = useMemo<Terroir[]>(() => {
-    const champagneBySlug = new Map(
-      champagnes.map((champagne) => [champagne.slug, champagne])
-    );
-
-    return CHAMPAGNE_LOCATIONS.map((location) => {
-      const x = X_OFFSET + X_SCALE * location.lng;
-      const y = Y_OFFSET + Y_SCALE * location.lat;
-
-      return {
-        id: location.id,
-        village: location.village,
-        area: location.area,
-        description: location.description,
-        xPct: ((x - MAP_VIEWBOX.minX) / MAP_VIEWBOX.width) * 100,
-        yPct: ((y - MAP_VIEWBOX.minY) / MAP_VIEWBOX.height) * 100,
-        champagnes: location.champagneSlugs
-          .map((slug) => champagneBySlug.get(slug))
-          .filter((champagne): champagne is Champagne => champagne !== undefined),
-      };
-    });
-  }, [champagnes]);
-  const totalCuvees = useMemo(
-    () => terroirs.reduce((total, terroir) => total + terroir.champagnes.length, 0),
-    [terroirs]
-  );
-  const centroid = useMemo(
-    () =>
-      terroirs.reduce(
-        (center, terroir) => ({
-          xPct: center.xPct + terroir.xPct / terroirs.length,
-          yPct: center.yPct + terroir.yPct / terroirs.length,
-        }),
-        { xPct: 0, yPct: 0 }
-      ),
-    [terroirs]
-  );
+export default function ChampagneTerroirsMap() {
   const viewportRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<{
     pointerId: number;
@@ -172,11 +162,11 @@ export default function ChampagneTerroirsMap({
     setView(
       clampView({
         zoom: FOCUS_ZOOM,
-        x: size.width / 2 - (centroid.xPct / 100) * size.width * FOCUS_ZOOM,
-        y: size.height / 2 - (centroid.yPct / 100) * size.height * FOCUS_ZOOM,
+        x: size.width / 2 - (CENTROID.xPct / 100) * size.width * FOCUS_ZOOM,
+        y: size.height / 2 - (CENTROID.yPct / 100) * size.height * FOCUS_ZOOM,
       })
     );
-  }, [centroid.xPct, centroid.yPct, clampView, size.height, size.width]);
+  }, [clampView, size.height, size.width]);
 
   useEffect(() => {
     const element = viewportRef.current;
@@ -259,7 +249,7 @@ export default function ChampagneTerroirsMap({
   const pins = useMemo(() => {
     if (!size.width || !size.height) return [];
 
-    const anchors = terroirs.map((terroir) => ({
+    const anchors = TERROIRS.map((terroir) => ({
       terroir,
       baseX: (terroir.xPct / 100) * size.width * view.zoom + view.x,
       baseY: (terroir.yPct / 100) * size.height * view.zoom + view.y,
@@ -302,7 +292,7 @@ export default function ChampagneTerroirsMap({
       x: clamp(points[index].x, PIN_PADDING, size.width - PIN_PADDING),
       y: clamp(points[index].y, PIN_PADDING, size.height - PIN_PADDING),
     }));
-  }, [size, view, terroirs]);
+  }, [size, view]);
 
   const activeId = hoveredId ?? selectedId;
   const activePin = pins.find((pin) => pin.terroir.id === activeId);
@@ -334,8 +324,8 @@ export default function ChampagneTerroirsMap({
         <div className="flex items-baseline justify-between border-b border-[#DCD7CD] pb-4">
           <p className="page-label">France · Grand Est</p>
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#827D75]">
-            {String(terroirs.length).padStart(2, "0")} terroirs ·{" "}
-            {String(totalCuvees).padStart(2, "0")} cuvées
+            {String(TERROIRS.length).padStart(2, "0")} terroirs ·{" "}
+            {String(TOTAL_CUVEES).padStart(2, "0")} cuvées
           </span>
         </div>
 
@@ -373,8 +363,8 @@ export default function ChampagneTerroirsMap({
               <div
                 className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#A58C62]/50 bg-[#A58C62]/5"
                 style={{
-                  left: `${centroid.xPct}%`,
-                  top: `${centroid.yPct}%`,
+                  left: `${CENTROID.xPct}%`,
+                  top: `${CENTROID.yPct}%`,
                   width: "12%",
                   aspectRatio: "1 / 1",
                 }}
@@ -419,7 +409,7 @@ export default function ChampagneTerroirsMap({
                 Grand Est
               </span>
               <span className="text-[9px] uppercase tracking-[0.14em] text-[#827D75]">
-                {terroirs.length} terroirs · {totalCuvees} cuvées
+                {TERROIRS.length} terroirs · {TOTAL_CUVEES} cuvées
               </span>
             </div>
 
@@ -613,12 +603,12 @@ export default function ChampagneTerroirsMap({
         <div className="flex items-baseline justify-between border-b border-[#DCD7CD] pb-4">
           <h2 className="font-serif text-2xl font-light">Nos terroirs</h2>
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#827D75]">
-            {String(terroirs.length).padStart(2, "0")} villages
+            {String(TERROIRS.length).padStart(2, "0")} villages
           </span>
         </div>
 
         <ol className="mt-5 space-y-3">
-          {terroirs.map((terroir, index) => {
+          {TERROIRS.map((terroir, index) => {
             const isActive = activeId === terroir.id;
 
             return (

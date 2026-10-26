@@ -2,10 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import {
-  getChampagneFromDatabaseBySlug,
-  getChampagnesFromDatabase,
-} from "@/lib/data/champagnesRepository";
+import { CHAMPAGNES, getChampagneBySlug } from "@/lib/data/champagnes";
 import AddToCartButton from "@/components/product/AddToCartButton";
 import ChampagneCard from "@/components/product/ChampagneCard";
 import ProductImage from "@/components/product/ProductImage";
@@ -19,13 +16,19 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
+export function generateStaticParams() {
+  return CHAMPAGNES.map((c) => ({
+    slug: c.slug,
+  }));
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const champagne = await getChampagneFromDatabaseBySlug(slug);
+  const champagne = getChampagneBySlug(slug);
 
   if (!champagne) {
     return {
@@ -45,16 +48,13 @@ export default async function ChampagneDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [champagne, allChampagnes] = await Promise.all([
-    getChampagneFromDatabaseBySlug(slug),
-    getChampagnesFromDatabase(),
-  ]);
+  const champagne = getChampagneBySlug(slug);
 
   if (!champagne) {
     notFound();
   }
 
-  const relatedChampagnes = allChampagnes.filter(
+  const relatedChampagnes = CHAMPAGNES.filter(
     (c) => c.id !== champagne.id
   ).slice(0, 3);
 

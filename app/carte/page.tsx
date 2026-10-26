@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ChampagneTerroirsMap from "@/components/map/ChampagneTerroirsMap";
 import { CHAMPAGNE_LOCATIONS } from "@/lib/data/champagneLocations";
-import { getChampagnesFromDatabase } from "@/lib/data/champagnesRepository";
+import { getChampagneBySlug } from "@/lib/data/champagnes";
 
 export const metadata = {
   title: "La carte des terroirs | LA CAVE — Haute Champagne",
@@ -9,13 +9,11 @@ export const metadata = {
     "Découvrez sur la carte de France les villages d'origine de nos champagnes : Reims, Hautvillers, Aÿ, Mareuil-sur-Aÿ et Le Mesnil-sur-Oger.",
 };
 
-export default async function CartePage() {
-  const champagnes = await getChampagnesFromDatabase();
-  const champagneSlugs = new Set(champagnes.map((champagne) => champagne.slug));
+export default function CartePage() {
   const totalCuvees = CHAMPAGNE_LOCATIONS.reduce(
     (total, location) =>
       total +
-      location.champagneSlugs.filter((slug) => champagneSlugs.has(slug)).length,
+      location.champagneSlugs.filter((slug) => getChampagneBySlug(slug)).length,
     0
   );
 
@@ -68,7 +66,7 @@ export default async function CartePage() {
         </header>
 
         <div className="pt-10 sm:pt-12">
-          <ChampagneTerroirsMap champagnes={champagnes} />
+          <ChampagneTerroirsMap />
         </div>
       </div>
     </div>

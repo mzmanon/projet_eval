@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
+import { CHAMPAGNES } from "@/lib/data/champagnes";
 import {
   FREE_SHIPPING_THRESHOLD,
   getFreeShippingProgress,
@@ -27,7 +28,6 @@ import {
 export default function CartPage() {
   const {
     items,
-    catalog,
     updateQuantity,
     removeItem,
     clearCart,
@@ -43,7 +43,7 @@ export default function CartPage() {
   const grandTotal = totalPrice + shippingCost;
 
   // Suggestions de cuvées lorsque le panier est vide ou pour compléter
-  const suggestions = catalog.filter(
+  const suggestions = CHAMPAGNES.filter(
     (c) => !items.some((item) => item.champagne.id === c.id)
   ).slice(0, 3);
 
