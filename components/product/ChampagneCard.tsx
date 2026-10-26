@@ -28,7 +28,7 @@ export default function ChampagneCard({
       >
         <div className="absolute left-4 top-4 z-10 flex flex-col gap-1">
           {champagne.isRare && (
-            <span className="border border-[#A58C62] bg-[#FCFBF8]/90 px-2 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-[#171715]">
+            <span className="border border-[#344D42] bg-[#344D42] px-2 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-[#F4F1E9]">
               Allocation rare
             </span>
           )}
