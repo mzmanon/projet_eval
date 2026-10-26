@@ -106,30 +106,47 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const supabase = createClient();
     let active = true;
     let authEventReceived = false;
+    let activeScope: string | null = null;
 
     const activateScope = (userId: string | null) => {
       if (!active) return;
       const nextScope = userId ? `user:${userId}` : "guest";
+      if (activeScope === nextScope) {
+        setAuthReady(true);
+        return;
+      }
       try {
-        const legacyCart = localStorage.getItem(STORAGE_KEY);
-        if (legacyCart) {
-          const targetKey = `${STORAGE_PREFIX}${nextScope}`;
-          const existing = JSON.parse(localStorage.getItem(targetKey) || "[]") as CartItem[];
-          const legacy = JSON.parse(legacyCart) as CartItem[];
+        const targetKey = `${STORAGE_PREFIX}${nextScope}`;
+        const shouldMergeGuestCart = userId && (activeScope === null || activeScope === "guest");
+        const sourceKeys = [
+          ...(shouldMergeGuestCart ? [`${STORAGE_PREFIX}guest`] : []),
+          STORAGE_KEY,
+        ];
+        const cartsToMerge = [
+          JSON.parse(localStorage.getItem(targetKey) || "[]") as CartItem[],
+          ...sourceKeys
+            .map((key) => localStorage.getItem(key))
+            .filter((value): value is string => Boolean(value))
+            .map((value) => JSON.parse(value) as CartItem[]),
+        ];
+        if (cartsToMerge.length > 1) {
           const merged = new Map<string, CartItem>();
-          for (const item of [...existing, ...legacy]) {
+          for (const cart of cartsToMerge) for (const item of cart) {
+            if (!item?.champagne?.id || !Number.isInteger(item.quantity) || item.quantity < 1) continue;
             const current = merged.get(item.champagne.id);
             merged.set(item.champagne.id, {
               ...item,
               quantity: (current?.quantity ?? 0) + item.quantity,
             });
           }
-          localStorage.setItem(targetKey, JSON.stringify([...merged.values()]));
-          localStorage.removeItem(STORAGE_KEY);
+          const mergedItems = [...merged.values()];
+          localStorage.setItem(targetKey, JSON.stringify(mergedItems));
+          for (const key of sourceKeys) localStorage.removeItem(key);
         }
       } catch {
         // Keep the current account usable if legacy browser storage is malformed.
       }
+      activeScope = nextScope;
       setCartScope(nextScope);
       setAuthReady(true);
       emitChange();
@@ -186,9 +203,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isCatalogLoaded || !authReady) return;
     const catalogById = new Map(catalog.map((champagne) => [champagne.id, champagne]));
-    const synchronizedItems = items.flatMap((item) => {
+    const synchronizedItems = items.map((item) => {
       const currentProduct = catalogById.get(item.champagne.id);
-      return currentProduct ? [{ ...item, champagne: currentProduct }] : [];
+      return currentProduct ? { ...item, champagne: currentProduct } : item;
     });
     if (JSON.stringify(synchronizedItems) !== JSON.stringify(items)) {
       cartStore.save(synchronizedItems, cartScope);
