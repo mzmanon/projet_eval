@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, ShieldCheck, ShoppingBag, Wine } from "lucide-react";
 import { getFeaturedChampagnes } from "@/lib/data/champagnes";
 import ChampagneCard from "@/components/product/ChampagneCard";
+import ThemeToggle from "./theme-toggle";
 
 export default function Home() {
   const featured = getFeaturedChampagnes().slice(0, 3);
@@ -22,6 +23,7 @@ export default function Home() {
             <Link href="/champagnes" className="button-ink text-[11px] font-medium uppercase tracking-[0.18em]">Découvrir la collection</Link>
             <Link href="/panier" className="editorial-link text-[11px] font-medium uppercase tracking-[0.16em]">Votre panier <ShoppingBag className="h-4 w-4" /></Link>
             <Link href="/philosophie" className="editorial-link text-[11px] font-medium uppercase tracking-[0.16em]">Notre philosophie <ArrowUpRight className="h-4 w-4" /></Link>
+            <ThemeToggle />
           </div>
         </div>
         <div className="relative min-h-[430px] overflow-hidden bg-[#e9e5dc] lg:col-span-7">
