@@ -18,7 +18,7 @@ export default function CartePage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F7F5F0] pb-20 sm:pb-24">
+    <div className="luxury-page min-h-screen bg-[#F7F5F0] pb-20 sm:pb-24">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
         <nav
           aria-label="Fil d'Ariane"

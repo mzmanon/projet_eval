@@ -20,15 +20,15 @@ export default function ChampagneCard({
   const { addItem, openProductDrawer } = useCart();
 
   return (
-    <article className="group flex flex-col border-t border-[#C8C1B4] bg-transparent pt-4">
+    <article className="product-card group flex flex-col border-t border-[#C8C1B4] bg-transparent pt-4">
       <Link
         href={`/champagnes/${champagne.slug}`}
-        className="relative block h-80 overflow-hidden bg-[#ECE8DF] p-7 sm:h-96"
+        className="product-card-media relative block h-80 overflow-hidden bg-[#ECE8DF] p-7 sm:h-96"
         aria-label={`Découvrir ${champagne.name}`}
       >
         <div className="absolute left-4 top-4 z-10 flex flex-col gap-1">
           {champagne.isRare && (
-            <span className="border border-[#A58C62] bg-[#FCFBF8]/90 px-2 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-[#171715]">
+            <span className="border border-[#344D42] bg-[#344D42] px-2 py-1 text-[9px] font-medium uppercase tracking-[0.14em] text-[#F4F1E9]">
               Allocation rare
             </span>
           )}
