@@ -1,0 +1,105 @@
+{
+  "desktop /champagnes/dom-perignon-vintage-2013": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 3040,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#fbfaf6",
+        "pct": 42.9
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 26.2
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 25.7
+      },
+      {
+        "hex": "#eff3e8",
+        "pct": 2.9
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.8
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.8
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.6
+      },
+      {
+        "hex": "#ebf0eb",
+        "pct": 0.1
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3000/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=750&q=75",
+      "http://localhost:3000/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=640&q=75"
+    ],
+    "imgCount": 4
+  },
+  "mobile /champagnes/dom-perignon-vintage-2013": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 5742,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 43.6
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 29.9
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 16
+      },
+      {
+        "hex": "#eff3e8",
+        "pct": 6.2
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 1.8
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 1.6
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.8
+      },
+      {
+        "hex": "#ebf0eb",
+        "pct": 0.2
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3000/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=640&q=75"
+    ],
+    "imgCount": 4
+  }
+}

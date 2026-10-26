@@ -44,18 +44,18 @@ const TERROIRS = [
 
 export default function TerroirsPage() {
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-20">
+    <div className="bg-[#FBFAF6] min-h-screen py-12 sm:py-20 text-[#14150F]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#C5A059] font-medium block">
+          <span className="text-[9px] uppercase tracking-[0.3em] text-[#755A22] font-normal block">
             Géologie &amp; Climatologie
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-light text-[#FCFBF9] mt-3">
+          <h1 className="font-serif text-3xl sm:text-5xl font-light text-[#14150F] mt-3">
             L&apos;Âme des Terroirs Champenois
           </h1>
-          <div className="w-12 h-[1px] bg-[#C5A059] mx-auto mt-6" />
-          <p className="mt-6 text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
+          <div className="w-12 h-[1px] bg-[#E3C47D]/55 mx-auto mt-6" />
+          <p className="mt-6 text-xs sm:text-sm text-[#565C4E] leading-relaxed font-light">
             La grandeur du champagne commence sous la terre. Une mosaïque de
             micro-climats et de bancs de craie sédimentaire qui confèrent aux vins
             leur effervescence soyeuse et leur salinité minérale.
@@ -67,11 +67,11 @@ export default function TerroirsPage() {
           {TERROIRS.map((terroir, idx) => (
             <article
               key={terroir.name}
-              className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-[#111111] border border-white/5 p-6 sm:p-10 ${
+              className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center bg-white border border-[#2E4636]/10 p-6 sm:p-10 ${
                 idx % 2 === 1 ? "lg:flex-row-reverse" : ""
               }`}
             >
-              <div className="lg:col-span-6 relative h-72 sm:h-96 w-full bg-[#181818] border border-white/10 overflow-hidden">
+              <div className="lg:col-span-6 relative h-72 sm:h-96 w-full bg-[#FBF7EC] border border-[#2E4636]/14 overflow-hidden">
                 <Image
                   src={terroir.image}
                   alt={terroir.name}
@@ -81,38 +81,38 @@ export default function TerroirsPage() {
               </div>
 
               <div className="lg:col-span-6 space-y-4">
-                <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-[#C5A059] font-medium">
-                  <Compass className="h-3.5 w-3.5" />
+                <div className="flex items-center gap-2 text-[9px] uppercase tracking-widest text-[#755A22] font-normal">
+                  <Compass className="h-3.5 w-3.5 stroke-1" />
                   <span>Cépage de prédilection : {terroir.grape}</span>
                 </div>
 
-                <h2 className="font-serif text-2xl sm:text-3xl font-light text-[#FCFBF9]">
+                <h2 className="font-serif text-2xl sm:text-3xl font-light text-[#14150F]">
                   {terroir.name}
                 </h2>
 
-                <div className="p-3 bg-[#161616] border border-white/5 text-xs text-neutral-300 space-y-1">
+                <div className="p-4 bg-[#FBFAF6] border border-[#2E4636]/10 text-xs text-[#333A2F] space-y-1.5 font-light">
                   <div>
-                    <strong className="text-neutral-400 text-[10px] uppercase block">
+                    <strong className="text-[#565C4E] text-[9px] uppercase tracking-wider block font-normal">
                       Sous-sol géologique :
                     </strong>
                     <span>{terroir.geology}</span>
                   </div>
-                  <div className="pt-1">
-                    <strong className="text-neutral-400 text-[10px] uppercase block">
+                  <div className="pt-1 border-t border-[#2E4636]/8">
+                    <strong className="text-[#565C4E] text-[9px] uppercase tracking-wider block font-normal">
                       Crus historiques majeurs :
                     </strong>
                     <span>{terroir.villages}</span>
                   </div>
                 </div>
 
-                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
+                <p className="text-xs sm:text-sm text-[#565C4E] leading-relaxed font-light">
                   {terroir.description}
                 </p>
 
                 <div className="pt-2">
                   <Link
                     href="/champagnes"
-                    className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-[#C5A059] hover:underline"
+                    className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#755A22] hover:text-[#14150F] transition-colors font-light"
                   >
                     <span>Déguster les cuvées de ce terroir</span>
                     <ArrowRight className="h-3.5 w-3.5" />

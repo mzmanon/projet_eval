@@ -1,0 +1,123 @@
+{
+  "desktop /": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 3746,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#fbfaf6",
+        "pct": 40.5
+      },
+      {
+        "hex": "#e6efdd",
+        "pct": 18.4
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 16.1
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 11.3
+      },
+      {
+        "hex": "#eff3e8",
+        "pct": 11.2
+      },
+      {
+        "hex": "#f1f5ea",
+        "pct": 0.9
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.7
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.5
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.3
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 0.1
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [],
+    "imgCount": 4
+  },
+  "mobile /": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 6433,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 32.3
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 23.3
+      },
+      {
+        "hex": "#eff3e8",
+        "pct": 14.8
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 13.7
+      },
+      {
+        "hex": "#e6efdd",
+        "pct": 10.7
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 2.2
+      },
+      {
+        "hex": "#f1f5ea",
+        "pct": 1.3
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.7
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.6
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 0.3
+      }
+    ],
+    "overflow": [
+      {
+        "tag": "div",
+        "cls": "absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle,rgba(227,1",
+        "left": -15,
+        "right": 369
+      }
+    ],
+    "brokenImages": [],
+    "imgCount": 4
+  }
+}

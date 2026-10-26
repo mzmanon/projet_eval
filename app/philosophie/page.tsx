@@ -11,34 +11,34 @@ export const metadata = {
 
 export default function PhilosophiePage() {
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-20">
+    <div className="bg-[#FBFAF6] min-h-screen py-12 sm:py-20 text-[#14150F]">
       <div className="max-w-4xl mx-auto px-6 sm:px-8 space-y-16">
         {/* Header */}
         <div className="text-center space-y-4">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#C5A059] font-medium block">
+          <span className="text-[9px] uppercase tracking-[0.3em] text-[#755A22] font-normal block">
             Manifeste &amp; Art de Vivre
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-light text-[#FCFBF9] leading-tight">
+          <h1 className="font-serif text-3xl sm:text-5xl font-light text-[#14150F] leading-tight">
             Le Temps, Le Silence et la Vérité du Flacon
           </h1>
-          <div className="w-12 h-[1px] bg-[#C5A059] mx-auto mt-6" />
+          <div className="w-12 h-[1px] bg-[#E3C47D]/55 mx-auto mt-6" />
         </div>
 
         {/* Lead Quote */}
-        <div className="p-8 sm:p-12 bg-[#121212] border border-[#C5A059]/30 text-center">
-          <p className="font-serif text-lg sm:text-2xl text-neutral-200 italic font-light leading-relaxed">
+        <div className="p-8 sm:p-12 bg-white border border-[#B08F4C]/40 text-center">
+          <p className="font-serif text-lg sm:text-2xl text-[#22271F] italic font-light leading-relaxed">
             « Le champagne ne se fabrique pas. Il s&apos;attend, il se respecte,
             il s&apos;écoute murmurer au fond des crayères avant d&apos;illuminer
             les grands moments de l&apos;existence. »
           </p>
-          <span className="text-[10px] uppercase tracking-widest text-[#C5A059] block mt-4 font-medium">
+          <span className="text-[9px] uppercase tracking-[0.25em] text-[#755A22] block mt-4 font-normal">
             — Conservatoire de LA CAVE, Épernay
           </span>
         </div>
 
         {/* Narrative Section 1 */}
-        <div className="space-y-6 text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
-          <h2 className="font-serif text-2xl text-neutral-100 font-normal">
+        <div className="space-y-6 text-xs sm:text-sm text-[#333A2F]/90 leading-relaxed font-light">
+          <h2 className="font-serif text-2xl text-[#1B1F18] font-light">
             Une Exigence Sans Concession
           </h2>
           <p>
@@ -56,7 +56,7 @@ export default function PhilosophiePage() {
         </div>
 
         {/* Image Break */}
-        <div className="relative h-72 sm:h-96 w-full bg-[#181818] border border-white/10 overflow-hidden">
+        <div className="relative h-72 sm:h-96 w-full bg-[#FBF7EC] border border-[#2E4636]/14 overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80"
             alt="Dégustation confidentielle de grands crus"
@@ -66,28 +66,28 @@ export default function PhilosophiePage() {
         </div>
 
         {/* Narrative Section 2: L'Art de la Dégustation */}
-        <div className="space-y-6 text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
-          <h2 className="font-serif text-2xl text-neutral-100 font-normal flex items-center gap-2">
-            <Wine className="h-5 w-5 text-[#C5A059]" />
+        <div className="space-y-6 text-xs sm:text-sm text-[#333A2F]/90 leading-relaxed font-light">
+          <h2 className="font-serif text-2xl text-[#1B1F18] font-light flex items-center gap-2">
+            <Wine className="h-5 w-5 text-[#755A22] stroke-1" />
             L&apos;Art de Déguster selon la Haute Maison
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-            <div className="bg-[#121212] p-5 border border-white/5 space-y-2">
-              <strong className="text-neutral-100 text-xs uppercase tracking-wider block text-[#C5A059]">
+            <div className="bg-white p-6 border border-[#2E4636]/10 space-y-2">
+              <strong className="text-xs uppercase tracking-wider block text-[#755A22] font-normal">
                 Le Choix du Verre
               </strong>
-              <p className="text-neutral-400 text-xs">
+              <p className="text-[#565C4E] text-xs leading-relaxed font-light">
                 Bannissez les coupes évasées qui dispersent le bouquet et les flûtes
                 étroites qui compriment les arômes. Privilégiez un verre tulipe
                 ou un verre à vin blanc de dégustation à paraison généreuse.
               </p>
             </div>
 
-            <div className="bg-[#121212] p-5 border border-white/5 space-y-2">
-              <strong className="text-neutral-100 text-xs uppercase tracking-wider block text-[#C5A059]">
+            <div className="bg-white p-6 border border-[#2E4636]/10 space-y-2">
+              <strong className="text-xs uppercase tracking-wider block text-[#755A22] font-normal">
                 La Juste Température
               </strong>
-              <p className="text-neutral-400 text-xs">
+              <p className="text-[#565C4E] text-xs leading-relaxed font-light">
                 Ne servez jamais un grand millésime glacé. Entre 10°C et 12°C pour
                 les cuvées de prestige millésimées, afin de libérer l&apos;entière
                 palette de noisette, de brioche et de minéralité saline.
@@ -97,13 +97,13 @@ export default function PhilosophiePage() {
         </div>
 
         {/* Call to action */}
-        <div className="text-center pt-8 border-t border-white/10">
+        <div className="text-center pt-8 border-t border-[#2E4636]/12">
           <Link
             href="/champagnes"
-            className="inline-flex items-center gap-3 bg-[#C5A059] text-[#0A0A0A] px-8 py-3.5 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#DFC282] transition-colors"
+            className="inline-flex items-center gap-3 border border-[#B08F4C] bg-[#E3C47D] text-[#14150F] px-8 py-3.5 text-xs uppercase tracking-[0.22em] font-normal hover:bg-[#EFD9A2] transition-colors"
           >
             <span>Accéder à la Sélection Confidentielle</span>
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>

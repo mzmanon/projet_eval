@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
-  Sparkles,
   Lock,
 } from "lucide-react";
 
@@ -43,44 +42,43 @@ export default function CartPage() {
   const shippingCost = items.length === 0 ? 0 : isFreeShipping ? 0 : 25;
   const grandTotal = totalPrice + shippingCost;
 
-  // Suggestions de cuvées lorsque le panier est vide ou pour compléter
   const suggestions = CHAMPAGNES.filter(
     (c) => !items.some((item) => item.champagne.id === c.id)
   ).slice(0, 3);
 
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-10 sm:py-16 text-[#FCFBF9]">
+    <div className="bg-[#FBFAF6] min-h-screen py-10 sm:py-16 text-[#14150F]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Fil d'Ariane & En-tête */}
-        <div className="border-b border-white/10 pb-8 mb-10">
+        <div className="border-b border-[#2E4636]/12 pb-8 mb-10">
           <nav
             aria-label="Fil d'Ariane"
-            className="text-[11px] uppercase tracking-[0.2em] text-neutral-400 mb-4"
+            className="text-[10px] uppercase tracking-[0.22em] text-[#565C4E] mb-4 font-light"
           >
-            <Link href="/" className="hover:text-white transition-colors">
+            <Link href="/" className="hover:text-[#2E4636] transition-colors">
               Accueil
             </Link>{" "}
             /{" "}
             <Link
               href="/champagnes"
-              className="hover:text-white transition-colors"
+              className="hover:text-[#2E4636] transition-colors"
             >
               La Collection
             </Link>{" "}
-            / <span className="text-[#C5A059]">Mon Panier</span>
+            / <span className="text-[#755A22]">Mon Panier</span>
           </nav>
 
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#C5A059] font-medium block">
+              <span className="text-[9px] uppercase tracking-[0.3em] text-[#755A22] font-normal block">
                 Maison de Sommellerie &bull; Épernay
               </span>
-              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-[#FCFBF9] mt-2">
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-[#14150F] mt-2">
                 Votre Sélection de Champagnes
               </h1>
             </div>
             {items.length > 0 && (
-              <p className="text-xs text-neutral-400 font-mono tracking-wider">
+              <p className="text-xs text-[#565C4E] font-mono tracking-wider font-light">
                 {totalCount} {totalCount > 1 ? "flacons retenus" : "flacon retenu"}
               </p>
             )}
@@ -91,18 +89,18 @@ export default function CartPage() {
           /* PANIER VIDE */
           <div className="py-16 sm:py-24">
             <div className="max-w-xl mx-auto text-center space-y-6">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#C5A059]/30 bg-[#121212]">
-                <ShoppingBag className="h-8 w-8 text-[#C5A059]" />
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-[#2E4636]/15 bg-[#F4F7EE]">
+                <ShoppingBag className="h-8 w-8 text-[#755A22] stroke-1" />
               </div>
 
               <div className="space-y-2">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#C5A059]">
+                <span className="text-[9px] uppercase tracking-[0.28em] text-[#755A22] font-light">
                   Cave Privée
                 </span>
-                <h2 className="font-serif text-2xl sm:text-3xl text-neutral-200 font-light">
+                <h2 className="font-serif text-2xl sm:text-3xl text-[#22271F] font-light">
                   Votre panier est actuellement vide
                 </h2>
-                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed max-w-md mx-auto">
+                <p className="text-xs sm:text-sm text-[#565C4E] leading-relaxed max-w-md mx-auto font-light">
                   Aucun article n&apos;a encore été sélectionné. Explorez notre
                   collection de grands crus, cuvées rares et millésimes de
                   prestige pour composer votre cave personnelle.
@@ -112,22 +110,22 @@ export default function CartPage() {
               <div className="pt-4">
                 <Link
                   href="/champagnes"
-                  className="inline-flex items-center gap-3 bg-[#C5A059] text-[#0A0A0A] px-8 py-3.5 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#DFC282] transition-colors"
+                  className="inline-flex items-center gap-3 border border-[#B08F4C] bg-[#E3C47D] text-[#14150F] px-8 py-3.5 text-xs uppercase tracking-[0.22em] font-normal hover:bg-[#EFD9A2] transition-colors"
                 >
                   <span>Explorer le catalogue des champagnes</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             </div>
 
             {/* Suggestions de découverte */}
             {suggestions.length > 0 && (
-              <div className="mt-20 pt-12 border-t border-white/10">
+              <div className="mt-20 pt-12 border-t border-[#2E4636]/12">
                 <div className="text-center mb-8">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#C5A059]">
+                  <span className="text-[9px] uppercase tracking-[0.25em] text-[#755A22] font-light">
                     Sélection du Sommelier
                   </span>
-                  <h3 className="font-serif text-2xl font-light text-neutral-200 mt-1">
+                  <h3 className="font-serif text-2xl font-light text-[#22271F] mt-1">
                     Cuvées Recommandées
                   </h3>
                 </div>
@@ -136,10 +134,10 @@ export default function CartPage() {
                   {suggestions.map((champagne) => (
                     <div
                       key={champagne.id}
-                      className="bg-[#121212] border border-white/5 p-5 flex flex-col justify-between hover:border-[#C5A059]/30 transition-colors"
+                      className="bg-white border border-[#2E4636]/10 p-5 flex flex-col justify-between hover:border-[#B08F4C]/45 transition-colors"
                     >
                       <div className="flex gap-4 items-center">
-                        <div className="relative h-24 w-16 bg-[#181818] flex-shrink-0 p-1">
+                        <div className="relative h-24 w-16 bg-[radial-gradient(ellipse_at_center,rgba(227,196,125,0.30)_0%,rgba(239,243,232,0.95)_75%)] flex-shrink-0 p-1">
                           <Image
                             src={champagne.imageUrl}
                             alt={champagne.name}
@@ -149,37 +147,37 @@ export default function CartPage() {
                           />
                         </div>
                         <div>
-                          <span className="text-[9px] uppercase tracking-widest text-[#C5A059] font-medium block">
+                          <span className="text-[9px] uppercase tracking-widest text-[#755A22] font-normal block">
                             {champagne.house}
                           </span>
                           <Link
                             href={`/champagnes/${champagne.slug}`}
-                            className="font-serif text-sm text-neutral-100 hover:text-[#C5A059] transition-colors line-clamp-1"
+                            className="font-serif text-sm text-[#1B1F18] hover:text-[#755A22] transition-colors line-clamp-1 font-light"
                           >
                             {champagne.name}
                           </Link>
-                          <p className="text-xs text-neutral-400 mt-0.5">
+                          <p className="text-xs text-[#565C4E] mt-0.5 font-light">
                             {champagne.vintage} &bull; {champagne.dosage}
                           </p>
-                          <p className="text-sm font-semibold text-[#FCFBF9] mt-1">
+                          <p className="text-sm font-light text-[#14150F] mt-1 font-serif">
                             {champagne.price} €
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
+                      <div className="mt-4 pt-3 border-t border-[#2E4636]/10 flex items-center justify-between text-xs">
                         <Link
                           href={`/champagnes/${champagne.slug}`}
-                          className="text-[11px] text-neutral-400 hover:text-white uppercase tracking-wider"
+                          className="text-[10px] text-[#565C4E] hover:text-[#2E4636] uppercase tracking-wider font-light"
                         >
                           Détails
                         </Link>
                         <button
                           onClick={() => addItem(champagne, 1)}
-                          className="inline-flex items-center gap-1.5 bg-[#C5A059] text-[#0A0A0A] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider hover:bg-[#DFC282] transition-colors"
+                          className="inline-flex items-center gap-1.5 border border-[#B08F4C] bg-[#E3C47D] text-[#14150F] px-3 py-1.5 text-[10px] font-normal uppercase tracking-wider hover:bg-[#EFD9A2] transition-colors"
                         >
                           <Plus className="h-3 w-3" />
-                          <span>Ajouter au panier</span>
+                          <span>Ajouter</span>
                         </button>
                       </div>
                     </div>
@@ -193,42 +191,41 @@ export default function CartPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Colonne Principale : Liste détaillée des articles */}
             <div className="lg:col-span-8 space-y-6">
-              {/* Jauge de livraison offerte */}
-              <div className="bg-[#121212] border border-[#C5A059]/20 p-4 sm:p-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-neutral-300 gap-2 mb-2">
+              {/* Jauge fine de livraison offerte */}
+              <div className="bg-white border border-[#2E4636]/12 p-4 sm:p-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#333A2F] gap-2 mb-2 font-light">
                   <div className="flex items-center gap-2">
-                    <Truck className="h-4 w-4 text-[#C5A059]" />
+                    <Truck className="h-4 w-4 text-[#755A22] stroke-1" />
                     {isFreeShipping ? (
-                      <span className="text-[#C5A059] font-medium">
-                        Félicitations ! Vous bénéficiez de la livraison offerte et
-                        du coffret sécurisé.
+                      <span className="text-[#755A22]">
+                        Félicitations ! Vous bénéficiez de l&apos;expédition offerte et du coffret sécurisé.
                       </span>
                     ) : (
                       <span>
                         Ajoutez encore{" "}
-                        <strong className="text-[#C5A059] font-semibold">
+                        <strong className="text-[#755A22] font-normal font-mono">
                           {missingForFreeShipping.toFixed(0)} €
                         </strong>{" "}
                         de cuvées pour bénéficier de la{" "}
-                        <span className="text-[#C5A059]">livraison offerte</span>.
+                        <span className="text-[#755A22]">livraison offerte</span>.
                       </span>
                     )}
                   </div>
-                  <span className="text-neutral-400 font-mono self-end sm:self-auto">
+                  <span className="text-[#565C4E] font-mono self-end sm:self-auto text-[11px]">
                     {progressRatio.toFixed(0)}%
                   </span>
                 </div>
-                <div className="h-1.5 w-full bg-[#1e1e1e] rounded-full overflow-hidden">
+                <div className="h-1 w-full bg-[#DDE5D3] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#8E733E] via-[#C5A059] to-[#DFC282] transition-all duration-500"
+                    className="h-full bg-[#E3C47D] transition-all duration-500"
                     style={{ width: `${progressRatio}%` }}
                   />
                 </div>
               </div>
 
               {/* Tableau / Carte des articles */}
-              <div className="bg-[#121212] border border-white/5 divide-y divide-white/5">
-                <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-6 py-3 text-[10px] uppercase tracking-[0.2em] text-neutral-400 border-b border-white/5">
+              <div className="bg-white border border-[#2E4636]/10 divide-y divide-[#2E4636]/10">
+                <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-6 py-3 text-[9px] uppercase tracking-[0.22em] text-[#565C4E] border-b border-[#2E4636]/10 font-light">
                   <span className="col-span-6">Article &amp; Millésime</span>
                   <span className="col-span-2 text-right">Prix Unitaire</span>
                   <span className="col-span-2 text-center">Quantité</span>
@@ -246,7 +243,7 @@ export default function CartPage() {
                       <div className="col-span-6 w-full flex items-center gap-4">
                         <Link
                           href={`/champagnes/${champagne.slug}`}
-                          className="relative h-28 w-20 flex-shrink-0 bg-[#181818] border border-white/5 p-2 rounded-xs group overflow-hidden"
+                          className="relative h-28 w-20 flex-shrink-0 bg-[radial-gradient(ellipse_at_center,rgba(227,196,125,0.30)_0%,rgba(239,243,232,0.95)_75%)] border border-[#2E4636]/12 p-2 group overflow-hidden"
                         >
                           <Image
                             src={champagne.imageUrl}
@@ -257,31 +254,31 @@ export default function CartPage() {
                           />
                         </Link>
 
-                        <div className="flex-1 min-w-0">
-                          <span className="text-[10px] uppercase tracking-widest text-[#C5A059] font-medium block">
+                        <div className="flex-1 min-w-0 font-light">
+                          <span className="text-[9px] uppercase tracking-widest text-[#755A22] font-normal block">
                             {champagne.house}
                           </span>
                           <Link
                             href={`/champagnes/${champagne.slug}`}
-                            className="font-serif text-base sm:text-lg font-light text-neutral-100 hover:text-[#C5A059] transition-colors block truncate"
+                            className="font-serif text-base sm:text-lg font-light text-[#1B1F18] hover:text-[#755A22] transition-colors block truncate"
                           >
                             {champagne.name}
                           </Link>
-                          <div className="flex flex-wrap items-center gap-x-2 text-xs text-neutral-400 mt-1">
+                          <div className="flex flex-wrap items-center gap-x-2 text-xs text-[#565C4E] mt-1">
                             <span>{champagne.vintage}</span>
                             <span>&bull;</span>
                             <span>{champagne.dosage}</span>
                             <span>&bull;</span>
                             <span>{champagne.format}</span>
                           </div>
-                          <p className="text-[11px] text-neutral-500 mt-0.5 truncate">
+                          <p className="text-[11px] text-[#585F50] mt-0.5 truncate">
                             {champagne.terroir}
                           </p>
 
                           {/* Bouton supprimer sur mobile */}
                           <button
                             onClick={() => removeItem(champagne.id)}
-                            className="inline-flex sm:hidden items-center gap-1.5 text-xs text-neutral-400 hover:text-red-400 transition-colors mt-2"
+                            className="inline-flex sm:hidden items-center gap-1.5 text-xs text-[#565C4E] hover:text-[#A3352B] transition-colors mt-2"
                             aria-label={`Supprimer ${champagne.name} du panier`}
                           >
                             <Trash2 className="h-3 w-3" />
@@ -291,62 +288,59 @@ export default function CartPage() {
                       </div>
 
                       {/* Prix Unitaire */}
-                      <div className="w-full sm:w-auto sm:col-span-2 flex sm:block justify-between items-center sm:text-right border-t sm:border-0 border-white/5 pt-2 sm:pt-0">
-                        <span className="text-xs text-neutral-400 sm:hidden">
+                      <div className="w-full sm:w-auto sm:col-span-2 flex sm:block justify-between items-center sm:text-right border-t sm:border-0 border-[#2E4636]/10 pt-2 sm:pt-0 font-light">
+                        <span className="text-xs text-[#565C4E] sm:hidden">
                           Prix unitaire :
                         </span>
                         <div>
-                          <span className="font-serif text-sm sm:text-base text-neutral-200">
+                          <span className="font-serif text-sm sm:text-base text-[#22271F]">
                             {champagne.price} €
-                          </span>
-                          <span className="text-[10px] text-neutral-400 block sm:hidden">
-                            / unité
                           </span>
                         </div>
                       </div>
 
                       {/* Sélecteur de Quantité */}
                       <div className="w-full sm:w-auto sm:col-span-2 flex sm:justify-center justify-between items-center">
-                        <span className="text-xs text-neutral-400 sm:hidden">
+                        <span className="text-xs text-[#565C4E] sm:hidden font-light">
                           Quantité :
                         </span>
-                        <div className="flex items-center border border-white/10 rounded-xs bg-[#161616]">
+                        <div className="flex items-center border border-[#2E4636]/15 bg-[#FBFAF6]">
                           <button
                             onClick={() =>
                               updateQuantity(champagne.id, quantity - 1)
                             }
-                            className="h-8 w-8 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+                            className="h-8 w-8 flex items-center justify-center text-[#565C4E] hover:text-[#2E4636] transition-colors"
                             aria-label={`Diminuer la quantité de ${champagne.name}`}
                           >
-                            <Minus className="h-3.5 w-3.5" />
+                            <Minus className="h-3 w-3" />
                           </button>
-                          <span className="w-9 text-center font-mono text-xs font-medium text-neutral-100">
+                          <span className="w-8 text-center font-mono text-xs font-normal text-[#1B1F18]">
                             {quantity}
                           </span>
                           <button
                             onClick={() =>
                               updateQuantity(champagne.id, quantity + 1)
                             }
-                            className="h-8 w-8 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+                            className="h-8 w-8 flex items-center justify-center text-[#565C4E] hover:text-[#2E4636] transition-colors"
                             aria-label={`Augmenter la quantité de ${champagne.name}`}
                           >
-                            <Plus className="h-3.5 w-3.5" />
+                            <Plus className="h-3 w-3" />
                           </button>
                         </div>
                       </div>
 
                       {/* Total Article & Suppression Desktop */}
-                      <div className="w-full sm:w-auto sm:col-span-2 flex sm:flex-col justify-between items-end sm:text-right border-t sm:border-0 border-white/5 pt-2 sm:pt-0">
-                        <span className="text-xs text-neutral-400 sm:hidden">
+                      <div className="w-full sm:w-auto sm:col-span-2 flex sm:flex-col justify-between items-end sm:text-right border-t sm:border-0 border-[#2E4636]/10 pt-2 sm:pt-0">
+                        <span className="text-xs text-[#565C4E] sm:hidden font-light">
                           Total article :
                         </span>
                         <div>
-                          <span className="font-serif text-base sm:text-lg font-medium text-[#C5A059]">
+                          <span className="font-serif text-base sm:text-lg font-light text-[#755A22]">
                             {lineTotal.toFixed(0)} €
                           </span>
                           <button
                             onClick={() => removeItem(champagne.id)}
-                            className="hidden sm:inline-flex items-center gap-1 text-[11px] text-neutral-500 hover:text-red-400 transition-colors mt-1"
+                            className="hidden sm:inline-flex items-center gap-1 text-[11px] text-[#585F50] hover:text-[#A3352B] transition-colors mt-1 font-light"
                             title="Supprimer cet article"
                             aria-label={`Supprimer ${champagne.name}`}
                           >
@@ -361,94 +355,89 @@ export default function CartPage() {
               </div>
 
               {/* Actions en bas de liste */}
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-2">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-2 font-light">
                 <Link
                   href="/champagnes"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-neutral-300 hover:text-[#C5A059] transition-colors"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#333A2F] hover:text-[#755A22] transition-colors"
                 >
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowLeft className="h-3.5 w-3.5" />
                   <span>Poursuivre la sélection de cuvées</span>
                 </Link>
 
                 <button
                   onClick={clearCart}
-                  className="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-red-400 transition-colors"
+                  className="inline-flex items-center gap-2 text-xs text-[#565C4E] hover:text-[#A3352B] transition-colors"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
-                  <span>Vider l&apos;intégralité du panier</span>
+                  <span>Vider le panier</span>
                 </button>
               </div>
             </div>
 
             {/* Colonne Latérale : Récapitulatif & Total de la commande */}
             <aside className="lg:col-span-4 space-y-6">
-              <div className="bg-[#121212] border border-[#C5A059]/30 p-6 sm:p-7 sticky top-28 space-y-6 shadow-xl">
+              <div className="bg-white border border-[#2E4636]/14 p-6 sm:p-7 sticky top-28 space-y-6">
                 <div>
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#C5A059] font-medium block">
+                  <span className="text-[9px] uppercase tracking-[0.25em] text-[#755A22] font-normal block">
                     Récapitulatif
                   </span>
-                  <h2 className="font-serif text-2xl font-light text-neutral-100 mt-1">
+                  <h2 className="font-serif text-2xl font-light text-[#1B1F18] mt-1">
                     Total de la Commande
                   </h2>
                 </div>
 
-                <div className="space-y-3.5 text-xs text-neutral-300 border-t border-b border-white/10 py-5">
-                  {/* Nombre d'articles */}
+                <div className="space-y-3.5 text-xs text-[#333A2F] border-t border-b border-[#2E4636]/12 py-5 font-light">
                   <div className="flex justify-between items-center">
-                    <span className="text-neutral-400">Articles sélectionnés</span>
-                    <span className="font-mono text-neutral-200">
+                    <span className="text-[#565C4E]">Articles sélectionnés</span>
+                    <span className="font-mono text-[#22271F]">
                       {totalCount} {totalCount > 1 ? "bouteilles" : "bouteille"}
                     </span>
                   </div>
 
-                  {/* Sous-total des articles */}
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-neutral-300 font-medium">
-                      Prix des articles (Sous-total)
+                    <span className="text-[#333A2F]">
+                      Sous-total
                     </span>
-                    <span className="font-serif font-medium text-neutral-100 text-base">
+                    <span className="font-serif font-light text-[#1B1F18] text-base">
                       {totalPrice.toFixed(0)} €
                     </span>
                   </div>
 
-                  {/* Frais de port */}
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-1.5">
-                      <Truck className="h-3.5 w-3.5 text-[#C5A059]" />
-                      <span className="text-neutral-400">
-                        Livraison sécurisée &amp; isotherme
+                      <Truck className="h-3.5 w-3.5 text-[#755A22] stroke-1" />
+                      <span className="text-[#565C4E]">
+                        Expédition isotherme
                       </span>
                     </div>
                     <span>
                       {isFreeShipping ? (
-                        <span className="text-[#C5A059] font-medium">Offerte</span>
+                        <span className="text-[#755A22]">Offerte</span>
                       ) : (
-                        <span className="font-mono text-neutral-200">25 €</span>
+                        <span className="font-mono text-[#22271F]">25 €</span>
                       )}
                     </span>
                   </div>
 
-                  {/* Taxes */}
-                  <div className="flex justify-between items-center text-[11px] text-neutral-400">
+                  <div className="flex justify-between items-center text-[11px] text-[#565C4E]">
                     <span>TVA française (20%) &amp; accises</span>
                     <span>Incluses</span>
                   </div>
 
-                  {/* Ligne TOTAL GÉNÉRAL */}
-                  <div className="pt-4 border-t border-white/10 flex justify-between items-baseline">
+                  <div className="pt-4 border-t border-[#2E4636]/12 flex justify-between items-baseline">
                     <div>
-                      <span className="text-xs uppercase tracking-wider text-neutral-300 block">
+                      <span className="text-xs uppercase tracking-wider text-[#333A2F] block">
                         Prix Total à régler
                       </span>
-                      <span className="text-[10px] text-neutral-400">
+                      <span className="text-[10px] text-[#565C4E]">
                         Flacons d&apos;origine garantis
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="font-serif text-2xl sm:text-3xl font-medium text-[#C5A059]">
+                      <span className="font-serif text-2xl sm:text-3xl font-light text-[#755A22]">
                         {grandTotal.toFixed(0)} €
                       </span>
-                      <span className="text-[10px] text-neutral-400 block">
+                      <span className="text-[10px] text-[#565C4E] block">
                         TTC
                       </span>
                     </div>
@@ -459,33 +448,17 @@ export default function CartPage() {
                 <div className="space-y-3">
                   <Link
                     href="/checkout"
-                    className="w-full flex items-center justify-center gap-2.5 bg-[#C5A059] text-[#0A0A0A] py-4 px-6 text-xs font-semibold uppercase tracking-[0.2em] hover:bg-[#DFC282] transition-all duration-300 shadow-lg text-center"
+                    className="w-full flex items-center justify-center gap-2.5 border border-[#B08F4C] bg-[#E3C47D] text-[#14150F] py-3.5 px-6 text-xs font-normal uppercase tracking-[0.22em] hover:bg-[#EFD9A2] transition-all duration-300 shadow-md text-center"
                   >
-                    <Lock className="h-4 w-4" />
+                    <Lock className="h-3.5 w-3.5" />
                     <span>Procéder au paiement sécurisé</span>
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
 
-                  <p className="text-[10px] text-center text-neutral-400 flex items-center justify-center gap-1.5">
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#C5A059]" />
+                  <p className="text-[10px] text-center text-[#565C4E] flex items-center justify-center gap-1.5 font-light">
+                    <ShieldCheck className="h-3.5 w-3.5 text-[#755A22] stroke-1" />
                     <span>Transaction chiffrée SSL 256 bits &bull; Expédition discrète</span>
                   </p>
-                </div>
-
-                {/* Engagements de la Maison */}
-                <div className="pt-4 border-t border-white/5 space-y-2.5 text-[11px] text-neutral-400">
-                  <div className="flex items-start gap-2">
-                    <Sparkles className="h-3.5 w-3.5 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                    <span>
-                      Direct domaine ou négociant historique avec certificat d&apos;origine.
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Truck className="h-3.5 w-3.5 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                    <span>
-                      Emballage renforcé anti-chocs et anti-variations thermiques.
-                    </span>
-                  </div>
                 </div>
               </div>
             </aside>

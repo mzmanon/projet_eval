@@ -1,0 +1,282 @@
+{
+  "desktop /": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 3746,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#e6efdd",
+        "pct": 35.6
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 27.4
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 20.9
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 14.6
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.7
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.4
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.4
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=640&q=75",
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=640&q=75"
+    ],
+    "imgCount": 4
+  },
+  "desktop /champagnes": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 2729,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 48.5
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 33.6
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 15.5
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 1.1
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 1.1
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.2
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=640&q=75",
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=640&q=75",
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=640&q=75"
+    ],
+    "imgCount": 8
+  },
+  "desktop /panier": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 2042,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#fbfaf6",
+        "pct": 53.5
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 35.9
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 8.1
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 1.2
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 1.1
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 0.2
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=64&q=75",
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=64&q=75"
+    ],
+    "imgCount": 3
+  },
+  "mobile /": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 6433,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 37.5
+      },
+      {
+        "hex": "#e6efdd",
+        "pct": 27.1
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 27
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 5.3
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 1.5
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.8
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.7
+      }
+    ],
+    "overflow": [
+      {
+        "tag": "div",
+        "cls": "absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle,rgba(227,1",
+        "left": -15,
+        "right": 369
+      }
+    ],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=640&q=75",
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=640&q=75"
+    ],
+    "imgCount": 4
+  },
+  "mobile /champagnes": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 7045,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 69.6
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 24.4
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 3.2
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 1.5
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.6
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.6
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=640&q=75",
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=640&q=75"
+    ],
+    "imgCount": 8
+  },
+  "mobile /panier": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 3161,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#d9e4cc",
+        "pct": 45.8
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 31.4
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 17.5
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 3.6
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 1.2
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 0.5
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=64&q=75",
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1594488518063-8a304856019b%3Fauto%3Dformat%26fit%3Dcrop%26w%3D800%26q%3D80&w=64&q=75"
+    ],
+    "imgCount": 3
+  }
+}

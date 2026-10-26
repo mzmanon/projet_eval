@@ -31,8 +31,8 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 w-full transition-all duration-300">
       {/* Top Banner */}
-      <div className="bg-[#050505] border-b border-white/5 py-1.5 px-4 text-center">
-        <p className="text-[10px] uppercase tracking-[0.25em] text-[#C5A059] font-medium">
+      <div className="bg-[#C6D6B5] border-b border-[#2E4636]/8 py-1 px-4 text-center">
+        <p className="text-[9px] uppercase tracking-[0.28em] text-[#14150F] font-normal">
           Maison Fondée en Champagne • Expédition Confidentielle &amp; Flacons Garantis d&apos;Origine
         </p>
       </div>
@@ -40,10 +40,10 @@ export default function Navbar() {
       {/* Main Bar */}
       <nav
         aria-label="Navigation principale"
-        className={`w-full transition-all duration-300 ${
+        className={`w-full transition-all duration-500 ${
           isScrolled
-            ? "bg-[#0A0A0A]/95 backdrop-blur-md border-b border-white/10 py-3.5 shadow-2xl"
-            : "bg-gradient-to-b from-[#0A0A0A]/90 to-[#0A0A0A]/40 backdrop-blur-sm border-b border-white/5 py-5"
+            ? "bg-[#FBFAF6]/94 backdrop-blur-md border-b border-[#2E4636]/12 py-3 shadow-xl"
+            : "bg-gradient-to-b from-[#FBFAF6]/92 via-[#FBFAF6]/70 to-transparent backdrop-blur-sm border-b border-[#2E4636]/8 py-4"
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-between">
@@ -51,7 +51,7 @@ export default function Navbar() {
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setMobileMenuOpen((prev) => !prev)}
-              className="p-2 text-neutral-300 hover:text-[#C5A059] transition-colors"
+              className="p-2 text-[#333A2F] hover:text-[#755A22] transition-colors"
               aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -59,7 +59,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Left navigation */}
-          <div className="hidden lg:flex items-center space-x-8 text-xs uppercase tracking-[0.2em] font-medium">
+          <div className="hidden lg:flex items-center space-x-8 text-xs uppercase tracking-[0.22em] font-normal">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
 
@@ -68,10 +68,10 @@ export default function Navbar() {
                   <button
                     key={link.href}
                     onClick={toggleCart}
-                    className={`transition-colors duration-300 relative py-1 flex items-center gap-1.5 cursor-pointer uppercase ${
+                    className={`transition-colors duration-300 relative py-1 flex items-center gap-2 cursor-pointer uppercase ${
                       isActive
-                        ? "text-[#C5A059]"
-                        : "text-neutral-300 hover:text-[#FCFBF9]"
+                        ? "text-[#755A22]"
+                        : "text-[#333A2F] hover:text-[#14150F]"
                     }`}
                     title={
                       totalCount > 0
@@ -82,9 +82,9 @@ export default function Navbar() {
                     <span>{link.label}</span>
                     {totalCount > 0 && (
                       <span
-                        className={`inline-flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-[#C5A059] text-[9px] font-bold text-[#0A0A0A] transition-all duration-300 ${
+                        className={`inline-flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-[#E3C47D] text-[9px] font-medium text-[#14150F] transition-all duration-300 ${
                           isBadgeAnimating
-                            ? "scale-125 ring-2 ring-[#DFC282] bg-[#DFC282] animate-bounce"
+                            ? "scale-110 ring-2 ring-[#EFD9A2]"
                             : "scale-100"
                         }`}
                       >
@@ -92,7 +92,7 @@ export default function Navbar() {
                       </span>
                     )}
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A059]" />
+                      <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#E3C47D]" />
                     )}
                   </button>
                 );
@@ -104,13 +104,13 @@ export default function Navbar() {
                   href={link.href}
                   className={`transition-colors duration-300 relative py-1 flex items-center gap-1.5 ${
                     isActive
-                      ? "text-[#C5A059]"
-                      : "text-neutral-300 hover:text-[#FCFBF9]"
+                      ? "text-[#755A22]"
+                      : "text-[#333A2F] hover:text-[#14150F]"
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A059]" />
+                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#E3C47D]" />
                   )}
                 </Link>
               );
@@ -120,29 +120,29 @@ export default function Navbar() {
           {/* Center Brand Monogram & Title */}
           <div className="text-center">
             <Link href="/" className="inline-block group">
-              <span className="block font-serif text-2xl sm:text-3xl font-light tracking-[0.3em] text-[#FCFBF9] group-hover:text-[#C5A059] transition-colors duration-300">
+              <span className="block font-serif text-2xl sm:text-3xl font-light tracking-[0.35em] text-[#14150F] group-hover:text-[#755A22] transition-colors duration-500">
                 LA CAVE
               </span>
-              <span className="block text-[8px] sm:text-[9px] uppercase tracking-[0.45em] text-[#C5A059] font-medium mt-0.5">
+              <span className="block text-[8px] sm:text-[9px] uppercase tracking-[0.45em] text-[#755A22] font-light mt-0.5">
                 Haute Champagne • Épernay
               </span>
             </Link>
           </div>
 
-          {/* Right Action Icons (icône panier retirée comme demandé) */}
+          {/* Right Action Icons */}
           <div className="flex items-center space-x-4 sm:space-x-6">
             <Link
               href="/admin"
-              className="hidden md:flex items-center gap-1.5 text-xs text-neutral-400 hover:text-[#C5A059] transition-colors tracking-widest uppercase"
+              className="hidden md:flex items-center gap-1.5 text-xs text-[#565C4E] hover:text-[#755A22] transition-colors tracking-widest uppercase font-light"
               title="Espace Administrateur"
             >
-              <Shield className="h-3.5 w-3.5 text-[#C5A059]" />
+              <Shield className="h-3.5 w-3.5 text-[#755A22]" />
               <span className="hidden xl:inline text-[10px]">Espace Privilège</span>
             </Link>
 
             <Link
               href="/account"
-              className="p-2 text-neutral-300 hover:text-[#C5A059] transition-colors"
+              className="p-2 text-[#333A2F] hover:text-[#755A22] transition-colors"
               aria-label="Espace Client Privilège"
             >
               <User className="h-5 w-5" />
@@ -153,8 +153,8 @@ export default function Navbar() {
 
       {/* Mobile Curtain Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[85px] bg-[#0E0E0E] border-b border-[#C5A059]/20 p-6 shadow-2xl animate-in slide-in-from-top duration-300">
-          <div className="flex flex-col space-y-5 text-sm uppercase tracking-[0.25em]">
+        <div className="lg:hidden fixed inset-x-0 top-[75px] bg-[#E6EFDD]/98 backdrop-blur-xl border-b border-[#B08F4C]/35 p-6 shadow-2xl animate-in slide-in-from-top duration-300">
+          <div className="flex flex-col space-y-4 text-xs uppercase tracking-[0.25em] font-light">
             {navLinks.map((link) => {
               if (link.href === "/panier") {
                 return (
@@ -164,11 +164,11 @@ export default function Navbar() {
                       setMobileMenuOpen(false);
                       toggleCart();
                     }}
-                    className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5 flex items-center justify-between cursor-pointer text-left uppercase"
+                    className="text-[#22271F] hover:text-[#755A22] py-2.5 border-b border-[#2E4636]/10 flex items-center justify-between cursor-pointer text-left uppercase"
                   >
                     <span>{link.label}</span>
                     {totalCount > 0 && (
-                      <span className="bg-[#C5A059] text-[#0A0A0A] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      <span className="bg-[#E3C47D] text-[#14150F] text-[10px] font-medium px-2 py-0.5 rounded-full">
                         {totalCount}
                       </span>
                     )}
@@ -181,7 +181,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5 flex items-center justify-between"
+                  className="text-[#22271F] hover:text-[#755A22] py-2.5 border-b border-[#2E4636]/10 flex items-center justify-between"
                 >
                   <span>{link.label}</span>
                 </Link>
@@ -190,17 +190,17 @@ export default function Navbar() {
             <Link
               href="/account"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-neutral-200 hover:text-[#C5A059] py-2 border-b border-white/5 flex items-center gap-2"
+              className="text-[#22271F] hover:text-[#755A22] py-2.5 border-b border-[#2E4636]/10 flex items-center gap-2"
             >
-              <User className="h-4 w-4 text-[#C5A059]" />
+              <User className="h-4 w-4 text-[#755A22]" />
               Espace Privilège Client
             </Link>
             <Link
               href="/admin"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-neutral-200 hover:text-[#C5A059] py-2 flex items-center gap-2"
+              className="text-[#22271F] hover:text-[#755A22] py-2.5 flex items-center gap-2"
             >
-              <Shield className="h-4 w-4 text-[#C5A059]" />
+              <Shield className="h-4 w-4 text-[#755A22]" />
               Espace Administrateur
             </Link>
           </div>

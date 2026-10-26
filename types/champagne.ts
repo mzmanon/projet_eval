@@ -38,6 +38,26 @@ export interface Champagne {
   score?: number; // Note Bettane & Desseauve ou Parker / Revue du Vin de France (ex: 97)
 }
 
+export interface ReviewReply {
+  id: string;
+  author: string;
+  message: string;
+  createdAt: string;
+  isHouse?: boolean;
+}
+
+export interface ProductReview {
+  id: string;
+  champagneId: string;
+  author: string;
+  rating: number; // Note du client sur 5 étoiles
+  title?: string;
+  message: string;
+  createdAt: string;
+  verified?: boolean;
+  replies: ReviewReply[];
+}
+
 export interface CartItem {
   champagne: Champagne;
   quantity: number;

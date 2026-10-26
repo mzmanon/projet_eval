@@ -1,0 +1,116 @@
+{
+  "desktop /champagnes": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 2729,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 34.2
+      },
+      {
+        "hex": "#141610",
+        "pct": 28.7
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 20.3
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 9.5
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 5.4
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.7
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.6
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.6
+      },
+      {
+        "hex": "#e2c37e",
+        "pct": 0
+      },
+      {
+        "hex": "#334433",
+        "pct": 0
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [],
+    "imgCount": 9
+  },
+  "mobile /champagnes": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 7045,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 57.1
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 19.1
+      },
+      {
+        "hex": "#141610",
+        "pct": 11.3
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 6.9
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 2.7
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 1.2
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 1
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.5
+      },
+      {
+        "hex": "#e2c37e",
+        "pct": 0.1
+      },
+      {
+        "hex": "#334433",
+        "pct": 0.1
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [],
+    "imgCount": 9
+  }
+}

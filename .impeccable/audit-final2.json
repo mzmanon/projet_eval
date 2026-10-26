@@ -1,0 +1,342 @@
+{
+  "desktop /": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 3714,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#fbfaf6",
+        "pct": 27.7
+      },
+      {
+        "hex": "#e6efdd",
+        "pct": 24.1
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 21.1
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 14.8
+      },
+      {
+        "hex": "#eff3e8",
+        "pct": 11
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.7
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.4
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.4
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [],
+    "imgCount": 4
+  },
+  "desktop /maisons": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 2398,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 38.8
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 30.3
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 29.7
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 1
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.2
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [],
+    "imgCount": 6
+  },
+  "desktop /account": {
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    },
+    "scrollWidth": 1440,
+    "docHeight": 1807,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#d9e4cc",
+        "pct": 43.6
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 38.8
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 11.4
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 4.2
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 1.4
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.3
+      },
+      {
+        "hex": "#ebf2eb",
+        "pct": 0.3
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=1920&q=75"
+    ],
+    "imgCount": 2
+  },
+  "mobile /": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 6433,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 37.5
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 27
+      },
+      {
+        "hex": "#eff3e8",
+        "pct": 14.7
+      },
+      {
+        "hex": "#e6efdd",
+        "pct": 12.4
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 5.3
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 1.5
+      },
+      {
+        "hex": "#274e3b",
+        "pct": 0.8
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.7
+      }
+    ],
+    "overflow": [
+      {
+        "tag": "div",
+        "cls": "absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle,rgba(227,1",
+        "left": -15,
+        "right": 369
+      }
+    ],
+    "brokenImages": [],
+    "imgCount": 4
+  },
+  "mobile /maisons": {
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "scrollWidth": 390,
+    "docHeight": 5553,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#ffffff",
+        "pct": 57
+      },
+      {
+        "hex": "#d9e4cc",
+        "pct": 25.7
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 16
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 0.7
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 0.7
+      }
+    ],
+    "overflow": [],
+    "brokenImages": [],
+    "imgCount": 6
+  },
+  "mobile /account": {
+    "viewport": {
+      "w": 433,
+      "h": 937
+    },
+    "scrollWidth": 433,
+    "docHeight": 2443,
+    "bodyBg": "rgb(251, 250, 246)",
+    "bodyColor": "rgb(20, 21, 15)",
+    "contrastProblems": [],
+    "contrastProblemCount": 0,
+    "areaTop": [
+      {
+        "hex": "#d9e4cc",
+        "pct": 66.2
+      },
+      {
+        "hex": "#fbfaf6",
+        "pct": 11.6
+      },
+      {
+        "hex": "#ffffff",
+        "pct": 11
+      },
+      {
+        "hex": "#f4f7ee",
+        "pct": 6.9
+      },
+      {
+        "hex": "#c6d6b5",
+        "pct": 1.9
+      },
+      {
+        "hex": "#e3c47d",
+        "pct": 1.8
+      },
+      {
+        "hex": "#ebf2eb",
+        "pct": 0.7
+      }
+    ],
+    "overflow": [
+      {
+        "tag": "div",
+        "cls": "bg-[#C6D6B5] border-b border-[#2E4636]/8 py-1 px-4 text-center",
+        "left": 0,
+        "right": 433
+      },
+      {
+        "tag": "p",
+        "cls": "text-[9px] uppercase tracking-[0.28em] text-[#14150F] font-normal",
+        "left": 16,
+        "right": 417
+      },
+      {
+        "tag": "nav",
+        "cls": "w-full transition-all duration-500 bg-gradient-to-b from-[#FBFAF6]/92 ",
+        "left": 0,
+        "right": 433
+      },
+      {
+        "tag": "div",
+        "cls": "max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 flex items-center justify-betw",
+        "left": 0,
+        "right": 433
+      },
+      {
+        "tag": "div",
+        "cls": "flex items-center space-x-4 sm:space-x-6",
+        "left": 377,
+        "right": 413
+      },
+      {
+        "tag": "a",
+        "cls": "p-2 text-[#333A2F] hover:text-[#755A22] transition-colors",
+        "left": 377,
+        "right": 413
+      },
+      {
+        "tag": "svg",
+        "cls": "[object SVGAnimatedString]",
+        "left": 385,
+        "right": 405
+      },
+      {
+        "tag": "path",
+        "cls": "[object SVGAnimatedString]",
+        "left": 389,
+        "right": 401
+      },
+      {
+        "tag": "circle",
+        "cls": "[object SVGAnimatedString]",
+        "left": 392,
+        "right": 398
+      },
+      {
+        "tag": "button",
+        "cls": "pb-4 border-b-2 flex items-center gap-2 transition-colors cursor-point",
+        "left": 320,
+        "right": 427
+      },
+      {
+        "tag": "span",
+        "cls": "",
+        "left": 336,
+        "right": 427
+      }
+    ],
+    "brokenImages": [
+      "http://localhost:3100/_next/image?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F6%2F66%2FDom_P%25C3%25A9rignon_Champagne_2012.jpg%2F800px-Dom_P%25C3%25A9rignon_Champagne_2012.jpg&w=640&q=75"
+    ],
+    "imgCount": 2
+  }
+}

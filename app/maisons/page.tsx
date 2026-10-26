@@ -16,7 +16,7 @@ const HOUSES = [
     city: "Épernay / Hautvillers",
     style: "Tension, minéralité calcaire, complexité toastée et longévité absolue.",
     image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Dom_P%C3%A9rignon_Champagne_2012.jpg/800px-Dom_P%C3%A9rignon_Champagne_2012.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Dom_P%C3%A9rignon_Champagne_2012.jpg?width=800",
     slug: "dom-perignon",
     badge: "Abbaye d'Hautvillers",
   },
@@ -26,7 +26,7 @@ const HOUSES = [
     city: "Reims",
     style: "Générosité opulente, vinification sous bois, assemblage de centaines de vins de réserve.",
     image:
-      "https://images.unsplash.com/photo-1594488518063-8a304856019b?auto=format&fit=crop&w=800&q=80",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Champagne_Krug%2C_Penfolds_and_Bimbadgen_wines_%28Krug%29.jpg?width=800",
     slug: "krug",
     badge: "Orfèvrerie de l'Assemblage",
   },
@@ -74,18 +74,18 @@ const HOUSES = [
 
 export default function MaisonsPage() {
   return (
-    <div className="bg-[#0A0A0A] min-h-screen py-12 sm:py-20">
+    <div className="bg-[#FBFAF6] min-h-screen py-12 sm:py-20 text-[#14150F]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#C5A059] font-medium block">
+          <span className="text-[9px] uppercase tracking-[0.3em] text-[#755A22] font-normal block">
             Patrimoine &amp; Maisons Fondatrices
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl font-light text-[#FCFBF9] mt-3">
+          <h1 className="font-serif text-3xl sm:text-5xl font-light text-[#14150F] mt-3">
             Les Grandes Signatures de la Champagne
           </h1>
-          <div className="w-12 h-[1px] bg-[#C5A059] mx-auto mt-6" />
-          <p className="mt-6 text-xs sm:text-sm text-neutral-400 leading-relaxed font-light">
+          <div className="w-12 h-[1px] bg-[#E3C47D]/55 mx-auto mt-6" />
+          <p className="mt-6 text-xs sm:text-sm text-[#565C4E] leading-relaxed font-light">
             Découvrez l&apos;histoire singulière, la vision stylistique et la
             philosophie d&apos;élaboration des plus prestigieuses maisons
             sélectionnées par LA CAVE.
@@ -97,17 +97,17 @@ export default function MaisonsPage() {
           {HOUSES.map((house) => (
             <article
               key={house.name}
-              className="bg-[#121212] border border-white/5 hover:border-[#C5A059]/30 transition-all duration-500 p-8 flex flex-col justify-between"
+              className="bg-white border border-[#2E4636]/10 hover:border-[#B08F4C]/45 transition-all duration-500 p-8 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between text-xs text-neutral-400 mb-4">
-                  <span className="text-[10px] uppercase tracking-widest text-[#C5A059]">
+                <div className="flex items-center justify-between text-xs text-[#565C4E] mb-4 font-light">
+                  <span className="text-[9px] uppercase tracking-widest text-[#755A22]">
                     Fondée en {house.foundation}
                   </span>
                   <span>{house.city}</span>
                 </div>
 
-                <div className="relative h-64 w-full bg-[#161616] mb-6 p-4 border border-white/5">
+                <div className="relative h-64 w-full bg-[radial-gradient(ellipse_at_center,rgba(227,196,125,0.30)_0%,rgba(239,243,232,0.95)_75%)] mb-6 p-4 border border-[#2E4636]/10">
                   <Image
                     src={house.image}
                     alt={house.name}
@@ -116,22 +116,22 @@ export default function MaisonsPage() {
                   />
                 </div>
 
-                <h2 className="font-serif text-2xl font-light text-[#FCFBF9]">
+                <h2 className="font-serif text-2xl font-light text-[#14150F]">
                   {house.name}
                 </h2>
-                <span className="inline-block mt-1 text-[10px] uppercase tracking-wider text-neutral-400 bg-white/5 px-2 py-0.5">
+                <span className="inline-block mt-1 text-[9px] uppercase tracking-wider text-[#565C4E] border border-[#2E4636]/15 px-2 py-0.5 font-light">
                   {house.badge}
                 </span>
 
-                <p className="text-xs text-neutral-300 mt-4 leading-relaxed font-light">
+                <p className="text-xs text-[#333A2F]/80 mt-4 leading-relaxed font-light">
                   {house.style}
                 </p>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-white/5">
+              <div className="pt-6 mt-6 border-t border-[#2E4636]/10">
                 <Link
                   href={`/champagnes?house=${encodeURIComponent(house.name)}`}
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-[#C5A059] hover:text-[#DFC282] transition-colors"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[#755A22] hover:text-[#14150F] transition-colors font-light"
                 >
                   <span>Explorer les cuvées de la Maison</span>
                   <ArrowRight className="h-3.5 w-3.5" />

@@ -1,26 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  /* Haute Maison Palette - Noir profond, Ivoire, Or Champagne discret */
-  --background: #0a0a0a;
-  --foreground: #fcfbf9;
-  --surface: #121212;
-  --surface-elevated: #181818;
-  --surface-subtle: #202020;
-  
-  --gold-champagne: #c5a059;
-  --gold-light: #dfc282;
-  --gold-muted: #8e733e;
-  --gold-glow: rgba(197, 160, 89, 0.12);
+  /* Haute Maison Palette - Craie lumineuse, Vert Champagne, Jaune Champagne, Encre */
+  --background: #fbfaf6;
+  --foreground: #14150f;
+  --surface: #ffffff;
+  --surface-elevated: #f4f7ee;
+  --surface-subtle: #eff3e8;
 
-  --ivory: #fcfbf9;
-  --ivory-muted: #d6d0c4;
-  --text-muted: #9c9689;
-  --text-subtle: #6e695e;
+  --green-veil: #e6efdd;
+  --green-field: #d9e4cc;
+  --green-deep: #c6d6b5;
+  --green-ink: #2e4636;
 
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-gold: rgba(197, 160, 89, 0.22);
-  --border-gold-hover: rgba(197, 160, 89, 0.5);
+  --gold-champagne: #e3c47d;
+  --gold-light: #efd9a2;
+  --gold-muted: #b08f4c;
+  --gold-ink: #755a22;
+  --gold-glow: rgba(227, 196, 125, 0.28);
+
+  --ivory: #fbfaf6;
+  --ivory-muted: #f1f5ea;
+  --text-muted: #565c4e;
+  --text-subtle: #585f50;
+
+  --border-subtle: rgba(46, 70, 54, 0.10);
+  --border-strong: rgba(46, 70, 54, 0.16);
+  --border-gold: rgba(176, 143, 76, 0.35);
+  --border-gold-hover: rgba(176, 143, 76, 0.70);
 }
 
 @theme inline {
@@ -30,9 +37,15 @@
   --color-surface-elevated: var(--surface-elevated);
   --color-surface-subtle: var(--surface-subtle);
 
+  --color-green-veil: var(--green-veil);
+  --color-green-field: var(--green-field);
+  --color-green-deep: var(--green-deep);
+  --color-green-ink: var(--green-ink);
+
   --color-gold: var(--gold-champagne);
   --color-gold-light: var(--gold-light);
   --color-gold-muted: var(--gold-muted);
+  --color-gold-ink: var(--gold-ink);
 
   --color-ivory: var(--ivory);
   --color-ivory-muted: var(--ivory-muted);
@@ -40,6 +53,7 @@
   --color-text-subtle: var(--text-subtle);
 
   --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
   --color-border-gold: var(--border-gold);
 
   --font-serif: "Cormorant Garamond", "Didot", "Bodoni MT", Georgia, serif;
@@ -48,7 +62,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -61,37 +75,47 @@ body {
   overflow-x: hidden;
 }
 
+/* Sélection de texte aux reflets champagne */
 ::selection {
-  background-color: #c5a059;
-  color: #0a0a0a;
+  background-color: rgba(227, 196, 125, 0.55);
+  color: #14150f;
 }
 
 /* Scrollbar discrète et raffinée */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #fbfaf6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #262626;
-  border-radius: 3px;
+  background: #c6d6b5;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #c5a059;
+  background: #b08f4c;
 }
 
-/* Animations et transitions luxueuses */
+/* Micro-interactions feutrées */
 .transition-luxury {
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gold-hairline {
-  border-color: rgba(197, 160, 89, 0.2);
+  border-color: rgba(176, 143, 76, 0.40);
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #fcfbf9 30%, #dfc282 70%, #c5a059 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Espace et respiration éditoriale */
+.prose-sommelier {
+  letter-spacing: 0.015em;
+  line-height: 1.8;
+}
+
+/* Halo doux d'atmosphère champagne */
+.champagne-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(227, 196, 125, 0.24) 0%, transparent 70%);
+}
+
+.champagne-pedestal {
+  background: radial-gradient(ellipse at center, rgba(227, 196, 125, 0.30) 0%, rgba(239, 243, 232, 0.95) 75%);
 }
