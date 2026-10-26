@@ -49,35 +49,35 @@ export default function ChampagnesCatalogPage() {
     <div className="luxury-page min-h-screen py-16 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Breadcrumb & Header */}
-        <div className="border-b border-white/10 pb-10">
-          <nav className="text-[11px] uppercase tracking-[0.2em] text-neutral-400 mb-4">
-            <Link href="/" className="hover:text-white transition-colors">
+        <div className="border-b border-[#2E4636]/12 pb-10">
+          <nav className="text-[10px] uppercase tracking-[0.22em] text-[#565C4E] mb-4 font-light">
+            <Link href="/" className="hover:text-[#2E4636] transition-colors">
               Accueil
             </Link>{" "}
-            / <span className="text-[#C5A059]">La Collection</span>
+            / <span className="text-[#755A22]">La Collection</span>
           </nav>
 
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#C5A059] font-medium block">
+              <span className="text-[9px] uppercase tracking-[0.3em] text-[#755A22] font-normal block">
                 Cave &amp; Allocations
               </span>
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-[#FCFBF9] mt-2">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-[#14150F] mt-2">
                 Le Catalogue des Grands Champagnes
               </h1>
             </div>
-            <p className="text-xs text-neutral-400 max-w-md leading-relaxed">
-              Flacons conservés dans des conditions de fraîcheur et
-              d&apos;hygrométrie de crayère. Provenance vérifiée et scellée.
+            <p className="text-xs text-[#565C4E] max-w-md leading-relaxed font-light">
+              Flacons conservés dans la fraîcheur et l&apos;hygrométrie naturelle des
+              crayères séculaires d&apos;Épernay. Provenance vérifiée et scellée.
             </p>
           </div>
         </div>
 
-        {/* Filter Controls Bar */}
-        <div className="my-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-4 sm:p-5 bg-[#111111] border border-white/5">
+        {/* Filter Controls Bar — Allégée et fluide */}
+        <div className="my-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-3 sm:p-4 bg-white border border-[#2E4636]/10">
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-neutral-400 mr-2">
-              <Filter className="h-3.5 w-3.5 text-[#C5A059]" />
+            <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#565C4E] mr-2 font-light">
+              <Filter className="h-3 w-3 text-[#755A22]" />
               <span>Filtres :</span>
             </div>
 
@@ -85,7 +85,7 @@ export default function ChampagnesCatalogPage() {
             <select
               value={selectedHouse}
               onChange={(e) => setSelectedHouse(e.target.value)}
-              className="bg-[#181818] border border-white/10 text-neutral-200 text-xs py-2 px-3 focus:outline-none focus:border-[#C5A059] transition-colors"
+              className="bg-[#FBFAF6] border border-[#2E4636]/15 text-[#22271F] text-xs py-2 px-3 focus:outline-none focus:border-[#B08F4C] transition-colors font-light"
               aria-label="Filtrer par Maison"
             >
               <option value="all">Toutes les Maisons</option>
@@ -100,7 +100,7 @@ export default function ChampagnesCatalogPage() {
             <select
               value={selectedDosage}
               onChange={(e) => setSelectedDosage(e.target.value)}
-              className="bg-[#181818] border border-white/10 text-neutral-200 text-xs py-2 px-3 focus:outline-none focus:border-[#C5A059] transition-colors"
+              className="bg-[#FBFAF6] border border-[#2E4636]/15 text-[#22271F] text-xs py-2 px-3 focus:outline-none focus:border-[#B08F4C] transition-colors font-light"
               aria-label="Filtrer par Dosage"
             >
               <option value="all">Tous les Dosages</option>
@@ -111,10 +111,10 @@ export default function ChampagnesCatalogPage() {
             {/* Rare toggle */}
             <button
               onClick={() => setRareOnly((prev) => !prev)}
-              className={`text-xs px-3 py-2 border transition-colors ${
+              className={`text-xs px-3 py-2 border transition-colors font-light ${
                 rareOnly
-                  ? "border-[#C5A059] bg-[#C5A059]/10 text-[#C5A059]"
-                  : "border-white/10 text-neutral-400 hover:text-white"
+                  ? "border-[#B08F4C] bg-[#E3C47D]/30 text-[#755A22]"
+                  : "border-[#2E4636]/15 text-[#565C4E] hover:text-[#2E4636]"
               }`}
             >
               Cuvées Rares Uniquement
@@ -123,7 +123,7 @@ export default function ChampagnesCatalogPage() {
             {(selectedHouse !== "all" || selectedDosage !== "all" || rareOnly) && (
               <button
                 onClick={resetFilters}
-                className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-[#C5A059] transition-colors ml-2"
+                className="flex items-center gap-1.5 text-xs text-[#565C4E] hover:text-[#755A22] transition-colors ml-2 font-light"
                 title="Réinitialiser les filtres"
               >
                 <RotateCcw className="h-3 w-3" />
@@ -134,14 +134,14 @@ export default function ChampagnesCatalogPage() {
 
           {/* Sort selection */}
           <div className="flex items-center gap-3">
-            <span className="text-xs uppercase tracking-wider text-neutral-400 flex items-center gap-1.5">
-              <SlidersHorizontal className="h-3 w-3 text-[#C5A059]" />
+            <span className="text-xs uppercase tracking-wider text-[#565C4E] flex items-center gap-1.5 font-light">
+              <SlidersHorizontal className="h-3 w-3 text-[#755A22]" />
               Trier par :
             </span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-[#181818] border border-white/10 text-neutral-200 text-xs py-2 px-3 focus:outline-none focus:border-[#C5A059] transition-colors"
+              className="bg-[#FBFAF6] border border-[#2E4636]/15 text-[#22271F] text-xs py-2 px-3 focus:outline-none focus:border-[#B08F4C] transition-colors font-light"
               aria-label="Trier le catalogue"
             >
               <option value="featured">Sélection de la Maison</option>
@@ -153,10 +153,10 @@ export default function ChampagnesCatalogPage() {
         </div>
 
         {/* Results Counter */}
-        <div className="flex items-center justify-between mb-8 text-xs text-neutral-400">
+        <div className="flex items-center justify-between mb-8 text-xs text-[#565C4E] font-light">
           <span>
             Affichage de{" "}
-            <strong className="text-neutral-200 font-medium">
+            <strong className="text-[#22271F] font-medium">
               {filteredChampagnes.length}
             </strong>{" "}
             cuvée{filteredChampagnes.length > 1 ? "s" : ""} d&apos;exception
@@ -165,17 +165,17 @@ export default function ChampagnesCatalogPage() {
 
         {/* Catalog Grid */}
         {filteredChampagnes.length === 0 ? (
-          <div className="bg-[#111111] border border-white/5 py-24 text-center p-8">
-            <h3 className="font-serif text-2xl text-neutral-200 font-light">
+          <div className="bg-white border border-[#2E4636]/10 py-24 text-center p-8">
+            <h3 className="font-serif text-2xl text-[#22271F] font-light">
               Aucune cuvée ne correspond à vos critères
             </h3>
-            <p className="text-xs text-neutral-400 mt-2 max-w-sm mx-auto">
+            <p className="text-xs text-[#565C4E] mt-2 max-w-sm mx-auto font-light">
               Veuillez ajuster ou réinitialiser vos filtres pour découvrir notre
               collection.
             </p>
             <button
               onClick={resetFilters}
-              className="mt-6 inline-flex items-center gap-2 border border-[#C5A059] px-6 py-2.5 text-xs uppercase tracking-widest text-[#C5A059] hover:bg-[#C5A059] hover:text-[#0A0A0A] transition-colors"
+              className="mt-6 inline-flex items-center gap-2 border border-[#B08F4C] px-6 py-2.5 text-xs uppercase tracking-widest text-[#755A22] hover:bg-[#E3C47D] hover:text-[#14150F] transition-colors font-light"
             >
               Réinitialiser les filtres
             </button>
@@ -183,7 +183,11 @@ export default function ChampagnesCatalogPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
             {filteredChampagnes.map((champagne) => (
-              <ChampagneCard key={champagne.id} champagne={champagne} />
+              <ChampagneCard
+                key={champagne.id}
+                champagne={champagne}
+                showReviews
+              />
             ))}
           </div>
         )}

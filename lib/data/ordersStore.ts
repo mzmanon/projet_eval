@@ -22,7 +22,7 @@ const INITIAL_SAMPLE_ORDER: Order = {
       price: 245,
       quantity: 2,
       imageUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Dom_P%C3%A9rignon_Champagne_2012.jpg/800px-Dom_P%C3%A9rignon_Champagne_2012.jpg",
+        "https://commons.wikimedia.org/wiki/Special:FilePath/Dom_P%C3%A9rignon_Champagne_2012.jpg?width=800",
     },
     {
       champagneId: "ruinart-blanc-de-blancs",

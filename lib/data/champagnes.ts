@@ -29,7 +29,7 @@ export const CHAMPAGNES: Champagne[] = [
       service: "Servir entre 10°C et 12°C dans un verre tulipe à vin blanc ample.",
     },
     imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Dom_P%C3%A9rignon_Champagne_2012.jpg/800px-Dom_P%C3%A9rignon_Champagne_2012.jpg",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Dom_P%C3%A9rignon_Champagne_2012.jpg?width=800",
     isFeatured: true,
     isRare: false,
     score: 97,
@@ -62,7 +62,7 @@ export const CHAMPAGNES: Champagne[] = [
       service: "Servir à 11°C dans un grand verre de dégustation.",
     },
     imageUrl:
-      "https://images.unsplash.com/photo-1594488518063-8a304856019b?auto=format&fit=crop&w=800&q=80",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Champagne_Krug%2C_Penfolds_and_Bimbadgen_wines_%28Krug%29.jpg?width=800",
     isFeatured: true,
     isRare: true,
     score: 98,
@@ -227,7 +227,7 @@ export const CHAMPAGNES: Champagne[] = [
       service: "Servir à 9°C.",
     },
     imageUrl:
-      "https://images.unsplash.com/photo-1594488518063-8a304856019b?auto=format&fit=crop&w=800&q=80",
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Billecart-Salmon_Brut_Rose_Champagne_with_other_Champagnes.jpg?width=800",
     isFeatured: false,
     isRare: false,
     score: 95,
