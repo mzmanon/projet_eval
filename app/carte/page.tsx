@@ -9,6 +9,8 @@ export const metadata = {
     "Découvrez sur la carte de France les villages d'origine de nos champagnes : Reims, Hautvillers, Aÿ, Mareuil-sur-Aÿ et Le Mesnil-sur-Oger.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function CartePage() {
   const champagnes = await getProductsFromDatabase();
   const slugs = new Set(champagnes.map((champagne) => champagne.slug));

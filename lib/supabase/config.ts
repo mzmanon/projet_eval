@@ -8,17 +8,32 @@ export interface SupabasePublicConfig {
   configured: boolean;
 }
 
+function isPlaceholder(value: string | undefined): boolean {
+  if (!value) return true;
+
+  return /votre-projet|your-project|placeholder-project|votre_cle|\.\.\.$/i.test(
+    value.trim()
+  );
+}
+
 export function getSupabasePublicConfig(): SupabasePublicConfig {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || FALLBACK_SUPABASE_URL;
-  const anonKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim() ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() ||
-    FALLBACK_SUPABASE_ANON_KEY;
+  const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const rawKey = [
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim(),
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim(),
+  ].find((value) => value && !isPlaceholder(value));
+
+  // Si l'environnement contient encore les valeurs d'exemple du fichier
+  // .env.example, on retombe sur le projet Supabase public de LA CAVE.
+  const hasUsableEnvironment = !isPlaceholder(rawUrl) && Boolean(rawKey);
+
+  const url = hasUsableEnvironment ? rawUrl! : FALLBACK_SUPABASE_URL;
+  const anonKey = hasUsableEnvironment ? rawKey! : FALLBACK_SUPABASE_ANON_KEY;
 
   return {
-    url: url || FALLBACK_SUPABASE_URL,
-    anonKey: anonKey || FALLBACK_SUPABASE_ANON_KEY,
-    configured: Boolean(url && anonKey && !url.includes("placeholder-project")),
+    url,
+    anonKey,
+    configured: Boolean(url && anonKey),
   };
 }
 
