@@ -4,6 +4,9 @@ import { ArrowUpRight, ShieldCheck, ShoppingBag, Wine } from "lucide-react";
 import { getProductsFromDatabase } from "@/lib/data/productsRepository";
 import ChampagneCard from "@/components/product/ChampagneCard";
 
+// La sélection du moment est lue depuis Supabase à chaque requête.
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const featured = (await getProductsFromDatabase()).slice(0, 3);
 
